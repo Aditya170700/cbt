@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@fortawesome/vue-fontawesome": "^3.0.1",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.1",
     "bootstrap-vue-3": "^0.3.2",
