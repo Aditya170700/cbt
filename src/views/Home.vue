@@ -3,11 +3,23 @@
 <script setup>
 import { ref } from "vue";
 import backgroundImage from "@/assets/img/static/bg-landing.jpeg";
+import { useRouter } from "vue-router";
 
 let widthContent = window.innerWidth;
 let heightContent = window.innerHeight;
 let minus = widthContent > 900 ? 90 : 70;
 let minHeight = ref((heightContent - minus) / 2);
+let router = useRouter();
+
+function login() {
+  let redirect = router.resolve({ name: "dashboard" }).href;
+  window.location.href = redirect;
+}
+
+function signup() {
+  let redirect = router.resolve({ name: "dashboard" }).href;
+  window.location.href = redirect;
+}
 </script>
 
 <template>
@@ -29,10 +41,20 @@ let minHeight = ref((heightContent - minus) / 2);
         <b-button variant="outline-primary" size="sm" class="rounded-3 mx-1"
           >LSP</b-button
         >
-        <b-button variant="outline-primary" size="sm" class="rounded-3 mx-1"
+        <b-button
+          variant="outline-primary"
+          size="sm"
+          class="rounded-3 mx-1"
+          data-bs-toggle="modal"
+          data-bs-target="#loginModal"
           >Login</b-button
         >
-        <b-button variant="outline-primary" size="sm" class="rounded-3 mx-1"
+        <b-button
+          variant="outline-primary"
+          size="sm"
+          class="rounded-3 mx-1"
+          data-bs-toggle="modal"
+          data-bs-target="#signupModal"
           >Sign Up</b-button
         >
       </div>
@@ -97,5 +119,149 @@ let minHeight = ref((heightContent - minus) / 2);
     <div
       :style="`min-height:${minHeight}px; background-image: url('${backgroundImage}'); bacground-size: cover; background-position: center; background-repeat: no-repeat; background-fit: cover;`"
     ></div>
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content rounded-4">
+          <div class="modal-body p-4">
+            <div class="d-flex justify-content-between mb-3">
+              <div class="modal-title" id="loginModalLabel">
+                <div class="h5 fw-bold">Login</div>
+                <div class="small">Enter your email and password</div>
+              </div>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form @submit.prevent="login">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="alex@gmail.com"
+                    />
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      placeholder="Password"
+                    />
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+                <div class="col-lg-12 text-end mb-3">
+                  <a href="#" class="text-decoration-none small"
+                    >Forgot password?</a
+                  >
+                </div>
+                <div class="col-lg-12 mb-3">
+                  <div class="d-grid">
+                    <button class="btn btn-sm btn-primary rounded-3">
+                      Log In
+                    </button>
+                  </div>
+                </div>
+                <div class="col-lg-12 text-center">
+                  <a href="#" class="text-decoration-none small"
+                    >Don't have an account?</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="signupModal"
+      tabindex="-1"
+      aria-labelledby="signupModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content rounded-4">
+          <div class="modal-body p-4">
+            <div class="d-flex justify-content-between mb-3">
+              <div class="modal-title" id="signupModalLabel">
+                <div class="h5 fw-bold">Sign Up</div>
+                <div class="small">Enter your credentials to continue</div>
+              </div>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form @submit.prevent="signup">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="alex@gmail.com"
+                    />
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      placeholder="Password"
+                    />
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password_confirmation"
+                      placeholder="Password"
+                    />
+                    <label for="password_confirmation">Confirm Password</label>
+                  </div>
+                </div>
+                <div class="col-lg-12 mb-3">
+                  <div class="d-grid">
+                    <button class="btn btn-sm btn-primary rounded-3">
+                      Sign Up
+                    </button>
+                  </div>
+                </div>
+                <div class="col-lg-12 text-center">
+                  <a href="#" class="text-decoration-none small"
+                    >Already have an account?</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </b-container>
 </template>
