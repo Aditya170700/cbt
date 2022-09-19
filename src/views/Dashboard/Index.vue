@@ -1,6 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script setup></script>
+<script setup>
+import Sidebar from "../../components/Dashboard/Sidebar.vue";
+</script>
 
 <template>
-  <b-container fluid class="p-0">WKWK</b-container>
+  <div class="dashboard">
+    <Sidebar />
+  </div>
 </template>
