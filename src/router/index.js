@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import dashboard from "@/router/dashboard";
+import questionBank from '@/router/dashboard/question-bank';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,11 +10,8 @@ const router = createRouter({
       name: "home",
       component: () => import("../views/Home.vue"),
     },
-    {
-      path: "/dashboard",
-      name: "dashboard",
-      component: () => import("../views/Dashboard/Index.vue"),
-    },
+    ...dashboard,
+    ...questionBank,
   ],
 });
 

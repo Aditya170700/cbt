@@ -1,12 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
+import { useRoute } from "vue-router";
+
 let widthContent = window.innerWidth;
+let route = useRoute();
 
 function sidebar() {
   document.querySelector(".sidebar").classList.toggle("hide");
   document.querySelector(".content").classList.toggle("hide");
-  document.querySelector(".content-footer").classList.toggle("hide");
   document.querySelector(".main-content").classList.toggle("hide");
+  // document.querySelector(".content-footer").classList.toggle("hide");
 }
 </script>
 
@@ -26,8 +29,16 @@ function sidebar() {
       </router-link>
       <div class="height-hide overflow-auto">
         <div class="menu-wrapper">
-          <a class="text-white text-decoration-none" href="#">
-            <div class="item d-flex align-items-center active">
+          <router-link
+            :to="{ name: 'dashboard' }"
+            class="text-white text-decoration-none"
+            href="#"
+          >
+            <div
+              :class="`item d-flex align-items-center ${
+                route.name == 'dashboard' ? 'active' : ''
+              }`"
+            >
               <div
                 style="width: 20px"
                 class="col-2 icons d-flex justify-content-center me-2"
@@ -40,7 +51,7 @@ function sidebar() {
                 Dashboard
               </div>
             </div>
-          </a>
+          </router-link>
           <a class="text-white text-decoration-none" href="#">
             <div class="item d-flex align-items-center">
               <div
@@ -56,8 +67,16 @@ function sidebar() {
               </div>
             </div>
           </a>
-          <a class="text-white text-decoration-none" href="#">
-            <div class="item d-flex align-items-center">
+          <router-link
+            :to="{ name: 'dashboard-question-bank' }"
+            class="text-white text-decoration-none"
+            href="#"
+          >
+            <div
+              :class="`item d-flex align-items-center ${
+                route.meta.group == 'dashboard-question-bank' ? 'active' : ''
+              }`"
+            >
               <div
                 style="width: 20px"
                 class="col-2 icons d-flex justify-content-center me-2"
@@ -70,7 +89,7 @@ function sidebar() {
                 Question Bank
               </div>
             </div>
-          </a>
+          </router-link>
           <a class="text-white text-decoration-none" href="#">
             <div class="item d-flex align-items-center">
               <div
