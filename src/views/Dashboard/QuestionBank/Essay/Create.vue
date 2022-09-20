@@ -3,26 +3,19 @@
 import Sidebar from "@/components/Dashboard/Sidebar.vue";
 import { reactive, ref } from "vue";
 import Cropper from "vue-image-crop-upload";
-import { useRoute, useRouter } from "vue-router";
-import {
-  alertError,
-  alertSuccess,
-  clearBase64,
-} from "../../../../assets/js/utils";
+import { useRouter } from "vue-router";
+import { alertSuccess, clearBase64 } from "../../../../assets/js/utils";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 let widthContent = window.innerWidth;
-let route = useRoute();
 let router = useRouter();
 let coverPreview = ref(null);
 let showCoverCroper = ref(false);
-let option = ref("");
 let form = reactive({
   cover: "",
   question: "",
   score: 1,
-  options: [],
   loading: false,
 });
 
@@ -36,22 +29,6 @@ function showModalCoverCroper() {
   if (widthContent < 500) {
     document.querySelector(".vicp-wrap").style.width = "80%";
   }
-}
-
-function addOption() {
-  let valid = true;
-
-  if (option.value === "") {
-    valid = false;
-  }
-
-  if (valid) {
-    form.options.push({ value: option.value, is_true: false });
-    option.value = "";
-    return;
-  }
-
-  alertError("Please fill the option");
 }
 
 function submit() {
@@ -74,9 +51,7 @@ function submit() {
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
           <div class="col-6 col-lg-6 text-start mb-3">
-            <div class="h4 fw-bold">
-              CREATE QUESTION "{{ route.query.type }}"
-            </div>
+            <div class="h4 fw-bold">CREATE QUESTION ESSAY</div>
           </div>
           <div class="col-6 text-end">
             <router-link
@@ -151,71 +126,6 @@ function submit() {
                   style="height: 300px"
                   toolbar="full"
                 />
-              </div>
-            </div>
-            <div class="col-lg-5">
-              <div class="form-floating mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="option"
-                  placeholder="Input Option"
-                  v-model="option"
-                />
-                <label for="option">Option</label>
-              </div>
-            </div>
-            <div class="col-lg-1">
-              <div class="mb-3 d-grid">
-                <button
-                  class="btn btn-primary py-3 rounded-4"
-                  @click="addOption"
-                >
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="mb-3">
-                <ul class="list-group">
-                  <li
-                    class="list-group-item text-danger py-3"
-                    v-if="form.options.length <= 0"
-                  >
-                    No option yet
-                  </li>
-                  <li
-                    class="list-group-item py-3 d-flex justify-content-between"
-                    v-for="(opt, iopt) in form.options"
-                    :key="iopt"
-                  >
-                    {{ opt.value }}
-                    <div>
-                      <button
-                        :class="`btn btn-sm btn${
-                          opt.is_true ? '' : '-outline'
-                        }-primary rounded-4 me-1`"
-                        @click="
-                          () => {
-                            form.options.forEach((opt) => {
-                              opt.is_true = false;
-                            });
-                            form.options[iopt].is_true =
-                              !form.options[iopt].is_true;
-                          }
-                        "
-                      >
-                        <i class="fas fa-key"></i>
-                      </button>
-                      <button
-                        class="btn btn-sm btn-danger rounded-4 me-1"
-                        @click="form.options.splice(iopt, 1)"
-                      >
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </li>
-                </ul>
               </div>
             </div>
             <div class="col-lg-12">
