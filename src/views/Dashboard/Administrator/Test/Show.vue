@@ -13,7 +13,7 @@ let widthContent = window.innerWidth;
 let route = useRoute();
 let result = reactive({
   data: null,
-  meta: null,
+  bobot: 0,
   loading: false,
 });
 let question = reactive({
@@ -23,6 +23,7 @@ let question = reactive({
 
 onBeforeMount(() => {
   fetchData();
+  fetchQuestionNotInTest();
 });
 
 function fetchData() {
@@ -40,7 +41,7 @@ function fetchData() {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       result.loading = false;
       result.data = res.data.data;
-      result.meta = res.data.meta;
+      result.bobot = res.data.bobot;
     })
     .catch((err) => {
       result.loading = false;
@@ -147,7 +148,7 @@ function removeSoal(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="h4 fw-bold">Detail Test</div>
+          <div class="h4 fw-bold">{{ result?.data?.nama }}</div>
           <div>
             <router-link
               :to="{ name: 'dashboard-administrator-test' }"
@@ -161,6 +162,45 @@ function removeSoal(data) {
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2" v-else>
+          <div class="col-12 mb-3">
+            <div class="row">
+              <div class="col-auto">
+                <div class="card border-0">
+                  <div
+                    class="card-body bg-success text-white rounded-2 border-0 shadow-lg"
+                  >
+                    <div class="h6 fw-bold">Multiple Choice</div>
+                    <div class="h5 fw-bold">
+                      {{ result.data.lms_pertanyaan_multiple_choice_count }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="card border-0">
+                  <div
+                    class="card-body bg-warning text-white rounded-2 border-0 shadow-lg"
+                  >
+                    <div class="h6 fw-bold">Essay</div>
+                    <div class="h5 fw-bold">
+                      {{ result.data.lms_pertanyaan_essay_count }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="card border-0">
+                  <div
+                    class="card-body bg-info-1 text-white rounded-2 border-0 shadow-lg"
+                  >
+                    <div class="h6 fw-bold">Total Bobot</div>
+                    <div class="h5 fw-bold">{{ result.bobot }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3" v-html="result.data.deskripsi"></div>
           <div class="col-lg-6">
             <div class="row">
               <div
