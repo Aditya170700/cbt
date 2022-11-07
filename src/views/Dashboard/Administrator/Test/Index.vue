@@ -26,7 +26,7 @@ onBeforeMount(() => {
 function fetchData() {
   result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/admin-pusbang/list`, {
+    .get(`${storeApp.baseurl}cbt/admin-pusbang/test/list`, {
       headers: {
         Authorization: `Bearer ${storeApp.token}`,
       },
@@ -79,6 +79,9 @@ function fetchData() {
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2" v-else>
+          <div class="col-12 text-center" v-if="result.data.length == 0">
+            Belum ada data
+          </div>
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
             <router-link
               :to="{

@@ -124,13 +124,15 @@ function refreshToken() {
             </div>
           </router-link>
           <router-link
-            :to="{ name: 'dashboard-question-bank' }"
+            :to="{ name: 'dashboard-administrator-soal' }"
             class="text-white text-decoration-none"
             href="#"
           >
             <div
               :class="`item d-flex align-items-center ${
-                route.meta.group == 'dashboard-question-bank' ? 'active' : ''
+                route.meta.group == 'dashboard-administrator-soal'
+                  ? 'active'
+                  : ''
               }`"
             >
               <div
@@ -142,7 +144,7 @@ function refreshToken() {
               <div
                 class="col-10 d-flex justify-content-between align-items-center"
               >
-                Question Bank
+                Bank Soal
               </div>
             </div>
           </router-link>

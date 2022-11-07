@@ -4,7 +4,7 @@ import Sidebar from "@/components/Dashboard/Sidebar.vue";
 import { reactive, ref } from "vue";
 import Cropper from "vue-image-crop-upload";
 import { useRouter } from "vue-router";
-import { alertSuccess, clearBase64 } from "../../../../assets/js/utils";
+import { alertSuccess, clearBase64 } from "@/assets/js/utils";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 

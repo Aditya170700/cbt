@@ -1,4 +1,5 @@
 import test from '@/router/dashboard/administrator/test/index.js';
+import soal from '@/router/dashboard/administrator/soal/index.js';
 
 let routes = [
   {
@@ -11,6 +12,7 @@ let routes = [
     component: () => import("@/views/Dashboard/Administrator/Index.vue"),
   },
   ...test,
+  ...soal,
 ];
 
 export default routes;

@@ -16,7 +16,7 @@ let result = reactive({
 
 onBeforeMount(() => {
   axios
-    .get(`${storeApp.baseurl}cbt/admin-pusbang/list`, {
+    .get(`${storeApp.baseurl}cbt/admin-pusbang/test/list`, {
       headers: {
         Authorization: `Bearer ${storeApp.token}`,
       },
