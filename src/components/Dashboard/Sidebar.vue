@@ -1,15 +1,50 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useRoute } from "vue-router";
+import axios from "axios";
+import { appStore } from "@/stores/app";
+import { confirmation } from "@/assets/js/utils";
+import { onMounted } from "vue";
 
 let widthContent = window.innerWidth;
 let route = useRoute();
+const storeApp = appStore();
+
+onMounted(() => {
+  if (storeApp.token) {
+    refreshToken();
+  }
+});
 
 function sidebar() {
   document.querySelector(".sidebar").classList.toggle("hide");
   document.querySelector(".content").classList.toggle("hide");
   document.querySelector(".main-content").classList.toggle("hide");
   // document.querySelector(".content-footer").classList.toggle("hide");
+}
+
+function refreshToken() {
+  axios
+    .get(`${storeApp.baseurl}auth/refresh-token`, {
+      headers: {
+        Authorization: `Bearer ${storeApp.token}`,
+      },
+    })
+    .then((res) => {
+      localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem("user", res.data.data.user);
+    })
+    .catch((err) => {
+      console.log(err);
+      confirmation(
+        "Sesi telah habis, mohon untuk login ulang",
+        "Sesi Habis"
+      ).then(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+      });
+    });
 }
 </script>
 
@@ -28,15 +63,15 @@ function sidebar() {
         <span class="h1 fw-bold">CBT</span>
       </router-link>
       <div class="height-hide overflow-auto">
-        <div class="menu-wrapper">
+        <div class="menu-wrapper" v-if="route.meta.page == 'administrator'">
           <router-link
-            :to="{ name: 'dashboard' }"
+            :to="{ name: 'dashboard-administrator' }"
             class="text-white text-decoration-none"
             href="#"
           >
             <div
               :class="`item d-flex align-items-center ${
-                route.name == 'dashboard' ? 'active' : ''
+                route.name == 'dashboard-administrator' ? 'active' : ''
               }`"
             >
               <div
@@ -52,21 +87,31 @@ function sidebar() {
               </div>
             </div>
           </router-link>
-          <a class="text-white text-decoration-none" href="#">
-            <div class="item d-flex align-items-center">
+          <router-link
+            :to="{ name: 'dashboard-administrator-test' }"
+            class="text-white text-decoration-none"
+            href="#"
+          >
+            <div
+              :class="`item d-flex align-items-center ${
+                route.meta.group == 'dashboard-administrator-test'
+                  ? 'active'
+                  : ''
+              }`"
+            >
               <div
                 style="width: 20px"
                 class="col-2 icons d-flex justify-content-center me-2"
               >
-                <i class="fas fa-tv"></i>
+                <i class="fas fa-file-pen"></i>
               </div>
               <div
                 class="col-10 d-flex justify-content-between align-items-center"
               >
-                Presentation
+                Test
               </div>
             </div>
-          </a>
+          </router-link>
           <router-link
             :to="{ name: 'dashboard-question-bank' }"
             class="text-white text-decoration-none"
@@ -90,21 +135,6 @@ function sidebar() {
               </div>
             </div>
           </router-link>
-          <a class="text-white text-decoration-none" href="#">
-            <div class="item d-flex align-items-center">
-              <div
-                style="width: 20px"
-                class="col-2 icons d-flex justify-content-center me-2"
-              >
-                <i class="fas fa-file-pen"></i>
-              </div>
-              <div
-                class="col-10 d-flex justify-content-between align-items-center"
-              >
-                Test
-              </div>
-            </div>
-          </a>
           <a class="text-white text-decoration-none" href="#">
             <div class="item d-flex align-items-center">
               <div

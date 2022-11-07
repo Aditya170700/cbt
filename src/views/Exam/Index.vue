@@ -30,7 +30,11 @@ import Navbar from "../../components/Navbar.vue";
     <div class="row p-4">
       <div class="col-6 col-lg-4 mb-4" v-for="i in 12" :key="i">
         <router-link
-          :to="{ name: 'exam-show', params: { id: `uuid` } }"
+          :to="{
+            name: 'exam-show',
+            params: { id: `uuid` },
+            query: { status: i < 6 ? 'unfinish' : 'finish' },
+          }"
           class="text-decoration-none"
         >
           <div class="card rounded-4 shadow border-0 hovered popup-1">

@@ -8,72 +8,86 @@ export const imageReader = (files, target) => {
   reader.onload = (e) => {
     target.value = e.target.result;
   };
+
   reader.readAsDataURL(files);
 };
 
 export const dataURLtoFile = (dataurl) => {
-  let arr = dataurl.split(","),
+  let arr = dataurl.split(','),
     mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]),
     n = bstr.length,
     u8arr = new Uint8Array(n);
 
-  while (n--) {
+  while(n--){
     u8arr[n] = bstr.charCodeAt(n);
   }
 
-  return new File([u8arr], "haha", { type: mime });
+  return new File([u8arr], 'haha', {type:mime});
 };
 
 export const alertSuccess = (message) => {
   createToast(message, {
-    type: "success",
-    timeout: 3000,
-    position: "top-right",
-    showIcon: true,
-    toastBackgroundColor: "#51e6a7",
-  });
-};
+      type: 'success',
+      timeout: 3000,
+      position: 'top-right',
+      showIcon: true,
+      toastBackgroundColor: '#51e6a7',
+  })
+}
 
 export const alertError = (message) => {
   createToast(message, {
-    type: "danger",
-    timeout: 3000,
-    position: "top-right",
-    showIcon: true,
-    toastBackgroundColor: "#ff4560",
-  });
-};
+      type: 'danger',
+      timeout: 3000,
+      position: 'top-right',
+      showIcon: true,
+      toastBackgroundColor: '#ff4560',
+  })
+}
 
-export const confirmation = async (message) => {
-  return await Swal.fire({
-    title: "Yakin?",
-    text: message,
-    icon: "warning",
-    buttons: true,
-    showCancelButton: true,
-    confirmButtonText: "Oke",
-    cancelButtonText: "Batal",
-    dangerMode: true,
-  }).then((res) => {
-    return res.isConfirmed;
-  });
-};
+export const swalSuccess = async (message, title = "Berhasil") => {
+    return await Swal.fire({
+            title: title,
+            text: message,
+            icon: "success",
+            buttons: true,
+            showCancelButton: false,
+            confirmButtonText: "Oke",
+        })
+        .then((res) => {
+            return res.isConfirmed;
+        });
+}
 
-export const slugify = (text, ampersand = "and") => {
-  const a = "àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ";
-  const b = "aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh";
-  const p = new RegExp(a.split("").join("|"), "g");
+export const confirmation = async (message, title = "Yakin?") => {
+    return await Swal.fire({
+            title: title,
+            text: message,
+            icon: "warning",
+            buttons: true,
+            showCancelButton: true,
+            confirmButtonText: "Oke",
+            cancelButtonText: "Batal",
+            dangerMode: true,
+        })
+        .then((res) => {
+            return res.isConfirmed;
+        });
+}
 
-  return text
-    .toString()
-    .toLowerCase()
-    .replace(/[\s_]+/g, "-")
-    .replace(p, (c) => b.charAt(a.indexOf(c)))
+export const slugify = (text, ampersand = 'and') => {
+  const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
+  const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
+  const p = new RegExp(a.split('').join('|'), 'g')
+
+  return text.toString().toLowerCase()
+    .replace(/[\s_]+/g, '-')
+    .replace(p, c => b.charAt(a.indexOf(c)))
     .replace(/&/g, `-${ampersand}-`)
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-')
+    .replace(/^-+|-+$/g, '')
 };
 
 export const clearBase64 = (base64) => {
@@ -88,11 +102,37 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   window.location.href = "/";
-};
+}
 
 export const checkPermission = (permissions, reqAccess) => {
   return permissions.includes(reqAccess);
 };
+
+export const checkPermissions = (permissions, reqAccess) => {
+  let valid = false;
+  reqAccess.forEach((access) => {
+    if (permissions.includes(access)) {
+      valid = true;
+    }
+  });
+
+  return valid;
+};
+
+export const checkRole = (roles, reqAccess) => {
+  return roles.includes(reqAccess);
+};
+
+export const checkRoles = (roles, reqAccess) => {
+  let valid = false;
+  reqAccess.forEach((access) => {
+    if (roles.includes(access)) {
+      valid = true;
+    }
+  });
+
+  return valid;
+}
 
 export const formatDate = (date, format, locale = "en") => {
   return moment(date).locale(locale).format(format);
