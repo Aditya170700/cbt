@@ -5,22 +5,37 @@ import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
 import axios from "axios";
+import { useRoute } from "vue-router";
+import { alertError, alertSuccess, confirmation } from "@/assets/js/utils";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
+let route = useRoute();
 let result = reactive({
-  data: [],
+  data: null,
   meta: null,
-  loading: true,
+  loading: false,
+});
+let question = reactive({
+  data: [],
+  loading: false,
 });
 
 onBeforeMount(() => {
+  fetchData();
+});
+
+function fetchData() {
+  result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/admin-pusbang/test/list`, {
-      headers: {
-        Authorization: `Bearer ${storeApp.token}`,
-      },
-    })
+    .get(
+      `${storeApp.baseurl}cbt/admin-pusbang/test/${route.params.id_test}/show/${route.params.table}`,
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.token}`,
+        },
+      }
+    )
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       result.loading = false;
@@ -31,7 +46,97 @@ onBeforeMount(() => {
       result.loading = false;
       console.log(err);
     });
-});
+}
+
+function fetchQuestionNotInTest() {
+  question.loading = true;
+
+  axios
+    .get(
+      `${storeApp.baseurl}cbt/admin-pusbang/soal/${route.params.id_test}/not-in-test/${route.params.table}`,
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.token}`,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      question.loading = false;
+      question.data = res.data.data;
+    })
+    .catch((err) => {
+      question.loading = false;
+      console.log(err);
+    });
+}
+
+function addSoal(data) {
+  data.loading = true;
+
+  axios
+    .post(
+      `${storeApp.baseurl}cbt/admin-pusbang/test/attach-pertanyaan`,
+      {
+        bobot: data.bobot,
+        test_id: route.params.id_test,
+        table: route.params.table,
+        soal_id: data.id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.token}`,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      data.loading = false;
+      alertSuccess(res.data.message);
+      fetchData();
+      fetchQuestionNotInTest();
+    })
+    .catch((err) => {
+      data.loading = false;
+      alertError(err.response.data.message);
+      console.log(err);
+    });
+}
+
+function removeSoal(data) {
+  confirmation("Yakin hapus data ini?").then((confirmed) => {
+    if (confirmed) {
+      data.loading = true;
+
+      axios
+        .post(
+          `${storeApp.baseurl}cbt/admin-pusbang/test/detach-pertanyaan`,
+          {
+            test_id: route.params.id_test,
+            table: route.params.table,
+            soal_id: data.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${storeApp.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.code_response != 200) throw new Error(res.data.message);
+          data.loading = false;
+          alertSuccess(res.data.message);
+          fetchData();
+          fetchQuestionNotInTest();
+        })
+        .catch((err) => {
+          data.loading = false;
+          alertError(err.response.data.message);
+          console.log(err);
+        });
+    }
+  });
+}
 </script>
 
 <template>
@@ -56,17 +161,165 @@ onBeforeMount(() => {
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2" v-else>
-          <div class="col-lg-4 mb-4" v-for="i in 12" :key="i">
-            <div class="card rounded-4 shadow border">
-              <div class="card-body rounded-4 p-4">
-                <div class="h6 fw-bold">Pre Test 1</div>
-                <div class="small mb-3">13 January 2022</div>
-                <p class="four-line">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                  explicabo ab quas natus ipsam est numquam, quia esse facilis
-                  doloribus quasi itaque assumenda. Nemo ducimus minima
-                  provident quo voluptatum ratione!
-                </p>
+          <div class="col-lg-6">
+            <div class="row">
+              <div
+                class="col-12 d-flex justify-content-between mb-2 align-items-center"
+              >
+                <div class="col-8">
+                  <span class="fw-bold">List Soal</span>
+                </div>
+                <div class="col-4">
+                  <div class="input-group rounded-2">
+                    <input
+                      type="text"
+                      class="form-control rounded-2"
+                      aria-describedby="btn-search"
+                      placeholder="Cari..."
+                    />
+                    <button
+                      class="btn btn-success btn-sm rounded-2"
+                      type="button"
+                      id="btn-search"
+                      @click="fetchQuestionNotInTest"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead class="bg-info-1">
+                      <tr>
+                        <th>Pertanyaan</th>
+                        <th>Tipe</th>
+                        <th>Creator</th>
+                        <th>Bobot Maks.</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody v-if="question.loading">
+                      <tr>
+                        <td colspan="5" class="text-center">
+                          <Spinner :color="'dark'" />
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody v-else>
+                      <tr v-if="question.data.length < 1">
+                        <td colspan="5" class="text-center">
+                          Cari soal dari bank soal
+                        </td>
+                      </tr>
+                      <tr v-for="(data, i) in question.data" :key="i">
+                        <td v-html="data.pertanyaan"></td>
+                        <td>
+                          {{ data.tipe }}
+                        </td>
+                        <td>
+                          {{ data.creator.nm_pengguna ?? data.creator.role }}
+                        </td>
+                        <td>
+                          <div>
+                            <input
+                              type="number"
+                              class="form-control"
+                              v-model="data.bobot"
+                              placeholder="Bobot"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex">
+                            <div>
+                              <button
+                                class="btn btn-sm rounded-2 btn-success"
+                                @click="addSoal(data)"
+                              >
+                                <Spinner v-if="data.loading" /><i
+                                  class="fas fa-arrow-right"
+                                  v-else
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row">
+              <div
+                class="col-12 d-flex justify-content-between mb-2 align-items-center"
+              >
+                <div class="col-12 py-2">
+                  <span class="fw-bold">Soal Terpilih</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead class="bg-info-1">
+                      <tr>
+                        <th>Aksi</th>
+                        <th>Pertanyaan</th>
+                        <th>Tipe</th>
+                        <th>Creator</th>
+                        <th>Bobot Maks.</th>
+                      </tr>
+                    </thead>
+                    <tbody v-if="result.loading">
+                      <tr>
+                        <td colspan="5" class="text-center">
+                          <Spinner :color="'dark'" />
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody v-else>
+                      <tr v-if="result.data?.lms_pertanyaan?.length < 1">
+                        <td colspan="5" class="text-center">
+                          Belum ada soal terpilih
+                        </td>
+                      </tr>
+                      <tr
+                        v-for="(data, i) in result.data?.lms_pertanyaan"
+                        :key="i"
+                      >
+                        <td>
+                          <div class="d-flex">
+                            <div>
+                              <button
+                                class="btn btn-sm rounded-2 btn-danger"
+                                @click="removeSoal(data)"
+                              >
+                                <Spinner v-if="data.loading" /><i
+                                  class="fas fa-arrow-left"
+                                  v-else
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                        <td v-html="data.pertanyaan"></td>
+                        <td>
+                          {{ data.tipe }}
+                        </td>
+                        <td>
+                          {{ data.creator.nm_pengguna ?? data.creator.role }}
+                        </td>
+                        <td>{{ data.pivot?.bobot }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

@@ -148,36 +148,6 @@ function refreshToken() {
               </div>
             </div>
           </router-link>
-          <a class="text-white text-decoration-none" href="#">
-            <div class="item d-flex align-items-center">
-              <div
-                style="width: 20px"
-                class="col-2 icons d-flex justify-content-center me-2"
-              >
-                <i class="fas fa-landmark"></i>
-              </div>
-              <div
-                class="col-10 d-flex justify-content-between align-items-center"
-              >
-                Class
-              </div>
-            </div>
-          </a>
-          <a class="text-white text-decoration-none" href="#">
-            <div class="item d-flex align-items-center">
-              <div
-                style="width: 20px"
-                class="col-2 icons d-flex justify-content-center me-2"
-              >
-                <i class="far fa-calendar"></i>
-              </div>
-              <div
-                class="col-10 d-flex justify-content-between align-items-center"
-              >
-                Schedule
-              </div>
-            </div>
-          </a>
           <a
             href="#"
             @click.prevent="logout"

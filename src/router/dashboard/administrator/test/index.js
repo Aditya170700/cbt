@@ -9,7 +9,7 @@ let routes = [
     component: () => import("@/views/Dashboard/Administrator/Test/Index.vue"),
   },
   {
-    path: "/dashboard/administrator/test/:id_test/show",
+    path: "/dashboard/administrator/test/:id_test/show/:table",
     name: "dashboard-administrator-test-show",
     meta: {
       page: "administrator",

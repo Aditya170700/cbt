@@ -86,7 +86,7 @@ function fetchData() {
             <router-link
               :to="{
                 name: 'dashboard-administrator-test-show',
-                params: { id_test: data.id },
+                params: { id_test: data.id, table: data.flag },
               }"
               class="text-decoration-none text-dark"
             >
