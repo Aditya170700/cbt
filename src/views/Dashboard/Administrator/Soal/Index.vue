@@ -184,6 +184,7 @@ function destroy(data) {
                   <button
                     class="rounded-pill btn btn-danger btn-sm me-1"
                     @click="destroy(data)"
+                    :disabled="data.loading"
                   >
                     <Spinner v-if="data.loading" /><i
                       class="fas fa-trash"

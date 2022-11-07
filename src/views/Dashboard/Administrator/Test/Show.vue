@@ -279,6 +279,7 @@ function removeSoal(data) {
                               <button
                                 class="btn btn-sm rounded-2 btn-success"
                                 @click="addSoal(data)"
+                                :disabled="data.loading"
                               >
                                 <Spinner v-if="data.loading" /><i
                                   class="fas fa-arrow-right"
@@ -339,6 +340,7 @@ function removeSoal(data) {
                               <button
                                 class="btn btn-sm rounded-2 btn-danger"
                                 @click="removeSoal(data)"
+                                :disabled="data.loading"
                               >
                                 <Spinner v-if="data.loading" /><i
                                   class="fas fa-arrow-left"
