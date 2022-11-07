@@ -42,7 +42,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-soal",
     },
-    component: () => import("@/views/Dashboard/Administrator/Soal/Essay/Create.vue"),
+    component: () => import("@/views/Dashboard/Administrator/Soal/Essay/Edit.vue"),
   },
 ];
 
