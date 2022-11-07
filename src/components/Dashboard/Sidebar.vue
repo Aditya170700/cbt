@@ -5,6 +5,7 @@ import axios from "axios";
 import { appStore } from "@/stores/app";
 import { confirmation } from "@/assets/js/utils";
 import { onMounted } from "vue";
+import logoSidebar from "@/assets/static/logo-sidebar.png";
 
 let widthContent = window.innerWidth;
 let route = useRoute();
@@ -60,7 +61,17 @@ function refreshToken() {
         :to="{ name: 'dashboard' }"
         class="d-none d-lg-block text-decoration-none text-center text-white"
       >
-        <span class="h1 fw-bold">CBT</span>
+        <a
+          class="d-none d-lg-block text-decoration-none text-center text-white"
+          href="#"
+        >
+          <img
+            :src="logoSidebar"
+            alt="Logo Sidebar"
+            style="width: 90%"
+            class="img-fluid"
+          />
+        </a>
       </router-link>
       <div class="height-hide overflow-auto">
         <div class="menu-wrapper" v-if="route.meta.page == 'administrator'">
