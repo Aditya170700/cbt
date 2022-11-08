@@ -5,6 +5,7 @@ let routes = [
     meta: {
       page: "administrator",
       group: "dashboard-administrator-soal",
+      role: "administrator",
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/Index.vue"),
   },
@@ -14,6 +15,7 @@ let routes = [
     meta: {
       page: "administrator",
       group: "dashboard-administrator-soal",
+      role: "administrator",
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/MultipleChoice/Create.vue"),
   },
@@ -23,6 +25,7 @@ let routes = [
     meta: {
       page: "administrator",
       group: "dashboard-administrator-soal",
+      role: "administrator",
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/MultipleChoice/Edit.vue"),
   },
@@ -32,6 +35,7 @@ let routes = [
     meta: {
       page: "administrator",
       group: "dashboard-administrator-soal",
+      role: "administrator",
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/Essay/Create.vue"),
   },
@@ -41,6 +45,7 @@ let routes = [
     meta: {
       page: "administrator",
       group: "dashboard-administrator-soal",
+      role: "administrator",
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/Essay/Edit.vue"),
   },

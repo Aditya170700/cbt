@@ -8,6 +8,7 @@ let routes = [
     meta: {
       page: "administrator",
       group: "dashboard-administrator",
+      role: "administrator",
     },
     component: () => import("@/views/Dashboard/Administrator/Index.vue"),
   },

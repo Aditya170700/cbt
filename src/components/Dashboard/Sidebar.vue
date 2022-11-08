@@ -5,6 +5,8 @@ import axios from "axios";
 import { appStore } from "@/stores/app";
 import { confirmation } from "@/assets/js/utils";
 import { onMounted } from "vue";
+import SidebarAdministrator from "@/components/Dashboard/Sidebar/Administrator.vue";
+import SidebarPeserta from "@/components/Dashboard/Sidebar/Peserta.vue";
 import logoSidebar from "@/assets/static/logo-sidebar.png";
 
 let widthContent = window.innerWidth;
@@ -74,96 +76,8 @@ function refreshToken() {
         </a>
       </router-link>
       <div class="height-hide overflow-auto">
-        <div class="menu-wrapper" v-if="route.meta.page == 'administrator'">
-          <router-link
-            :to="{ name: 'dashboard-administrator' }"
-            class="text-white text-decoration-none"
-            href="#"
-          >
-            <div
-              :class="`item d-flex align-items-center ${
-                route.name == 'dashboard-administrator' ? 'active' : ''
-              }`"
-            >
-              <div
-                style="width: 20px"
-                class="col-2 icons d-flex justify-content-center me-2"
-              >
-                <i class="fas fa-dashboard"></i>
-              </div>
-              <div
-                class="col-10 d-flex justify-content-between align-items-center"
-              >
-                Dashboard
-              </div>
-            </div>
-          </router-link>
-          <router-link
-            :to="{ name: 'dashboard-administrator-test' }"
-            class="text-white text-decoration-none"
-            href="#"
-          >
-            <div
-              :class="`item d-flex align-items-center ${
-                route.meta.group == 'dashboard-administrator-test'
-                  ? 'active'
-                  : ''
-              }`"
-            >
-              <div
-                style="width: 20px"
-                class="col-2 icons d-flex justify-content-center me-2"
-              >
-                <i class="fas fa-file-pen"></i>
-              </div>
-              <div
-                class="col-10 d-flex justify-content-between align-items-center"
-              >
-                Test
-              </div>
-            </div>
-          </router-link>
-          <router-link
-            :to="{ name: 'dashboard-administrator-soal' }"
-            class="text-white text-decoration-none"
-            href="#"
-          >
-            <div
-              :class="`item d-flex align-items-center ${
-                route.meta.group == 'dashboard-administrator-soal'
-                  ? 'active'
-                  : ''
-              }`"
-            >
-              <div
-                style="width: 20px"
-                class="col-2 icons d-flex justify-content-center me-2"
-              >
-                <i class="fas fa-cubes"></i>
-              </div>
-              <div
-                class="col-10 d-flex justify-content-between align-items-center"
-              >
-                Bank Soal
-              </div>
-            </div>
-          </router-link>
-          <a
-            href="#"
-            @click.prevent="logout"
-            class="text-white text-decoration-none"
-          >
-            <div class="item logout d-flex align-items-center">
-              <div
-                style="width: 20px"
-                class="icons d-flex justify-content-center me-2"
-              >
-                <i class="fas fa-power-off"></i>
-              </div>
-              <div>Logout</div>
-            </div>
-          </a>
-        </div>
+        <SidebarAdministrator v-if="route.meta.role == 'administrator'" />
+        <SidebarPeserta v-if="route.meta.role == 'peserta'" />
       </div>
     </div>
 
