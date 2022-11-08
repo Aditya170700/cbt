@@ -1,20 +1,27 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable no-undef -->
 <script setup>
 import Sidebar from "@/components/Dashboard/Sidebar.vue";
 import axios from "axios";
 import { onMounted, reactive } from "vue";
 import { appStore } from "@/stores/app";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import Spinner from "@/components/Spinner.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import BlotFormatter from "quill-blot-formatter";
 import ImageUploader from "quill-image-uploader";
-import { clearBase64, confirmation } from "@/assets/js/utils";
+import {
+  clearBase64,
+  confirmation,
+  alertSuccess,
+  alertError,
+} from "@/assets/js/utils";
 
 let widthContent = window.innerWidth;
 const storeApp = appStore();
 let route = useRoute();
+let router = useRouter();
 let result = reactive({
   data: [],
   loading: false,
@@ -153,10 +160,41 @@ function submit() {
   confirmation("Apakah anda yakin ingin mengakhiri test ini?").then(
     (confirmed) => {
       if (confirmed) {
-        console.log(result.data.pertanyaan);
-        localStorage.removeItem("jawaban");
+        axios
+          .post(
+            `${storeApp.baseurl}cbt/peserta/test/jawab`,
+            {
+              id_test: result.data.id,
+              table: result.data.flag,
+              jawaban: result.data.pertanyaan,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${storeApp.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            if (res.data.code_response != 200)
+              throw new Error(res.data.message);
+
+            result.submitLoading = false;
+            alertSuccess(res.data.message);
+            localStorage.removeItem("jawaban");
+            router.push({
+              name: "dashboard-peserta-diklat-test",
+              params: {
+                id_diklat: route.params.id_diklat,
+              },
+            });
+          })
+          .catch((err) => {
+            result.submitLoading = false;
+            alertError(err.response.data.message);
+          });
+      } else {
+        result.submitLoading = false;
       }
-      result.submitLoading = false;
     }
   );
 }
