@@ -14,16 +14,42 @@ let route = useRoute();
 let router = useRouter();
 let result = reactive({
   data: null,
-  bobot: 0,
+  loading: false,
+});
+let test = reactive({
+  data: null,
   loading: false,
 });
 
 onBeforeMount(() => {
   fetchData();
+  fetchTest();
 });
 
 function fetchData() {
   result.loading = true;
+  axios
+    .get(
+      `${storeApp.baseurl}cbt/peserta/diklat/${route.params.id_diklat}/show`,
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.token}`,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      result.loading = false;
+      result.data = res.data.data;
+    })
+    .catch((err) => {
+      result.loading = false;
+      console.log(err);
+    });
+}
+
+function fetchTest() {
+  test.loading = true;
   axios
     .get(
       `${storeApp.baseurl}cbt/peserta/test/${route.params.id_diklat}/by-diklat`,
@@ -35,12 +61,11 @@ function fetchData() {
     )
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
-      result.loading = false;
-      result.data = res.data.data;
-      result.bobot = res.data.bobot;
+      test.loading = false;
+      test.data = res.data.data;
     })
     .catch((err) => {
-      result.loading = false;
+      test.loading = false;
       console.log(err);
     });
 }
@@ -71,7 +96,7 @@ function doTest(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="h4 fw-bold">Test List</div>
+          <div class="h4 fw-bold">Detail</div>
           <div>
             <router-link
               :to="{ name: 'dashboard-peserta-diklat' }"
@@ -80,42 +105,87 @@ function doTest(data) {
             >
           </div>
         </div>
-        <div class="row px-2 mb-3">
-          <div class="col-lg-4">
-            <div class="input-group mb-3 bg-white rounded-2 shadow">
-              <input
-                type="text"
-                class="form-control rounded-2 border-0"
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="btn-search"
-              />
-              <button
-                class="btn btn-success rounded-2 border-0"
-                type="button"
-                id="btn-search"
-              >
-                <i class="fas fa-magnifying-glass"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="row px-2" v-if="result.loading">
+        <div class="row px-2 mb-4" v-if="result.loading">
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
-        <div class="row px-2" v-else>
-          <div class="col-12 text-center" v-if="result.data.length == 0">
+        <div class="row px-2 mb-4" v-else>
+          <div class="col-2">
+            <div class="fw-bold">Jenis Diklat</div>
+          </div>
+          <div class="col-10">
+            :
+            {{
+              result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
+                .parent.name
+            }}
+          </div>
+          <div class="col-2">
+            <div class="fw-bold">Kategori Diklat</div>
+          </div>
+          <div class="col-10">
+            :
+            {{
+              result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
+                .name
+            }}
+          </div>
+          <div class="col-2">
+            <div class="fw-bold">Program Diklat</div>
+          </div>
+          <div class="col-10">
+            :
+            {{
+              result.data.jenis_diklat_referensi_diklat_pnbp
+                .referensi_diklat_pnbp.name
+            }}
+          </div>
+          <div class="col-2">
+            <div class="fw-bold">Lembaga</div>
+          </div>
+          <div class="col-10">
+            :
+            {{ result.data.profil_lemdik.nm_lembaga }}
+          </div>
+          <div class="col-2">
+            <div class="fw-bold">Tanggal Pelaksanaan</div>
+          </div>
+          <div class="col-10">
+            :
+            {{ result.data.tgl_pelaksanaan }}
+          </div>
+        </div>
+        <div
+          :class="`row px-2 mb-4 ${result.loading ? 'd-none' : ''}`"
+          v-if="test.loading"
+        >
+          <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
+        </div>
+        <div class="row px-2 mb-4" v-else>
+          <div class="col-12 text-center" v-if="test.data.length == 0">
             Belum ada test
           </div>
-          <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
+          <div class="col-lg-3 mb-4" v-for="(data, i) in test.data" :key="i">
             <div
-              class="card rounded-4 shadow border hovered pointer"
-              @click.prevent="doTest(data)"
+              :class="`card rounded-4 border ${
+                data.status == 'Belum mengerjakan' ? 'hovered pointer' : ''
+              }`"
+              @click.prevent="
+                data.status == 'Belum mengerjakan' ? doTest(data) : ''
+              "
             >
-              <div class="card-body rounded-4 p-4">
+              <div class="card-body rounded-4 p-3 position-relative">
                 <div class="h6 fw-bold">{{ data.nama }}</div>
                 <div class="small mb-3">{{ data.created_at }}</div>
-                <div class="four-line" v-html="data.deskripsi"></div>
+                <span :class="`badge bg-${data.status_color}`">{{
+                  data.status
+                }}</span>
+                <div
+                  class="position-absolute rounded-circle bg-info-1 d-flex justify-content-center align-items-center fw-bold"
+                  style="width: 40px; height: 40px; right: 10px; top: 10px"
+                  v-if="data.status == 'Sudah dinilai'"
+                >
+                  {{ data.nilai }}
+                </div>
               </div>
             </div>
           </div>
