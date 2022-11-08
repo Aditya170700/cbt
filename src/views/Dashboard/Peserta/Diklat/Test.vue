@@ -5,11 +5,13 @@ import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { confirmation } from "@/assets/js/utils";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
 let route = useRoute();
+let router = useRouter();
 let result = reactive({
   data: null,
   bobot: 0,
@@ -41,6 +43,23 @@ function fetchData() {
       result.loading = false;
       console.log(err);
     });
+}
+
+function doTest(data) {
+  confirmation(
+    "Apakah anda yakin akan mengerjakan test ini, tes hanya bisa dikerjakan sekali?"
+  ).then((confirmed) => {
+    if (confirmed) {
+      router.push({
+        name: "dashboard-peserta-diklat-test-do",
+        params: {
+          id_diklat: route.params.id_diklat,
+          id_test: data.id,
+          table: data.flag,
+        },
+      });
+    }
+  });
 }
 </script>
 
@@ -89,21 +108,16 @@ function fetchData() {
             Belum ada test
           </div>
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
-            <router-link
-              :to="{
-                name: 'dashboard-administrator-test-show',
-                params: { id_test: data.id, table: data.flag },
-              }"
-              class="text-decoration-none text-dark"
+            <div
+              class="card rounded-4 shadow border hovered pointer"
+              @click.prevent="doTest(data)"
             >
-              <div class="card rounded-4 shadow border hovered">
-                <div class="card-body rounded-4 p-4">
-                  <div class="h6 fw-bold">{{ data.nama }}</div>
-                  <div class="small mb-3">{{ data.created_at }}</div>
-                  <div class="four-line" v-html="data.deskripsi"></div>
-                </div>
+              <div class="card-body rounded-4 p-4">
+                <div class="h6 fw-bold">{{ data.nama }}</div>
+                <div class="small mb-3">{{ data.created_at }}</div>
+                <div class="four-line" v-html="data.deskripsi"></div>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
       </div>

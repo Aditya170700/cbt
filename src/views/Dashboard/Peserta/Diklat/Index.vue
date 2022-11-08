@@ -86,7 +86,7 @@ function fetchData() {
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
             <router-link
               :to="{
-                name: 'dashboard-peserta-diklat-show',
+                name: 'dashboard-peserta-diklat-test',
                 params: { id_diklat: data.id },
               }"
               class="text-decoration-none text-dark hovered"
