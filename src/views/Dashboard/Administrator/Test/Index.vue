@@ -83,21 +83,35 @@ function fetchData() {
             Belum ada data
           </div>
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
-            <router-link
-              :to="{
-                name: 'dashboard-administrator-test-show',
-                params: { id_test: data.id, table: data.flag },
-              }"
-              class="text-decoration-none text-dark"
-            >
-              <div class="card rounded-4 shadow border hovered">
-                <div class="card-body rounded-4 p-4">
-                  <div class="h6 fw-bold">{{ data.nama }}</div>
-                  <div class="small mb-3">{{ data.created_at }}</div>
-                  <div class="four-line" v-html="data.deskripsi"></div>
+            <div class="card rounded-4 shadow border">
+              <div class="card-body rounded-4 p-4">
+                <div class="h6 fw-bold">{{ data.nama }}</div>
+                <div class="small mb-3">{{ data.created_at }}</div>
+                <div class="four-line" v-html="data.deskripsi"></div>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <router-link
+                      :to="{
+                        name: 'dashboard-administrator-test-show',
+                        params: { id_test: data.id, table: data.flag },
+                      }"
+                      class="btn btn-sm rounded-2 bg-info-1 me-2 text-white hovered"
+                    >
+                      <i class="fas fa-list me-2"></i>Soal
+                    </router-link>
+                    <router-link
+                      :to="{
+                        name: 'dashboard-administrator-test-nilai',
+                        params: { id_test: data.id, table: data.flag },
+                      }"
+                      class="btn btn-sm rounded-2 bg-danger me-2 text-white hovered"
+                    >
+                      <i class="fas fa-list-check me-2"></i>Nilai
+                    </router-link>
+                  </div>
                 </div>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
       </div>
