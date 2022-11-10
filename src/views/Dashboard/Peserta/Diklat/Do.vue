@@ -165,6 +165,7 @@ function submit() {
             `${storeApp.baseurl}cbt/peserta/test/jawab`,
             {
               id_test: result.data.id,
+              id_diklat: route.params.id_diklat,
               table: result.data.flag,
               jawaban: result.data.pertanyaan,
             },
