@@ -104,13 +104,31 @@ function fetchData() {
                       data.total_jawaban == 0
                         ? "Belum Dikerjakan"
                         : data.total_jawaban == data.dinilai
-                        ? data.nilai
+                        ? `${Math.round((data.nilai / data.bobot) * 100)} / 100`
                         : "Menunggu Penilaian"
                     }}
                   </td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-sm rounded-2 btn-success">
+                      <router-link
+                        :to="{
+                          name: 'dashboard-administrator-test-nilai-input',
+                          params: {
+                            id_test: route.params.id_test,
+                            table: route.params.table,
+                            id_peserta: data.id,
+                          },
+                        }"
+                        class="btn btn-sm rounded-2 btn-success"
+                        v-if="data.total_jawaban != 0"
+                      >
+                        <i class="fas fa-play"></i>
+                      </router-link>
+                      <button
+                        class="btn btn-sm rounded-2 btn-success"
+                        disabled
+                        v-else
+                      >
                         <i class="fas fa-play"></i>
                       </button>
                     </div>
