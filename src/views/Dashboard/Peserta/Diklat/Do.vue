@@ -16,6 +16,7 @@ import {
   confirmation,
   alertSuccess,
   alertError,
+  swalSuccess,
 } from "@/assets/js/utils";
 
 let widthContent = window.innerWidth;
@@ -113,6 +114,13 @@ function timer(selesai) {
         result.jam = 0;
         result.menit = 0;
         result.detik = 0;
+
+        swalSuccess(
+          "Waktu pengerjaan telah habis, Klik Oke untuk mengakhiri tes"
+        ).then(() => {
+          storeToDb();
+        });
+
         clearInterval(x);
       }
     }, 0);
@@ -160,44 +168,48 @@ function submit() {
   confirmation("Apakah anda yakin ingin mengakhiri test ini?").then(
     (confirmed) => {
       if (confirmed) {
-        axios
-          .post(
-            `${storeApp.baseurl}cbt/peserta/test/jawab`,
-            {
-              id_test: result.data.id,
-              id_diklat: route.params.id_diklat,
-              table: result.data.flag,
-              jawaban: result.data.pertanyaan,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${storeApp.token}`,
-              },
-            }
-          )
-          .then((res) => {
-            if (res.data.code_response != 200)
-              throw new Error(res.data.message);
-
-            result.submitLoading = false;
-            alertSuccess(res.data.message);
-            localStorage.removeItem("jawaban");
-            router.push({
-              name: "dashboard-peserta-diklat-test",
-              params: {
-                id_diklat: route.params.id_diklat,
-              },
-            });
-          })
-          .catch((err) => {
-            result.submitLoading = false;
-            alertError(err.response.data.message);
-          });
+        storeToDb();
       } else {
         result.submitLoading = false;
       }
     }
   );
+}
+
+function storeToDb() {
+  result.submitLoading = true;
+  axios
+    .post(
+      `${storeApp.baseurl}cbt/peserta/test/jawab`,
+      {
+        id_test: result.data.id,
+        id_diklat: route.params.id_diklat,
+        table: result.data.flag,
+        jawaban: result.data.pertanyaan,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.token}`,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+
+      result.submitLoading = false;
+      alertSuccess(res.data.message);
+      localStorage.removeItem("jawaban");
+      router.push({
+        name: "dashboard-peserta-diklat-test",
+        params: {
+          id_diklat: route.params.id_diklat,
+        },
+      });
+    })
+    .catch((err) => {
+      result.submitLoading = false;
+      alertError(err.response.data.message);
+    });
 }
 </script>
 
