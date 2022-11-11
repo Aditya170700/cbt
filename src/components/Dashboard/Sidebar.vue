@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 import { appStore } from "@/stores/app";
 import { confirmation } from "@/assets/js/utils";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import SidebarAdministrator from "@/components/Dashboard/Sidebar/Administrator.vue";
 import SidebarPeserta from "@/components/Dashboard/Sidebar/Peserta.vue";
 import logoSidebar from "@/assets/static/logo-sidebar.png";
@@ -12,11 +12,13 @@ import logoSidebar from "@/assets/static/logo-sidebar.png";
 let widthContent = window.innerWidth;
 let route = useRoute();
 const storeApp = appStore();
+let user = ref(null);
 
 onMounted(() => {
   if (storeApp.token) {
     refreshToken();
   }
+  user.value = JSON.parse(storeApp.user);
 });
 
 function sidebar() {
@@ -93,18 +95,14 @@ function refreshToken() {
                   <i class="fas fa-bars text-white me-3"></i>
                 </div>
                 <div class="d-flex align-items-center">
-                  <i class="fas fa-magnifying-glass text-white me-3"></i>
-                  <i class="fas fa-bell text-white me-4 position-relative">
-                    <span
-                      class="badge bg-danger rounded-custom small position-absolute"
-                      style="top: -13px; right: -13px"
-                      >1</span
-                    >
-                  </i>
                   <div class="d-flex align-items-center">
                     <div class="me-3">
-                      <span class="d-block text-white">Alex</span>
-                      <span class="d-block text-white small">Admin</span>
+                      <span class="d-block text-white text-capitalize">{{
+                        user?.username ?? "User"
+                      }}</span>
+                      <span class="d-block text-white small">{{
+                        user?.role
+                      }}</span>
                     </div>
                     <div
                       class="profile align-items-center justify-content-center"

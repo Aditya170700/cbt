@@ -3,6 +3,12 @@
 import { useRoute } from "vue-router";
 
 let route = useRoute();
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "/";
+}
 </script>
 
 <template>
