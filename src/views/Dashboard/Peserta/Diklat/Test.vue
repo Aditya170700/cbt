@@ -86,6 +86,17 @@ function doTest(data) {
     }
   });
 }
+
+function listJawaban(data) {
+  router.push({
+    name: "dashboard-peserta-diklat-jawaban",
+    params: {
+      id_diklat: route.params.id_diklat,
+      id_test: data.id,
+      table: data.flag,
+    },
+  });
+}
 </script>
 
 <template>
@@ -166,11 +177,11 @@ function doTest(data) {
           </div>
           <div class="col-lg-3 mb-4" v-for="(data, i) in test.data" :key="i">
             <div
-              :class="`card rounded-4 border ${
-                data.status == 'Belum mengerjakan' ? 'hovered pointer' : ''
-              }`"
+              :class="`card rounded-4 border hovered pointer`"
               @click.prevent="
-                data.status == 'Belum mengerjakan' ? doTest(data) : ''
+                data.status == 'Belum mengerjakan'
+                  ? doTest(data)
+                  : listJawaban(data)
               "
             >
               <div class="card-body rounded-4 p-3 position-relative">

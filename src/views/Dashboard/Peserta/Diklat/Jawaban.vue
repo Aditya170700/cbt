@@ -6,7 +6,6 @@ import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
-import { alertError, alertSuccess } from "@/assets/js/utils";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
@@ -24,7 +23,7 @@ function fetchData() {
   result.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/${route.params.id_test}/list-jawaban/${route.params.table}/${route.params.id_peserta}`,
+      `${storeApp.baseurl}cbt/peserta/test/${route.params.id_diklat}/jawaban/${route.params.id_test}/${route.params.table}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -41,37 +40,6 @@ function fetchData() {
       console.log(err);
     });
 }
-
-function submitNilai(data) {
-  data.loading = true;
-
-  if (data.nilai > data.pertanyaan?.bobot) {
-    alertError("Nilai tidak boleh lebih dari bobot");
-    return;
-  }
-
-  axios
-    .post(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/store-nilai/${route.params.table}/${data.id}`,
-      {
-        nilai: data.nilai,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${storeApp.token}`,
-        },
-      }
-    )
-    .then((res) => {
-      if (res.data.code_response != 200) throw new Error(res.data.message);
-      alertSuccess("Berhasil menginput nilai");
-      data.loading = false;
-    })
-    .catch((err) => {
-      data.loading = false;
-      console.log(err);
-    });
-}
 </script>
 
 <template>
@@ -82,14 +50,13 @@ function submitNilai(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="h4 fw-bold">Input Nilai</div>
+          <div class="h4 fw-bold">Detail Jawaban</div>
           <div>
             <router-link
               :to="{
-                name: 'dashboard-administrator-test-nilai',
+                name: 'dashboard-peserta-diklat-test',
                 params: {
-                  id_test: route.params.id_test,
-                  table: route.params.table,
+                  id_diklat: route.params.id_diklat,
                 },
               }"
               class="btn btn-sm btn-light rounded-2"
@@ -154,17 +121,8 @@ function submitNilai(data) {
                   v-if="data.pertanyaan?.pertanyaan?.tipe == 'Essay'"
                 >
                   <div class="col-auto fw-bold">Nilai :</div>
-                  <div class="col-auto mx-2" style="max-width: 50px">
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="0"
-                      v-model="data.nilai"
-                      @change="submitNilai(data)"
-                    />
-                  </div>
-                  <div class="col-auto fw-bold">
-                    / {{ data.pertanyaan?.bobot }}
+                  <div class="col-auto fw-bold ms-2">
+                    {{ `${data.nilai} / ${data.pertanyaan?.bobot}` }}
                   </div>
                 </div>
                 <div
@@ -193,18 +151,8 @@ function submitNilai(data) {
                   v-if="data.pertanyaan?.pertanyaan?.tipe == 'Multiple Choice'"
                 >
                   <div class="col-auto fw-bold">Nilai :</div>
-                  <div class="col-auto mx-2" style="max-width: 50px">
-                    <Spinner :color="'dark'" v-if="data.loading" />
-                    <input
-                      v-else
-                      type="text"
-                      class="form-control"
-                      disabled
-                      :value="data.nilai"
-                    />
-                  </div>
-                  <div class="col-auto fw-bold">
-                    / {{ data.pertanyaan?.bobot }}
+                  <div class="col-auto fw-bold ms-2">
+                    {{ `${data.nilai} / ${data.pertanyaan?.bobot}` }}
                   </div>
                 </div>
               </div>
