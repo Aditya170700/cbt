@@ -8,6 +8,7 @@ import { onMounted, ref } from "vue";
 import SidebarAdministrator from "@/components/Dashboard/Sidebar/Administrator.vue";
 import SidebarPeserta from "@/components/Dashboard/Sidebar/Peserta.vue";
 import SidebarPanitia from "@/components/Dashboard/Sidebar/Panitia.vue";
+import SidebarInstruktur from "@/components/Dashboard/Sidebar/Instruktur.vue";
 import logoSidebar from "@/assets/static/logo-sidebar.png";
 
 let widthContent = window.innerWidth;
@@ -82,6 +83,7 @@ function refreshToken() {
         <SidebarAdministrator v-if="route.meta.role == 'administrator'" />
         <SidebarPeserta v-if="route.meta.role == 'peserta'" />
         <SidebarPanitia v-if="route.meta.role == 'panitia'" />
+        <SidebarInstruktur v-if="route.meta.role == 'instruktur'" />
       </div>
     </div>
 
