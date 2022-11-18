@@ -26,7 +26,7 @@ onBeforeMount(() => {
 function fetchData() {
   result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/admin-pusbang/test/list`, {
+    .get(`${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/test/list`, {
       headers: {
         Authorization: `Bearer ${storeApp.token}`,
       },
@@ -94,7 +94,7 @@ function fetchData() {
                   <div class="col-12">
                     <router-link
                       :to="{
-                        name: 'dashboard-administrator-test-show',
+                        name: 'dashboard-non-pnbp-admin-lemdik-test-show',
                         params: { id_test: data.id, table: data.flag },
                       }"
                       class="btn btn-sm rounded-2 bg-info-1 me-2 text-white hovered"
@@ -103,7 +103,7 @@ function fetchData() {
                     </router-link>
                     <router-link
                       :to="{
-                        name: 'dashboard-administrator-test-nilai',
+                        name: 'dashboard-non-pnbp-admin-lemdik-test-nilai',
                         params: { id_test: data.id, table: data.flag },
                       }"
                       class="btn btn-sm rounded-2 bg-danger me-2 text-white hovered"

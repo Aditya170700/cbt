@@ -1,3 +1,5 @@
+import test from "@/router/dashboard-non-pnbp/admin-lemdik/test/index.js";
+
 let routes = [
   {
     path: "/dashboard-non-pnbp/admin-lemdik",
@@ -9,6 +11,7 @@ let routes = [
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Index.vue"),
   },
+  ...test,
 ];
 
 export default routes;
