@@ -11,7 +11,7 @@ let widthContent = window.innerWidth;
     <div
       :class="`main-content content ${widthContent > 992 ? '' : 'hide'} mb-5`"
     >
-      <div class="container p-lg-2"></div>
+      <div class="container p-lg-4">Dashboard Instruktur</div>
     </div>
   </div>
 </template>

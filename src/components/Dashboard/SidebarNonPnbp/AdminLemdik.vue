@@ -14,13 +14,13 @@ function logout() {
 <template>
   <div class="menu-wrapper">
     <router-link
-      :to="{ name: 'dashboard-peserta' }"
+      :to="{ name: 'dashboard-non-pnbp-admin-lemdik' }"
       class="text-white text-decoration-none"
       href="#"
     >
       <div
         :class="`item d-flex align-items-center ${
-          route.name == 'dashboard-peserta' ? 'active' : ''
+          route.name == 'dashboard-non-pnbp-admin-lemdik' ? 'active' : ''
         }`"
       >
         <div
@@ -31,27 +31,6 @@ function logout() {
         </div>
         <div class="col-10 d-flex justify-content-between align-items-center">
           Dashboard
-        </div>
-      </div>
-    </router-link>
-    <router-link
-      :to="{ name: 'dashboard-peserta-diklat' }"
-      class="text-white text-decoration-none"
-      href="#"
-    >
-      <div
-        :class="`item d-flex align-items-center ${
-          route.meta.group == 'dashboard-peserta-diklat' ? 'active' : ''
-        }`"
-      >
-        <div
-          style="width: 20px"
-          class="col-2 icons d-flex justify-content-center me-2"
-        >
-          <i class="fas fa-book"></i>
-        </div>
-        <div class="col-10 d-flex justify-content-between align-items-center">
-          Diklat
         </div>
       </div>
     </router-link>

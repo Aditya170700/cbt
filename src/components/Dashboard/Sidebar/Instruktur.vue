@@ -7,7 +7,7 @@ let route = useRoute();
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  window.location.href = "/";
+  window.close();
 }
 </script>
 

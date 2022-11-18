@@ -9,6 +9,8 @@ import SidebarAdministrator from "@/components/Dashboard/Sidebar/Administrator.v
 import SidebarPeserta from "@/components/Dashboard/Sidebar/Peserta.vue";
 import SidebarPanitia from "@/components/Dashboard/Sidebar/Panitia.vue";
 import SidebarInstruktur from "@/components/Dashboard/Sidebar/Instruktur.vue";
+
+import SidebarNonPnbpAdminLemdik from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
 import logoSidebar from "@/assets/static/logo-sidebar.png";
 
 let widthContent = window.innerWidth;
@@ -49,7 +51,7 @@ function refreshToken() {
       ).then(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        window.location.href = "/";
+        window.close();
       });
     });
 }
@@ -63,8 +65,7 @@ function refreshToken() {
       <div class="d-flex justify-content-end d-lg-none">
         <i class="fas fa-times" @click="sidebar"></i>
       </div>
-      <router-link
-        :to="{ name: 'dashboard' }"
+      <div
         class="d-none d-lg-block text-decoration-none text-center text-white"
       >
         <a
@@ -78,12 +79,18 @@ function refreshToken() {
             class="img-fluid"
           />
         </a>
-      </router-link>
+      </div>
       <div class="height-hide overflow-auto">
         <SidebarAdministrator v-if="route.meta.role == 'administrator'" />
         <SidebarPeserta v-if="route.meta.role == 'peserta'" />
         <SidebarPanitia v-if="route.meta.role == 'panitia'" />
         <SidebarInstruktur v-if="route.meta.role == 'instruktur'" />
+        <SidebarNonPnbpAdminLemdik
+          v-if="
+            route.meta.role == 'admin-lemdik' &&
+            route.meta.page == 'admin-lemdik-non-pnbp'
+          "
+        />
       </div>
     </div>
 
