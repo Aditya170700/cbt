@@ -77,7 +77,7 @@ function addSoal(data) {
 
   axios
     .post(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/attach-pertanyaan`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/attach-pertanyaan`,
       {
         bobot: data.bobot,
         test_id: route.params.id_test,
@@ -111,7 +111,7 @@ function removeSoal(data) {
 
       axios
         .post(
-          `${storeApp.baseurl}cbt/admin-pusbang/test/detach-pertanyaan`,
+          `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/detach-pertanyaan`,
           {
             test_id: route.params.id_test,
             table: route.params.table,
