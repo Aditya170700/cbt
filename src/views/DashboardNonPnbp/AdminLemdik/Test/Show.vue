@@ -30,7 +30,7 @@ function fetchData() {
   result.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/${route.params.id_test}/show/${route.params.table}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/test/${route.params.id_test}/show/${route.params.table}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -54,7 +54,7 @@ function fetchQuestionNotInTest() {
 
   axios
     .get(
-      `${storeApp.baseurl}cbt/admin-pusbang/soal/${route.params.id_test}/not-in-test/${route.params.table}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/soal/${route.params.id_test}/not-in-test/${route.params.table}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
