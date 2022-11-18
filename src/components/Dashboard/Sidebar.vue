@@ -11,6 +11,7 @@ import SidebarPanitia from "@/components/Dashboard/Sidebar/Panitia.vue";
 import SidebarInstruktur from "@/components/Dashboard/Sidebar/Instruktur.vue";
 
 import SidebarNonPnbpAdminLemdik from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
+import SidebarNonPnbpPeserta from "@/components/Dashboard/SidebarNonPnbp/Peserta.vue";
 import logoSidebar from "@/assets/static/logo-sidebar.png";
 
 let widthContent = window.innerWidth;
@@ -82,13 +83,29 @@ function refreshToken() {
       </div>
       <div class="height-hide overflow-auto">
         <SidebarAdministrator v-if="route.meta.role == 'administrator'" />
-        <SidebarPeserta v-if="route.meta.role == 'peserta'" />
+        <SidebarPeserta
+          v-if="
+            route.meta.role == 'peserta' &&
+            route.meta.page != 'peserta-non-pnbp'
+          "
+        />
         <SidebarPanitia v-if="route.meta.role == 'panitia'" />
-        <SidebarInstruktur v-if="route.meta.role == 'instruktur'" />
+        <SidebarInstruktur
+          v-if="
+            route.meta.role == 'instruktur' &&
+            route.meta.page != 'instruktur-non-pnbp'
+          "
+        />
         <SidebarNonPnbpAdminLemdik
           v-if="
             route.meta.role == 'admin-lemdik' &&
             route.meta.page == 'admin-lemdik-non-pnbp'
+          "
+        />
+        <SidebarNonPnbpPeserta
+          v-if="
+            route.meta.role == 'peserta' &&
+            route.meta.page == 'peserta-non-pnbp'
           "
         />
       </div>
