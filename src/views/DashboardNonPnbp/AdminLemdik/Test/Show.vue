@@ -30,7 +30,7 @@ function fetchData() {
   result.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/test/${route.params.id_test}/show/${route.params.table}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/${route.params.id_test}/show/${route.params.table}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -54,7 +54,7 @@ function fetchQuestionNotInTest() {
 
   axios
     .get(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/soal/${route.params.id_test}/not-in-test/${route.params.table}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${route.params.id_test}/not-in-test/${route.params.table}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -151,7 +151,12 @@ function removeSoal(data) {
           <div class="h4 fw-bold">{{ result?.data?.nama }}</div>
           <div>
             <router-link
-              :to="{ name: 'dashboard-administrator-test' }"
+              :to="{
+                name: 'dashboard-non-pnbp-admin-lemdik-test',
+                params: {
+                  id_lemdik: route.params.id_lemdik,
+                },
+              }"
               class="btn btn-sm btn-light rounded-2"
             >
               <i class="fas fa-arrow-left me-2"></i>Kembali</router-link

@@ -1,6 +1,6 @@
 let routes = [
   {
-    path: "/dashboard-non-pnbp/admin-lemdik/test",
+    path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/test",
     name: "dashboard-non-pnbp-admin-lemdik-test",
     meta: {
       page: "admin-lemdik-non-pnbp",
@@ -10,7 +10,7 @@ let routes = [
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Test/Index.vue"),
   },
   {
-    path: "/dashboard-non-pnbp/admin-lemdik/test/:id_test/show/:table",
+    path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/test/:id_test/show/:table",
     name: "dashboard-non-pnbp-admin-lemdik-test-show",
     meta: {
       page: "admin-lemdik-non-pnbp",
@@ -20,7 +20,7 @@ let routes = [
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Test/Show.vue"),
   },
   {
-    path: "/dashboard-non-pnbp/admin-lemdik/test/:id_test/nilai/:table",
+    path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/test/:id_test/nilai/:table",
     name: "dashboard-non-pnbp-admin-lemdik-test-nilai",
     meta: {
       page: "admin-lemdik-non-pnbp",
@@ -30,7 +30,7 @@ let routes = [
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Test/Nilai.vue"),
   },
   {
-    path: "/dashboard-non-pnbp/admin-lemdik/test/:id_test/nilai/:table/input/:id_peserta",
+    path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/test/:id_test/nilai/:table/input/:id_peserta",
     name: "dashboard-non-pnbp-admin-lemdik-test-nilai-input",
     meta: {
       page: "admin-lemdik-non-pnbp",

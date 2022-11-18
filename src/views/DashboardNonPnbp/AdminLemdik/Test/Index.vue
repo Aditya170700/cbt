@@ -5,8 +5,10 @@ import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
 import axios from "axios";
+import { useRoute } from "vue-router";
 
 const storeApp = appStore();
+let route = useRoute();
 let widthContent = window.innerWidth;
 let result = reactive({
   data: [],
@@ -26,12 +28,15 @@ onBeforeMount(() => {
 function fetchData() {
   result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/test/list`, {
-      headers: {
-        Authorization: `Bearer ${storeApp.token}`,
-      },
-      params,
-    })
+    .get(
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/list`,
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.token}`,
+        },
+        params,
+      }
+    )
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       result.loading = false;
@@ -95,7 +100,11 @@ function fetchData() {
                     <router-link
                       :to="{
                         name: 'dashboard-non-pnbp-admin-lemdik-test-show',
-                        params: { id_test: data.id, table: data.flag },
+                        params: {
+                          id_lemdik: route.params.id_lemdik,
+                          id_test: data.id,
+                          table: data.flag,
+                        },
                       }"
                       class="btn btn-sm rounded-2 bg-info-1 me-2 text-white hovered"
                     >
@@ -104,7 +113,11 @@ function fetchData() {
                     <router-link
                       :to="{
                         name: 'dashboard-non-pnbp-admin-lemdik-test-nilai',
-                        params: { id_test: data.id, table: data.flag },
+                        params: {
+                          id_lemdik: route.params.id_lemdik,
+                          id_test: data.id,
+                          table: data.flag,
+                        },
                       }"
                       class="btn btn-sm rounded-2 bg-danger me-2 text-white hovered"
                     >
