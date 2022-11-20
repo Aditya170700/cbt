@@ -23,7 +23,7 @@ function fetchData() {
   result.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/${route.params.id_test}/list-nilai/${route.params.table}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/${route.params.id_test}/list-nilai/${route.params.table}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -53,7 +53,12 @@ function fetchData() {
           <div class="h4 fw-bold">{{ result?.data?.test?.nama }}</div>
           <div>
             <router-link
-              :to="{ name: 'dashboard-administrator-test' }"
+              :to="{
+                name: 'dashboard-non-pnbp-admin-lemdik-test',
+                params: {
+                  id_lemdik: route.params.id_lemdik,
+                },
+              }"
               class="btn btn-sm btn-light rounded-2"
             >
               <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
@@ -97,7 +102,7 @@ function fetchData() {
                     {{ data.role }}
                   </td>
                   <td>
-                    {{ data.name }}
+                    {{ result?.data?.test?.name }}
                   </td>
                   <td>
                     {{
@@ -112,8 +117,9 @@ function fetchData() {
                     <div class="d-flex">
                       <router-link
                         :to="{
-                          name: 'dashboard-administrator-test-nilai-input',
+                          name: 'dashboard-non-pnbp-admin-lemdik-test-nilai-input',
                           params: {
+                            id_lemdik: route.params.id_lemdik,
                             id_test: route.params.id_test,
                             table: route.params.table,
                             id_peserta: data.id,

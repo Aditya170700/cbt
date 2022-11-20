@@ -24,7 +24,7 @@ function fetchData() {
   result.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/${route.params.id_test}/list-jawaban/${route.params.table}/${route.params.id_peserta}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/${route.params.id_test}/list-jawaban/${route.params.table}/${route.params.id_peserta}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -52,7 +52,7 @@ function submitNilai(data) {
 
   axios
     .post(
-      `${storeApp.baseurl}cbt/admin-pusbang/test/store-nilai/${route.params.table}/${data.id}`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/store-nilai/${route.params.table}/${data.id}`,
       {
         nilai: data.nilai,
       },
@@ -86,8 +86,9 @@ function submitNilai(data) {
           <div>
             <router-link
               :to="{
-                name: 'dashboard-administrator-test-nilai',
+                name: 'dashboard-non-pnbp-admin-lemdik-test-nilai',
                 params: {
+                  id_lemdik: route.params.id_lemdik,
                   id_test: route.params.id_test,
                   table: route.params.table,
                 },
