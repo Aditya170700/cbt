@@ -12,6 +12,7 @@ import SidebarInstruktur from "@/components/Dashboard/Sidebar/Instruktur.vue";
 
 import SidebarNonPnbpAdminLemdik from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
 import SidebarNonPnbpPeserta from "@/components/Dashboard/SidebarNonPnbp/Peserta.vue";
+import SidebarNonPnbpInstruktur from "@/components/Dashboard/SidebarNonPnbp/Instruktur.vue";
 import logoSidebar from "@/assets/static/logo-sidebar.png";
 
 let widthContent = window.innerWidth;
@@ -106,6 +107,12 @@ function refreshToken() {
           v-if="
             route.meta.role == 'peserta' &&
             route.meta.page == 'peserta-non-pnbp'
+          "
+        />
+        <SidebarNonPnbpInstruktur
+          v-if="
+            route.meta.role == 'instruktur' &&
+            route.meta.page == 'instruktur-non-pnbp'
           "
         />
       </div>

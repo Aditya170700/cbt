@@ -3,18 +3,26 @@
 import { useRoute } from "vue-router";
 
 let route = useRoute();
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.close();
+}
 </script>
 
 <template>
   <div class="menu-wrapper">
     <router-link
-      :to="{ name: 'dashboard-instruktur' }"
+      :to="{
+        name: 'dashboard-non-pnbp-instruktur',
+      }"
       class="text-white text-decoration-none"
       href="#"
     >
       <div
         :class="`item d-flex align-items-center ${
-          route.name == 'dashboard-instruktur' ? 'active' : ''
+          route.name == 'dashboard-non-pnbp-instruktur' ? 'active' : ''
         }`"
       >
         <div
@@ -29,13 +37,17 @@ let route = useRoute();
       </div>
     </router-link>
     <router-link
-      :to="{ name: 'dashboard-instruktur-test' }"
+      :to="{
+        name: 'dashboard-non-pnbp-instruktur-test',
+      }"
       class="text-white text-decoration-none"
       href="#"
     >
       <div
         :class="`item d-flex align-items-center ${
-          route.meta.group == 'dashboard-instruktur-test' ? 'active' : ''
+          route.meta.group == 'dashboard-non-pnbp-instruktur-test'
+            ? 'active'
+            : ''
         }`"
       >
         <div
@@ -49,14 +61,19 @@ let route = useRoute();
         </div>
       </div>
     </router-link>
+
     <router-link
-      :to="{ name: 'dashboard-instruktur-soal' }"
+      :to="{
+        name: 'dashboard-non-pnbp-instruktur-soal',
+      }"
       class="text-white text-decoration-none"
       href="#"
     >
       <div
         :class="`item d-flex align-items-center ${
-          route.meta.group == 'dashboard-instruktur-soal' ? 'active' : ''
+          route.meta.group == 'dashboard-non-pnbp-instruktur-soal'
+            ? 'active'
+            : ''
         }`"
       >
         <div
@@ -70,19 +87,17 @@ let route = useRoute();
         </div>
       </div>
     </router-link>
-    <router-link
-      :to="{ name: 'instruktur' }"
-      class="text-white text-decoration-none"
-    >
+
+    <a href="#" @click.prevent="logout" class="text-white text-decoration-none">
       <div class="item logout d-flex align-items-center">
         <div
           style="width: 20px"
           class="icons d-flex justify-content-center me-2"
         >
-          <i class="fas fa-arrow-left"></i>
+          <i class="fas fa-power-off"></i>
         </div>
-        <div>Keluar</div>
+        <div>Logout</div>
       </div>
-    </router-link>
+    </a>
   </div>
 </template>

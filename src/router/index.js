@@ -15,6 +15,16 @@ const router = createRouter({
       },
       component: () => import("@/views/Peserta.vue"),
     },
+    {
+      path: "/instruktur",
+      name: "instruktur",
+      meta: {
+        page: "instruktur",
+        group: "instruktur",
+        role: "instruktur",
+      },
+      component: () => import("@/views/Instruktur.vue"),
+    },
     ...dashboard,
     ...dashboardNonPnbp,
   ],
