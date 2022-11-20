@@ -76,9 +76,10 @@ function doTest(data) {
   ).then((confirmed) => {
     if (confirmed) {
       router.push({
-        name: "dashboard-peserta-diklat-test-do",
+        name: "dashboard-non-pnbp-peserta-diklat-jadwal-test-do",
         params: {
           id_diklat: route.params.id_diklat,
+          id_jadwal: route.params.id_jadwal,
           id_test: data.id,
           table: data.flag,
         },
@@ -92,6 +93,7 @@ function listJawaban(data) {
     name: "dashboard-peserta-diklat-jawaban",
     params: {
       id_diklat: route.params.id_diklat,
+      id_jadwal: route.params.id_jadwal,
       id_test: data.id,
       table: data.flag,
     },
