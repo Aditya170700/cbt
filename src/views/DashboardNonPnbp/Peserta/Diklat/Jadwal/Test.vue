@@ -90,7 +90,7 @@ function doTest(data) {
 
 function listJawaban(data) {
   router.push({
-    name: "dashboard-peserta-diklat-jawaban",
+    name: "dashboard-non-pnbp-peserta-diklat-jadwal-test-jawaban",
     params: {
       id_diklat: route.params.id_diklat,
       id_jadwal: route.params.id_jadwal,

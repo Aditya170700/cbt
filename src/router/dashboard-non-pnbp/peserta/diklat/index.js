@@ -30,7 +30,7 @@ let routes = [
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal/Test.vue"),
   },
   {
-    path: "/dashboard-non-pnbp/peserta/diklat/:id_diklat/jadwal/:id_jadwal/test/:id_test/:table",
+    path: "/dashboard-non-pnbp/peserta/diklat/:id_diklat/jadwal/:id_jadwal/test/:id_test/do/:table",
     name: "dashboard-non-pnbp-peserta-diklat-jadwal-test-do",
     meta: {
       page: "peserta-non-pnbp",
@@ -38,6 +38,16 @@ let routes = [
       role: "peserta",
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal/Do.vue"),
+  },
+  {
+    path: "/dashboard-non-pnbp/peserta/diklat/:id_diklat/jadwal/:id_jadwal/test/:id_test/jawaban/:table",
+    name: "dashboard-non-pnbp-peserta-diklat-jadwal-test-jawaban",
+    meta: {
+      page: "peserta-non-pnbp",
+      group: "dashboard-non-pnbp-peserta-diklat",
+      role: "peserta",
+    },
+    component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal/Jawaban.vue"),
   },
 ];
 
