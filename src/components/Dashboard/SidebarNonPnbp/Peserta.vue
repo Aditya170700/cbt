@@ -32,6 +32,30 @@ let route = useRoute();
     </router-link>
 
     <router-link
+      :to="{ name: 'dashboard-non-pnbp-peserta-diklat' }"
+      class="text-white text-decoration-none"
+      href="#"
+    >
+      <div
+        :class="`item d-flex align-items-center ${
+          route.meta.group == 'dashboard-non-pnbp-peserta-diklat'
+            ? 'active'
+            : ''
+        }`"
+      >
+        <div
+          style="width: 20px"
+          class="col-2 icons d-flex justify-content-center me-2"
+        >
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="col-10 d-flex justify-content-between align-items-center">
+          Diklat
+        </div>
+      </div>
+    </router-link>
+
+    <router-link
       :to="{ name: 'peserta' }"
       class="text-white text-decoration-none"
     >

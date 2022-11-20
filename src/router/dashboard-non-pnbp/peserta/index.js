@@ -1,3 +1,5 @@
+import diklat from "@/router/dashboard-non-pnbp/peserta/diklat/index.js";
+
 let routes = [
   {
     path: "/dashboard-non-pnbp/peserta",
@@ -9,6 +11,7 @@ let routes = [
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Index.vue"),
   },
+  ...diklat,
 ];
 
 export default routes;

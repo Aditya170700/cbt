@@ -30,7 +30,7 @@ function fetchData() {
   result.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/peserta/diklat/${route.params.id_diklat}/show`,
+      `${storeApp.baseurl}cbt/non-pnbp/peserta/diklat/${route.params.id_diklat}/jadwal/${route.params.id_jadwal}`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -52,7 +52,7 @@ function fetchTest() {
   test.loading = true;
   axios
     .get(
-      `${storeApp.baseurl}cbt/peserta/test/${route.params.id_diklat}/by-diklat`,
+      `${storeApp.baseurl}cbt/non-pnbp/peserta/test/${route.params.id_diklat}/jadwal/${route.params.id_jadwal}/by-jadwal`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -110,7 +110,12 @@ function listJawaban(data) {
           <div class="h4 fw-bold">Detail</div>
           <div>
             <router-link
-              :to="{ name: 'dashboard-peserta-diklat' }"
+              :to="{
+                name: 'dashboard-non-pnbp-peserta-diklat-jadwal',
+                params: {
+                  id_diklat: route.params.id_diklat,
+                },
+              }"
               class="btn btn-sm btn-light rounded-2"
               ><i class="fas fa-arrow-left me-2"></i>Kembali</router-link
             >
@@ -121,48 +126,25 @@ function listJawaban(data) {
         </div>
         <div class="row px-2 mb-4" v-else>
           <div class="col-2">
-            <div class="fw-bold">Jenis Diklat</div>
+            <div class="fw-bold">Judul</div>
           </div>
           <div class="col-10">
             :
-            {{
-              result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
-                .parent.name
-            }}
+            {{ result.data.header }}
           </div>
           <div class="col-2">
-            <div class="fw-bold">Kategori Diklat</div>
+            <div class="fw-bold">Pelaksanaan</div>
           </div>
           <div class="col-10">
             :
-            {{
-              result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
-                .name
-            }}
+            {{ `${result.data.mulai} - ${result.data.selesai}` }}
           </div>
           <div class="col-2">
-            <div class="fw-bold">Program Diklat</div>
+            <div class="fw-bold">Jumlah Peserta</div>
           </div>
           <div class="col-10">
             :
-            {{
-              result.data.jenis_diklat_referensi_diklat_pnbp
-                .referensi_diklat_pnbp.name
-            }}
-          </div>
-          <div class="col-2">
-            <div class="fw-bold">Lembaga</div>
-          </div>
-          <div class="col-10">
-            :
-            {{ result.data.profil_lemdik.nm_lembaga }}
-          </div>
-          <div class="col-2">
-            <div class="fw-bold">Tanggal Pelaksanaan</div>
-          </div>
-          <div class="col-10">
-            :
-            {{ result.data.tgl_pelaksanaan }}
+            {{ result.data.peserta_count }}
           </div>
         </div>
         <div
