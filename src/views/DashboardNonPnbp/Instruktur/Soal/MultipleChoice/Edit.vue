@@ -30,7 +30,7 @@ onMounted(() => {
 
   axios
     .get(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${route.params.id_soal}/show`,
+      `${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/${route.params.id_soal}/show`,
       {
         headers: {
           Authorization: `Bearer ${storeApp.token}`,
@@ -76,7 +76,7 @@ function submit() {
 
   axios
     .put(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${route.params.id_soal}/update`,
+      `${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/${route.params.id_soal}/update`,
       form,
       {
         headers: {
@@ -89,10 +89,7 @@ function submit() {
       form.submitLoading = false;
       alertSuccess(res.data.message);
       router.push({
-        name: "dashboard-non-pnbp-admin-lemdik-soal",
-        params: {
-          id_lemdik: route.params.id_lemdik,
-        },
+        name: "dashboard-non-pnbp-instruktur-soal",
       });
     })
     .catch((err) => {
@@ -110,7 +107,7 @@ function destroyOpsi(data, iopt) {
       data.loading = true;
       axios
         .delete(
-          `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${route.params.id_soal}/destroy-opsi/${data.id}`,
+          `${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/${route.params.id_soal}/destroy-opsi/${data.id}`,
           {
             headers: {
               Authorization: `Bearer ${storeApp.token}`,
@@ -146,10 +143,7 @@ function destroyOpsi(data, iopt) {
           <div class="col-6 text-end">
             <router-link
               :to="{
-                name: 'dashboard-non-pnbp-admin-lemdik-soal',
-                params: {
-                  id_lemdik: route.params.id_lemdik,
-                },
+                name: 'dashboard-non-pnbp-instruktur-soal',
               }"
               class="btn btn-sm btn-outline-secondary rounded-2 px-3 mb-2"
             >

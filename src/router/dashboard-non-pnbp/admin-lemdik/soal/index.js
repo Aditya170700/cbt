@@ -11,7 +11,7 @@ let routes = [
   },
   {
     path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/soal/create-multiple-choice",
-    name: "dashboard-administrator-soal-create-multiple-choice",
+    name: "dashboard-admin-lemdik-soal-create-multiple-choice",
     meta: {
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
@@ -21,7 +21,7 @@ let routes = [
   },
   {
     path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/soal/edit-multiple-choice/:id_soal",
-    name: "dashboard-administrator-soal-edit-multiple-choice",
+    name: "dashboard-admin-lemdik-soal-edit-multiple-choice",
     meta: {
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
@@ -31,7 +31,7 @@ let routes = [
   },
   {
     path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/soal/create-essay",
-    name: "dashboard-administrator-soal-create-essay",
+    name: "dashboard-admin-lemdik-soal-create-essay",
     meta: {
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
@@ -41,7 +41,7 @@ let routes = [
   },
   {
     path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/soal/edit-essay/:id_soal",
-    name: "dashboard-administrator-soal-edit-essay",
+    name: "dashboard-admin-lemdik-soal-edit-essay",
     meta: {
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",

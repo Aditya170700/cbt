@@ -2,7 +2,7 @@
 <script setup>
 import Sidebar from "@/components/Dashboard/Sidebar.vue";
 import { reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { appStore } from "@/stores/app";
 import { alertError, alertSuccess } from "@/assets/js/utils";
 import { QuillEditor } from "@vueup/vue-quill";
@@ -12,7 +12,6 @@ import Spinner from "@/components/Spinner.vue";
 
 let widthContent = window.innerWidth;
 const storeApp = appStore();
-let route = useRoute();
 let router = useRouter();
 let option = ref("");
 let form = reactive({
@@ -48,24 +47,17 @@ function submit() {
   form.loading = true;
 
   axios
-    .post(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal`,
-      form,
-      {
-        headers: {
-          Authorization: `Bearer ${storeApp.token}`,
-        },
-      }
-    )
+    .post(`${storeApp.baseurl}cbt/non-pnbp/instruktur/soal`, form, {
+      headers: {
+        Authorization: `Bearer ${storeApp.token}`,
+      },
+    })
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       form.loading = false;
       alertSuccess(res.data.message);
       router.push({
-        name: "dashboard-non-pnbp-admin-lemdik-soal",
-        params: {
-          id_lemdik: route.params.id_lemdik,
-        },
+        name: "dashboard-non-pnbp-instruktur-soal",
       });
     })
     .catch((err) => {
@@ -92,10 +84,7 @@ function submit() {
           <div class="col-6 text-end">
             <router-link
               :to="{
-                name: 'dashboard-non-pnbp-admin-lemdik-soal',
-                params: {
-                  id_lemdik: route.params.id_lemdik,
-                },
+                name: 'dashboard-non-pnbp-instruktur-soal',
               }"
               class="btn btn-sm btn-outline-secondary rounded-2 px-3 mb-2"
             >

@@ -108,7 +108,7 @@ function destroy(data) {
                 <router-link
                   class="dropdown-item"
                   :to="{
-                    name: 'dashboard-administrator-soal-create-multiple-choice',
+                    name: 'dashboard-admin-lemdik-soal-create-multiple-choice',
                     params: { id_lemdik: route.params.id_lemdik },
                   }"
                   >MULTIPLE CHOICE</router-link
@@ -118,7 +118,7 @@ function destroy(data) {
                 <router-link
                   class="dropdown-item"
                   :to="{
-                    name: 'dashboard-administrator-soal-create-essay',
+                    name: 'dashboard-admin-lemdik-soal-create-essay',
                     params: { id_lemdik: route.params.id_lemdik },
                   }"
                   >ESSAY</router-link
@@ -180,8 +180,8 @@ function destroy(data) {
                     :to="{
                       name:
                         data.tipe == 'Multiple Choice'
-                          ? 'dashboard-administrator-soal-edit-multiple-choice'
-                          : 'dashboard-administrator-soal-edit-essay',
+                          ? 'dashboard-admin-lemdik-soal-edit-multiple-choice'
+                          : 'dashboard-admin-lemdik-soal-edit-essay',
                       params: {
                         id_lemdik: route.params.id_lemdik,
                         id_soal: data.id,

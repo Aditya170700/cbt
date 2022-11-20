@@ -6,11 +6,9 @@ import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import axios from "axios";
 import { alertError, alertSuccess, confirmation } from "@/assets/js/utils";
-import { useRoute } from "vue-router";
 
 let widthContent = window.innerWidth;
 const storeApp = appStore();
-let route = useRoute();
 let result = reactive({
   data: [],
   meta: null,
@@ -31,15 +29,12 @@ onBeforeMount(() => {
 function fetchData() {
   result.loading = true;
   axios
-    .get(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/list`,
-      {
-        headers: {
-          Authorization: `Bearer ${storeApp.token}`,
-        },
-        params,
-      }
-    )
+    .get(`${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/list`, {
+      headers: {
+        Authorization: `Bearer ${storeApp.token}`,
+      },
+      params,
+    })
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       result.loading = false;
@@ -58,7 +53,7 @@ function destroy(data) {
       data.loading = true;
       axios
         .delete(
-          `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${data.id}/destroy`,
+          `${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/${data.id}/destroy`,
           {
             headers: {
               Authorization: `Bearer ${storeApp.token}`,
@@ -108,8 +103,7 @@ function destroy(data) {
                 <router-link
                   class="dropdown-item"
                   :to="{
-                    name: 'dashboard-administrator-soal-create-multiple-choice',
-                    params: { id_lemdik: route.params.id_lemdik },
+                    name: 'dashboard-instruktur-soal-create-multiple-choice',
                   }"
                   >MULTIPLE CHOICE</router-link
                 >
@@ -118,8 +112,7 @@ function destroy(data) {
                 <router-link
                   class="dropdown-item"
                   :to="{
-                    name: 'dashboard-administrator-soal-create-essay',
-                    params: { id_lemdik: route.params.id_lemdik },
+                    name: 'dashboard-instruktur-soal-create-essay',
                   }"
                   >ESSAY</router-link
                 >
@@ -180,10 +173,9 @@ function destroy(data) {
                     :to="{
                       name:
                         data.tipe == 'Multiple Choice'
-                          ? 'dashboard-administrator-soal-edit-multiple-choice'
-                          : 'dashboard-administrator-soal-edit-essay',
+                          ? 'dashboard-instruktur-soal-edit-multiple-choice'
+                          : 'dashboard-instruktur-soal-edit-essay',
                       params: {
-                        id_lemdik: route.params.id_lemdik,
                         id_soal: data.id,
                       },
                     }"
