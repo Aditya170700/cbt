@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard-non-pnbp/instruktur/test",
@@ -6,6 +8,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Test/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Test/Show.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Test/Nilai.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Test/InputNilai.vue"),
   },

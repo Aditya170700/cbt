@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard/panitia/soal",
@@ -6,6 +8,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-soal",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Soal/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-soal",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Soal/MultipleChoice/Create.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-soal",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Soal/MultipleChoice/Edit.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-soal",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Soal/Essay/Create.vue"),
   },
@@ -46,6 +52,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-soal",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Soal/Essay/Edit.vue"),
   },

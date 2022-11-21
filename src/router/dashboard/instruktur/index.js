@@ -1,5 +1,6 @@
 import test from '@/router/dashboard/instruktur/test/index.js';
 import soal from '@/router/dashboard/instruktur/soal/index.js';
+import mAuth from "@/middleware/auth.js";
 
 let routes = [
   {
@@ -9,6 +10,7 @@ let routes = [
       page: "instruktur",
       group: "dashboard-instruktur",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Instruktur/Index.vue"),
   },

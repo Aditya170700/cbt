@@ -1,5 +1,6 @@
 import test from "@/router/dashboard-non-pnbp/admin-lemdik/test/index.js";
 import soal from "@/router/dashboard-non-pnbp/admin-lemdik/soal/index.js";
+import mAuth from "@/middleware/auth.js";
 
 let routes = [
   {
@@ -9,6 +10,7 @@ let routes = [
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik",
       role: "admin-lemdik",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Index.vue"),
   },

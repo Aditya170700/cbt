@@ -1,5 +1,6 @@
 import test from '@/router/dashboard/administrator/test/index.js';
 import soal from '@/router/dashboard/administrator/soal/index.js';
+import mAuth from "@/middleware/auth.js";
 
 let routes = [
   {
@@ -9,6 +10,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Index.vue"),
   },

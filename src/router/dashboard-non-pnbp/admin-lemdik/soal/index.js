@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard-non-pnbp/admin-lemdik/:id_lemdik/soal",
@@ -6,6 +8,7 @@ let routes = [
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
       role: "admin-lemdik",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Soal/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
       role: "admin-lemdik",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Soal/MultipleChoice/Create.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
       role: "admin-lemdik",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Soal/MultipleChoice/Edit.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
       role: "admin-lemdik",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Soal/Essay/Create.vue"),
   },
@@ -46,6 +52,7 @@ let routes = [
       page: "admin-lemdik-non-pnbp",
       group: "dashboard-non-pnbp-admin-lemdik-soal",
       role: "admin-lemdik",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/AdminLemdik/Soal/Essay/Edit.vue"),
   },

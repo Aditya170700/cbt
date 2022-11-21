@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard/instruktur/test",
@@ -6,6 +8,7 @@ let routes = [
       page: "instruktur",
       group: "dashboard-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Instruktur/Test/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "instruktur",
       group: "dashboard-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Instruktur/Test/Show.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "instruktur",
       group: "dashboard-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Instruktur/Test/Nilai.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "instruktur",
       group: "dashboard-instruktur-test",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Instruktur/Test/InputNilai.vue"),
   },

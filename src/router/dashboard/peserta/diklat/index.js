@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard/peserta/diklat",
@@ -6,6 +8,7 @@ let routes = [
       page: "peserta",
       group: "dashboard-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Peserta/Diklat/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "peserta",
       group: "dashboard-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Peserta/Diklat/Test.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "peserta",
       group: "dashboard-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Peserta/Diklat/Jawaban.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "peserta",
       group: "dashboard-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Peserta/Diklat/Do.vue"),
   },

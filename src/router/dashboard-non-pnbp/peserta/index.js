@@ -1,4 +1,5 @@
 import diklat from "@/router/dashboard-non-pnbp/peserta/diklat/index.js";
+import mAuth from "@/middleware/auth.js";
 
 let routes = [
   {
@@ -8,6 +9,7 @@ let routes = [
       page: "peserta-non-pnbp",
       group: "dashboard-non-pnbp-peserta",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Index.vue"),
   },

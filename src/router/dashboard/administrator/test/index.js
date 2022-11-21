@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard/administrator/test",
@@ -6,6 +8,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-test",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Test/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-test",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Test/Show.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-test",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Test/Nilai.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-test",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Test/InputNilai.vue"),
   },

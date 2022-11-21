@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard/panitia/test",
@@ -6,6 +8,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-test",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Test/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-test",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Test/Show.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-test",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Test/Nilai.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "panitia",
       group: "dashboard-panitia-test",
       role: "panitia",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Panitia/Test/InputNilai.vue"),
   },

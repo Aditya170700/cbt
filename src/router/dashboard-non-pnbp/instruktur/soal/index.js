@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard-non-pnbp/instruktur/soal",
@@ -6,6 +8,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-soal",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Soal/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-soal",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Soal/MultipleChoice/Create.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-soal",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Soal/MultipleChoice/Edit.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-soal",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Soal/Essay/Create.vue"),
   },
@@ -46,6 +52,7 @@ let routes = [
       page: "instruktur-non-pnbp",
       group: "dashboard-non-pnbp-instruktur-soal",
       role: "instruktur",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Instruktur/Soal/Essay/Edit.vue"),
   },

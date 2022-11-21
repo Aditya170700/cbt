@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard/administrator/soal",
@@ -6,6 +8,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-soal",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-soal",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/MultipleChoice/Create.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-soal",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/MultipleChoice/Edit.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-soal",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/Essay/Create.vue"),
   },
@@ -46,6 +52,7 @@ let routes = [
       page: "administrator",
       group: "dashboard-administrator-soal",
       role: "administrator",
+      middleware: [mAuth],
     },
     component: () => import("@/views/Dashboard/Administrator/Soal/Essay/Edit.vue"),
   },

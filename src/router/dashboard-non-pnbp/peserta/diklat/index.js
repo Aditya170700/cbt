@@ -1,3 +1,5 @@
+import mAuth from "@/middleware/auth.js";
+
 let routes = [
   {
     path: "/dashboard-non-pnbp/peserta/diklat",
@@ -6,6 +8,7 @@ let routes = [
       page: "peserta-non-pnbp",
       group: "dashboard-non-pnbp-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Index.vue"),
   },
@@ -16,6 +19,7 @@ let routes = [
       page: "peserta-non-pnbp",
       group: "dashboard-non-pnbp-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal.vue"),
   },
@@ -26,6 +30,7 @@ let routes = [
       page: "peserta-non-pnbp",
       group: "dashboard-non-pnbp-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal/Test.vue"),
   },
@@ -36,6 +41,7 @@ let routes = [
       page: "peserta-non-pnbp",
       group: "dashboard-non-pnbp-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal/Do.vue"),
   },
@@ -46,6 +52,7 @@ let routes = [
       page: "peserta-non-pnbp",
       group: "dashboard-non-pnbp-peserta-diklat",
       role: "peserta",
+      middleware: [mAuth],
     },
     component: () => import("@/views/DashboardNonPnbp/Peserta/Diklat/Jadwal/Jawaban.vue"),
   },
