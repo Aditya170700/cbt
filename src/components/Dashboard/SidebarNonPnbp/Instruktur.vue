@@ -3,12 +3,6 @@
 import { useRoute } from "vue-router";
 
 let route = useRoute();
-
-function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  window.close();
-}
 </script>
 
 <template>
@@ -87,17 +81,19 @@ function logout() {
         </div>
       </div>
     </router-link>
-
-    <a href="#" @click.prevent="logout" class="text-white text-decoration-none">
+    <router-link
+      :to="{ name: 'instruktur' }"
+      class="text-white text-decoration-none"
+    >
       <div class="item logout d-flex align-items-center">
         <div
           style="width: 20px"
           class="icons d-flex justify-content-center me-2"
         >
-          <i class="fas fa-power-off"></i>
+          <i class="fas fa-arrow-left"></i>
         </div>
-        <div>Logout</div>
+        <div>Keluar</div>
       </div>
-    </a>
+    </router-link>
   </div>
 </template>
