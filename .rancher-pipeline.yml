@@ -1,0 +1,15 @@
+stages:
+- name: build image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: agussang/cbt:${CICD_EXECUTION_SEQUENCE}
+      pushRemote: true
+      registry: index.docker.io
+  when:
+    branch:
+      include:
+      - master
+timeout: 60
+notification: {}
