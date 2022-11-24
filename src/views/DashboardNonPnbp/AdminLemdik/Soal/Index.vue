@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
 import { onBeforeMount, reactive } from "vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
@@ -35,7 +35,7 @@ function fetchData() {
       `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/list`,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenAdminLemdik}`,
         },
         params,
       }
@@ -61,7 +61,7 @@ function destroy(data) {
           `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${data.id}/destroy`,
           {
             headers: {
-              Authorization: `Bearer ${storeApp.token}`,
+              Authorization: `Bearer ${storeApp.tokenAdminLemdik}`,
             },
           }
         )

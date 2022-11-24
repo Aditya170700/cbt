@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/Sidebar/Administrator.vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
@@ -28,7 +28,7 @@ function fetchData() {
   axios
     .get(`${storeApp.baseurl}cbt/admin-pusbang/test/list`, {
       headers: {
-        Authorization: `Bearer ${storeApp.token}`,
+        Authorization: `Bearer ${storeApp.tokenAdministratorPelatihan}`,
       },
       params,
     })

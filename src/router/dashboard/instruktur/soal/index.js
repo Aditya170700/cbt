@@ -1,4 +1,4 @@
-import mAuth from "@/middleware/auth.js";
+import mAuth from "@/middleware/authInstruktur.js";
 
 let routes = [
   {

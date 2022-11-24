@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/SidebarNonPnbp/Instruktur.vue";
 import { onBeforeMount, reactive } from "vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
@@ -31,7 +31,7 @@ function fetchData() {
   axios
     .get(`${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/list`, {
       headers: {
-        Authorization: `Bearer ${storeApp.token}`,
+        Authorization: `Bearer ${storeApp.tokenInstruktur}`,
       },
       params,
     })
@@ -56,7 +56,7 @@ function destroy(data) {
           `${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/${data.id}/destroy`,
           {
             headers: {
-              Authorization: `Bearer ${storeApp.token}`,
+              Authorization: `Bearer ${storeApp.tokenInstruktur}`,
             },
           }
         )
@@ -103,7 +103,7 @@ function destroy(data) {
                 <router-link
                   class="dropdown-item"
                   :to="{
-                    name: 'dashboard-instruktur-soal-create-multiple-choice',
+                    name: 'dashboard-non-pnbp-instruktur-soal-create-multiple-choice',
                   }"
                   >MULTIPLE CHOICE</router-link
                 >
@@ -112,7 +112,7 @@ function destroy(data) {
                 <router-link
                   class="dropdown-item"
                   :to="{
-                    name: 'dashboard-instruktur-soal-create-essay',
+                    name: 'dashboard-non-pnbp-instruktur-soal-create-essay',
                   }"
                   >ESSAY</router-link
                 >
@@ -173,8 +173,8 @@ function destroy(data) {
                     :to="{
                       name:
                         data.tipe == 'Multiple Choice'
-                          ? 'dashboard-instruktur-soal-edit-multiple-choice'
-                          : 'dashboard-instruktur-soal-edit-essay',
+                          ? 'dashboard-non-pnbp-instruktur-soal-edit-multiple-choice'
+                          : 'dashboard-non-pnbp-instruktur-soal-edit-essay',
                       params: {
                         id_soal: data.id,
                       },

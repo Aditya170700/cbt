@@ -1,6 +1,6 @@
 import test from "@/router/dashboard-non-pnbp/admin-lemdik/test/index.js";
 import soal from "@/router/dashboard-non-pnbp/admin-lemdik/soal/index.js";
-import mAuth from "@/middleware/auth.js";
+import mAuth from "@/middleware/authAdminLemdik.js";
 
 let routes = [
   {

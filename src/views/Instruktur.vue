@@ -9,13 +9,13 @@ let user = ref(null);
 
 onMounted(() => {
   document.title = "CBT | SIMPEL Pusbang Laut";
-  user.value = JSON.parse(storeApp.user);
+  user.value = JSON.parse(storeApp.userInstruktur);
 });
 
 function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  window.close();
+  localStorage.removeItem("tokenInstruktur");
+  localStorage.removeItem("userInstruktur");
+  window.location.href = "/";
 }
 </script>
 

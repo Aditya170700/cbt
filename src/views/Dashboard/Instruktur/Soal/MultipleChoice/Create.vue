@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/Sidebar/Instruktur.vue";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { appStore } from "@/stores/app";
@@ -49,7 +49,7 @@ function submit() {
   axios
     .post(`${storeApp.baseurl}cbt/instruktur/soal`, form, {
       headers: {
-        Authorization: `Bearer ${storeApp.token}`,
+        Authorization: `Bearer ${storeApp.tokenInstruktur}`,
       },
     })
     .then((res) => {

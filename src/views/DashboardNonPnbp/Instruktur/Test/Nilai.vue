@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/SidebarNonPnbp/Instruktur.vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
@@ -26,7 +26,7 @@ function fetchData() {
       `${storeApp.baseurl}cbt/non-pnbp/instruktur/test/${route.params.id_test}/list-nilai/${route.params.table}`,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenInstruktur}`,
         },
       }
     )

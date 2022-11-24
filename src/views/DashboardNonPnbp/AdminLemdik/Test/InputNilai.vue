@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
@@ -27,7 +27,7 @@ function fetchData() {
       `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/${route.params.id_test}/list-jawaban/${route.params.table}/${route.params.id_peserta}`,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenAdminLemdik}`,
         },
       }
     )
@@ -58,7 +58,7 @@ function submitNilai(data) {
       },
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenAdminLemdik}`,
         },
       }
     )

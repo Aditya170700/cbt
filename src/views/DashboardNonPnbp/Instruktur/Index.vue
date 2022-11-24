@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/SidebarNonPnbp/Instruktur.vue";
 
 let widthContent = window.innerWidth;
 </script>

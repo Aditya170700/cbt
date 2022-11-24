@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/Sidebar/Instruktur.vue";
 import { onBeforeMount, reactive } from "vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
@@ -31,7 +31,7 @@ function fetchData() {
   axios
     .get(`${storeApp.baseurl}cbt/instruktur/soal/list`, {
       headers: {
-        Authorization: `Bearer ${storeApp.token}`,
+        Authorization: `Bearer ${storeApp.tokenInstruktur}`,
       },
       params,
     })
@@ -54,7 +54,7 @@ function destroy(data) {
       axios
         .delete(`${storeApp.baseurl}cbt/instruktur/soal/${data.id}/destroy`, {
           headers: {
-            Authorization: `Bearer ${storeApp.token}`,
+            Authorization: `Bearer ${storeApp.tokenInstruktur}`,
           },
         })
         .then((res) => {

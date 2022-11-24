@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/Sidebar/Panitia.vue";
 import { onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { appStore } from "@/stores/app";
@@ -31,7 +31,7 @@ onMounted(() => {
   axios
     .get(`${storeApp.baseurl}cbt/panitia/soal/${route.params.id_soal}/show`, {
       headers: {
-        Authorization: `Bearer ${storeApp.token}`,
+        Authorization: `Bearer ${storeApp.tokenPanitia}`,
       },
     })
     .then((res) => {
@@ -77,7 +77,7 @@ function submit() {
       form,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenPanitia}`,
         },
       }
     )
@@ -105,7 +105,7 @@ function destroyOpsi(data, iopt) {
           `${storeApp.baseurl}cbt/panitia/soal/${route.params.id_soal}/destroy-opsi/${data.id}`,
           {
             headers: {
-              Authorization: `Bearer ${storeApp.token}`,
+              Authorization: `Bearer ${storeApp.tokenPanitia}`,
             },
           }
         )

@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/Sidebar/Administrator.vue";
 import { onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { appStore } from "@/stores/app";
@@ -31,7 +31,7 @@ onMounted(() => {
       `${storeApp.baseurl}cbt/admin-pusbang/soal/${route.params.id_soal}/show`,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenAdministratorPelatihan}`,
         },
       }
     )
@@ -56,7 +56,7 @@ function submit() {
       form,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenAdministratorPelatihan}`,
         },
       }
     )

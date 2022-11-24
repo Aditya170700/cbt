@@ -1,6 +1,6 @@
 import test from '@/router/dashboard/administrator/test/index.js';
 import soal from '@/router/dashboard/administrator/soal/index.js';
-import mAuth from "@/middleware/auth.js";
+import mAuth from "@/middleware/authAdministratorPelatihan.js";
 
 let routes = [
   {

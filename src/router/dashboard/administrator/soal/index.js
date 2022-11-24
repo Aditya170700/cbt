@@ -1,4 +1,4 @@
-import mAuth from "@/middleware/auth.js";
+import mAuth from "@/middleware/authAdministratorPelatihan.js";
 
 let routes = [
   {

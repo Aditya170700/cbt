@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import dashboard from "@/router/dashboard";
+import auth from "@/router/auth.js";
 import dashboardNonPnbp from "@/router/dashboard-non-pnbp/index.js";
 import other from "@/router/other.js";
-import mAuth from "@/middleware/auth.js";
+import mAuthInstruktur from "@/middleware/authInstruktur.js";
+import mAuthPeserta from "@/middleware/authPeserta.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +16,7 @@ const router = createRouter({
         page: "peserta",
         group: "peserta",
         role: "peserta",
-        middleware: [mAuth],
+        middleware: [mAuthPeserta],
       },
       component: () => import("@/views/Peserta.vue"),
     },
@@ -25,10 +27,11 @@ const router = createRouter({
         page: "instruktur",
         group: "instruktur",
         role: "instruktur",
-        middleware: [mAuth],
+        middleware: [mAuthInstruktur],
       },
       component: () => import("@/views/Instruktur.vue"),
     },
+    ...auth,
     ...dashboard,
     ...dashboardNonPnbp,
     ...other,

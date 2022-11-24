@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/Sidebar.vue";
+import Sidebar from "@/components/Dashboard/Sidebar/Peserta.vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
@@ -26,7 +26,7 @@ function fetchData() {
       `${storeApp.baseurl}cbt/peserta/test/${route.params.id_diklat}/jawaban/${route.params.id_test}/${route.params.table}`,
       {
         headers: {
-          Authorization: `Bearer ${storeApp.token}`,
+          Authorization: `Bearer ${storeApp.tokenPeserta}`,
         },
       }
     )
