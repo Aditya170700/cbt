@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import bg from "@/assets/static/bg-1.png";
-import logo from "@/assets/static/logo-1.png";
+import logo from "@/assets/img/cbt-logo.png";
 import { onMounted, reactive } from "vue";
 import { appStore } from "@/stores/app";
 import { useRoute, useRouter } from "vue-router";
@@ -37,7 +37,7 @@ function submit() {
   form.errors = null;
   form.loading = true;
   axios
-    .post(`${storeApp.baseurl}auth/reset-password`, form, {
+    .post(`${storeApp.baseurl}cbt/auth/reset-password`, form, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function submit() {
       >
         <div class="container position-relative">
           <div
-            class="row bg-purple position-absolute rounded-2"
+            class="row bg-info-1 position-absolute rounded-2 text-dark"
             style="max-width: 1100px; top: 170px; left: 120px"
           >
             <div class="col-lg-7 bg-white p-5 rounded-2">
@@ -124,7 +124,7 @@ function submit() {
                 <div class="col-12">
                   <div class="d-grid mb-3 px-5">
                     <button
-                      class="btn bg-blue"
+                      class="btn bg-info-1 text-white"
                       @click="submit"
                       :disabled="form.loading"
                     >
@@ -169,7 +169,7 @@ function submit() {
       >
         <div class="container position-relative">
           <div
-            class="row bg-purple position-absolute"
+            class="row bg-info text-white position-absolute"
             style="max-width: 90%; top: 130px; left: 30px"
           >
             <div class="col-lg-7 bg-white p-5">
