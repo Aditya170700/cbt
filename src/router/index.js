@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { createRouter, createWebHistory } from "vue-router";
 import dashboard from "@/router/dashboard";
 import auth from "@/router/auth.js";
@@ -9,6 +10,16 @@ import mAuthPeserta from "@/middleware/authPeserta.js";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/redirect",
+      name: "redirect",
+      meta: {
+        page: "redirect",
+        group: "redirect",
+        role: "redirect",
+      },
+      component: () => import("@/views/Redirect.vue"),
+    },
     {
       path: "/peserta",
       name: "peserta",
