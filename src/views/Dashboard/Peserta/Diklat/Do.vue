@@ -9,10 +9,7 @@ import { useRoute, useRouter } from "vue-router";
 import Spinner from "@/components/Spinner.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import BlotFormatter from "quill-blot-formatter";
-import ImageUploader from "quill-image-uploader";
 import {
-  clearBase64,
   confirmation,
   alertSuccess,
   alertError,
@@ -32,40 +29,6 @@ let result = reactive({
   detik: 0,
   submitLoading: false,
 });
-let quillImageUploader = {
-  name: "imageUploader",
-  module: ImageUploader,
-  options: {
-    upload: (file) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-          axios
-            .post(`${storeApp.baseurl}quill/image-uploader`, {
-              image: clearBase64(e.target.result),
-              ext: file.name.split(".").pop().toLowerCase(),
-            })
-            .then((res) => {
-              if (res.data.status != 200) throw new Error(res.data.message);
-              resolve(res.data.data);
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        };
-        reader.onerror = (error) => reject(error);
-      });
-    },
-  },
-};
-let quillBlotFormatter = {
-  name: "blotFormatter",
-  module: BlotFormatter,
-  options: {
-    /* options */
-  },
-};
 
 onMounted(() => {
   fetchData();
@@ -291,7 +254,6 @@ function storeToDb() {
                       contentType="html"
                       style="height: 300px"
                       toolbar="full"
-                      :modules="[quillImageUploader, quillBlotFormatter]"
                     />
                   </div>
                 </div>
