@@ -87,7 +87,18 @@ function fetchData() {
               <div class="card-body rounded-4 p-4">
                 <div class="h6 fw-bold">{{ data.nama }}</div>
                 <div class="small mb-3">{{ data.created_at }}</div>
-                <div class="four-line" v-html="data.deskripsi"></div>
+                <div class="four-line mb-3" v-html="data.deskripsi"></div>
+                <div class="small">
+                  <span class="fw-bold">UPT</span>
+                  <span>: {{ data.nm_lembaga }}</span>
+                </div>
+                <div class="small">
+                  <span class="fw-bold">Pelaksanaan</span>
+                  <span class="small"
+                    >:
+                    {{ `${data.tgl}, ${data.mulai} - ${data.selesai}` }}</span
+                  >
+                </div>
                 <div class="row mt-3">
                   <div class="col-12">
                     <router-link
