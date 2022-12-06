@@ -44,7 +44,7 @@ function logout() {
                 aria-expanded="false"
                 v-if="user"
                 >{{ user.username }}
-                <span class="small d-sm-none d-lg-inline"
+                <span class="small d-none d-lg-inline"
                   >({{ user.role }})</span
                 ></a
               ><a

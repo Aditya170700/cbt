@@ -20,12 +20,6 @@ onMounted(() => {
   user.value = JSON.parse(storeApp.userAdministratorPelatihan);
 });
 
-function logout() {
-  localStorage.removeItem("tokenAdministratorPelatihan");
-  localStorage.removeItem("userAdministratorPelatihan");
-  window.location.href = "/";
-}
-
 function refreshToken() {
   axios
     .get(`${storeApp.baseurl}auth/refresh-token`, {
@@ -164,9 +158,8 @@ function sidebar() {
               </div>
             </div>
           </router-link>
-          <a
-            href="#"
-            @click.prevent="logout"
+          <router-link
+            :to="{ name: 'administrator' }"
             class="text-white text-decoration-none"
           >
             <div class="item logout d-flex align-items-center">
@@ -174,11 +167,11 @@ function sidebar() {
                 style="width: 20px"
                 class="icons d-flex justify-content-center me-2"
               >
-                <i class="fas fa-power-off"></i>
+                <i class="fas fa-arrow-left"></i>
               </div>
-              <div>Logout</div>
+              <div>Keluar</div>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
