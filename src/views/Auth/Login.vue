@@ -61,7 +61,7 @@ function submit() {
             "userAdministratorPelatihan",
             res.data.data.user
           );
-          r = router.resolve({ name: "dashboard-administrator" });
+          r = router.resolve({ name: "administrator" });
           window.location.href = r.href;
           break;
         case "admin-lemdik":
@@ -94,7 +94,7 @@ function submit() {
           alertSuccess(res.data.message);
           localStorage.setItem("tokenPanitia", res.data.data.token);
           localStorage.setItem("userPanitia", res.data.data.user);
-          r = router.resolve({ name: "dashboard-panitia" });
+          r = router.resolve({ name: "panitia" });
           window.location.href = r.href;
           break;
         default:

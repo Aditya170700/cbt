@@ -1,11 +1,14 @@
 /* eslint-disable no-undef */
 import { createRouter, createWebHistory } from "vue-router";
 import dashboard from "@/router/dashboard";
+import dashboardLsp from "@/router/dashboard-lsp/index.js";
 import auth from "@/router/auth.js";
 import dashboardNonPnbp from "@/router/dashboard-non-pnbp/index.js";
 import other from "@/router/other.js";
 import mAuthInstruktur from "@/middleware/authInstruktur.js";
 import mAuthPeserta from "@/middleware/authPeserta.js";
+import mAuthAdministrator from "@/middleware/authAdministratorPelatihan.js";
+import mAuthPanitia from "@/middleware/authPanitia.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,8 +45,31 @@ const router = createRouter({
       },
       component: () => import("@/views/Instruktur.vue"),
     },
+    {
+      path: "/administrator",
+      name: "administrator",
+      meta: {
+        page: "administrator",
+        group: "administrator",
+        role: "administrator",
+        middleware: [mAuthAdministrator],
+      },
+      component: () => import("@/views/Administrator.vue"),
+    },
+    {
+      path: "/panitia",
+      name: "panitia",
+      meta: {
+        page: "panitia",
+        group: "panitia",
+        role: "panitia",
+        middleware: [mAuthPanitia],
+      },
+      component: () => import("@/views/Panitia.vue"),
+    },
     ...auth,
     ...dashboard,
+    ...dashboardLsp,
     ...dashboardNonPnbp,
     ...other,
   ],
