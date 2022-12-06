@@ -73,24 +73,29 @@ function fetchData() {
         <div class="row px-2" v-else>
           <div class="col-12 mb-4">
             <div class="row">
-              <div class="col-1 fw-bold">Test</div>
-              <div class="col-11">{{ result.data?.test?.nama }}</div>
+              <div class="col-3 col-lg-1 fw-bold">Test</div>
+              <div class="col-9 col-lg-11">{{ result.data?.test?.nama }}</div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Deskripsi</div>
-              <div class="col-11" v-html="result.data?.test?.deskripsi"></div>
+              <div class="col-3 col-lg-1 fw-bold">Deskripsi</div>
+              <div
+                class="col-9 col-lg-11"
+                v-html="result.data?.test?.deskripsi"
+              ></div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Tanggal</div>
-              <div class="col-11">{{ result.data?.test?.tgl }}</div>
+              <div class="col-3 col-lg-1 fw-bold">Tanggal</div>
+              <div class="col-9 col-lg-11">{{ result.data?.test?.tgl }}</div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Mulai</div>
-              <div class="col-11">{{ result.data?.test?.mulai }}</div>
+              <div class="col-3 col-lg-1 fw-bold">Mulai</div>
+              <div class="col-9 col-lg-11">{{ result.data?.test?.mulai }}</div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Selesai</div>
-              <div class="col-11">{{ result.data?.test?.selesai }}</div>
+              <div class="col-3 col-lg-1 fw-bold">Selesai</div>
+              <div class="col-9 col-lg-11">
+                {{ result.data?.test?.selesai }}
+              </div>
             </div>
           </div>
           <div

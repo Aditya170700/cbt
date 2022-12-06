@@ -120,47 +120,47 @@ function listJawaban(data) {
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2 mb-4" v-else>
-          <div class="col-2">
+          <div class="col-5 col-lg-2">
             <div class="fw-bold">Jenis Diklat</div>
           </div>
-          <div class="col-10">
+          <div class="col-7 col-lg-10">
             :
             {{
               result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
                 .parent.name
             }}
           </div>
-          <div class="col-2">
+          <div class="col-5 col-lg-2">
             <div class="fw-bold">Kategori Diklat</div>
           </div>
-          <div class="col-10">
+          <div class="col-7 col-lg-10">
             :
             {{
               result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
                 .name
             }}
           </div>
-          <div class="col-2">
+          <div class="col-5 col-lg-2">
             <div class="fw-bold">Program Diklat</div>
           </div>
-          <div class="col-10">
+          <div class="col-7 col-lg-10">
             :
             {{
               result.data.jenis_diklat_referensi_diklat_pnbp
                 .referensi_diklat_pnbp.name
             }}
           </div>
-          <div class="col-2">
+          <div class="col-5 col-lg-2">
             <div class="fw-bold">Lembaga</div>
           </div>
-          <div class="col-10">
+          <div class="col-7 col-lg-10">
             :
             {{ result.data.profil_lemdik.nm_lembaga }}
           </div>
-          <div class="col-2">
+          <div class="col-5 col-lg-2">
             <div class="fw-bold">Tanggal Pelaksanaan</div>
           </div>
-          <div class="col-10">
+          <div class="col-7 col-lg-10">
             :
             {{ result.data.tgl_pelaksanaan }}
           </div>
