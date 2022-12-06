@@ -97,18 +97,18 @@ function fetchData() {
                 <div class="card-body rounded-4 p-4">
                   <div class="h5 fw-bold">
                     {{
-                      data.jenis_diklat_referensi_diklat_pnbp
-                        .referensi_diklat_pnbp.name
+                      data.jenis_diklat_referensi_diklat_lsp
+                        .referensi_diklat_lsp.name
                     }}
                   </div>
                   <div class="h6 fw-bold">
                     {{
-                      data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
+                      data.jenis_diklat_referensi_diklat_lsp.jenis_diklat_lsp
                         .parent.name
                     }}
                     /
                     {{
-                      data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
+                      data.jenis_diklat_referensi_diklat_lsp.jenis_diklat_lsp
                         .name
                     }}
                   </div>

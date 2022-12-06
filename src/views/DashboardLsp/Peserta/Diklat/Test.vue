@@ -126,7 +126,7 @@ function listJawaban(data) {
           <div class="col-10">
             :
             {{
-              result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
+              result.data.jenis_diklat_referensi_diklat_lsp.jenis_diklat_lsp
                 .parent.name
             }}
           </div>
@@ -136,7 +136,7 @@ function listJawaban(data) {
           <div class="col-10">
             :
             {{
-              result.data.jenis_diklat_referensi_diklat_pnbp.jenis_diklat_pnbp
+              result.data.jenis_diklat_referensi_diklat_lsp.jenis_diklat_lsp
                 .name
             }}
           </div>
@@ -146,8 +146,8 @@ function listJawaban(data) {
           <div class="col-10">
             :
             {{
-              result.data.jenis_diklat_referensi_diklat_pnbp
-                .referensi_diklat_pnbp.name
+              result.data.jenis_diklat_referensi_diklat_lsp.referensi_diklat_lsp
+                .name
             }}
           </div>
           <div class="col-2">

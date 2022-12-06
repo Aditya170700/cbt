@@ -148,14 +148,18 @@ function removeSoal(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="h4 fw-bold">{{ result?.data?.nama }}</div>
-          <div>
-            <router-link
-              :to="{ name: 'dashboard-lsp-panitia-test' }"
-              class="btn btn-sm btn-light rounded-2"
-            >
-              <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
-            >
+          <div class="col-6">
+            <div class="h4 fw-bold">{{ result?.data?.nama }}</div>
+          </div>
+          <div class="col-6 text-end">
+            <div>
+              <router-link
+                :to="{ name: 'dashboard-lsp-panitia-test' }"
+                class="btn btn-sm btn-light rounded-2"
+              >
+                <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
+              >
+            </div>
           </div>
         </div>
         <div class="row px-2" v-if="result.loading">
@@ -164,7 +168,7 @@ function removeSoal(data) {
         <div class="row px-2" v-else>
           <div class="col-12 mb-3">
             <div class="row">
-              <div class="col-auto">
+              <div class="col-lg-4 mb-3">
                 <div class="card border-0">
                   <div
                     class="card-body bg-success text-white rounded-2 border-0 shadow-lg"
@@ -176,7 +180,7 @@ function removeSoal(data) {
                   </div>
                 </div>
               </div>
-              <div class="col-auto">
+              <div class="col-lg-4 mb-3">
                 <div class="card border-0">
                   <div
                     class="card-body bg-warning text-white rounded-2 border-0 shadow-lg"
@@ -188,7 +192,7 @@ function removeSoal(data) {
                   </div>
                 </div>
               </div>
-              <div class="col-auto">
+              <div class="col-lg-4 mb-3">
                 <div class="card border-0">
                   <div
                     class="card-body bg-info-1 text-white rounded-2 border-0 shadow-lg"

@@ -82,20 +82,24 @@ function submitNilai(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="h4 fw-bold">Input Nilai</div>
-          <div>
-            <router-link
-              :to="{
-                name: 'dashboard-lsp-instruktur-test-nilai',
-                params: {
-                  id_test: route.params.id_test,
-                  table: route.params.table,
-                },
-              }"
-              class="btn btn-sm btn-light rounded-2"
-            >
-              <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
-            >
+          <div class="col-6">
+            <div class="h4 fw-bold">Input Nilai</div>
+          </div>
+          <div class="col-6 text-end">
+            <div>
+              <router-link
+                :to="{
+                  name: 'dashboard-lsp-instruktur-test-nilai',
+                  params: {
+                    id_test: route.params.id_test,
+                    table: route.params.table,
+                  },
+                }"
+                class="btn btn-sm btn-light rounded-2"
+              >
+                <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
+              >
+            </div>
           </div>
         </div>
         <div class="row px-2" v-if="result.loading">
@@ -106,24 +110,29 @@ function submitNilai(data) {
         <div class="row px-2" v-else>
           <div class="col-12 mb-4">
             <div class="row">
-              <div class="col-1 fw-bold">Test</div>
-              <div class="col-11">{{ result.data?.test?.nama }}</div>
+              <div class="col-4 col-lg-1 fw-bold">Test</div>
+              <div class="col-8 col-lg-11">{{ result.data?.test?.nama }}</div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Deskripsi</div>
-              <div class="col-11" v-html="result.data?.test?.deskripsi"></div>
+              <div class="col-4 col-lg-1 fw-bold">Deskripsi</div>
+              <div
+                class="col-8 col-lg-11"
+                v-html="result.data?.test?.deskripsi"
+              ></div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Tanggal</div>
-              <div class="col-11">{{ result.data?.test?.tgl }}</div>
+              <div class="col-4 col-lg-1 fw-bold">Tanggal</div>
+              <div class="col-8 col-lg-11">{{ result.data?.test?.tgl }}</div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Mulai</div>
-              <div class="col-11">{{ result.data?.test?.mulai }}</div>
+              <div class="col-4 col-lg-1 fw-bold">Mulai</div>
+              <div class="col-8 col-lg-11">{{ result.data?.test?.mulai }}</div>
             </div>
             <div class="row">
-              <div class="col-1 fw-bold">Selesai</div>
-              <div class="col-11">{{ result.data?.test?.selesai }}</div>
+              <div class="col-4 col-lg-1 fw-bold">Selesai</div>
+              <div class="col-8 col-lg-11">
+                {{ result.data?.test?.selesai }}
+              </div>
             </div>
           </div>
           <div
