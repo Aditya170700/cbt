@@ -82,21 +82,25 @@ function submitNilai(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="h4 fw-bold">Input Nilai</div>
-          <div>
-            <router-link
-              :to="{
-                name: 'dashboard-non-pnbp-admin-lemdik-test-nilai',
-                params: {
-                  id_lemdik: route.params.id_lemdik,
-                  id_test: route.params.id_test,
-                  table: route.params.table,
-                },
-              }"
-              class="btn btn-sm btn-light rounded-2"
-            >
-              <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
-            >
+          <div class="col-6">
+            <div class="h4 fw-bold">Input Nilai</div>
+          </div>
+          <div class="col-6 text-end">
+            <div>
+              <router-link
+                :to="{
+                  name: 'dashboard-non-pnbp-admin-lemdik-test-nilai',
+                  params: {
+                    id_lemdik: route.params.id_lemdik,
+                    id_test: route.params.id_test,
+                    table: route.params.table,
+                  },
+                }"
+                class="btn btn-sm btn-light rounded-2"
+              >
+                <i class="fas fa-arrow-left me-2"></i>Kembali</router-link
+              >
+            </div>
           </div>
         </div>
         <div class="row px-2" v-if="result.loading">
