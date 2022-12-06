@@ -23,13 +23,8 @@ function logout() {
   <div>
     <div class="fixed-top">
       <nav class="py-2 bg-info-1 border-bottom">
-        <div class="px-2 d-flex flex-wrap">
+        <div class="px-2 d-flex">
           <ul class="nav me-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link link-light px-2"
-                ><i class="fas fa-bars me-2"></i
-              ></a>
-            </li>
             <li class="nav-item">
               <a
                 href="#"
@@ -49,7 +44,9 @@ function logout() {
                 aria-expanded="false"
                 v-if="user"
                 >{{ user.username }}
-                <span class="small">({{ user.role }})</span></a
+                <span class="small d-sm-none d-lg-inline"
+                  >({{ user.role }})</span
+                ></a
               ><a
                 href="#"
                 class="nav-link link-light px-2 dropdown-toggle"
@@ -110,6 +107,30 @@ function logout() {
               <div class="row py-4" style="height: 200px">
                 <div class="col-lg-12 mb-3 text-white">
                   <div class="h5 fw-bold">Diklat Lemdik</div>
+                </div>
+                <div class="col-lg-12">
+                  <i
+                    class="fas fa-building-shield fa-4x"
+                    style="width: 100%"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="col-lg-2 mb-3">
+          <router-link
+            :to="{ name: 'dashboard-lsp-instruktur' }"
+            class="text-decoration-none text-dark"
+          >
+            <div
+              class="card bg-info-1 text-center shadow rounded-4 hovered pointer"
+            >
+              <div class="row py-4" style="height: 200px">
+                <div class="col-lg-12 mb-3 text-white">
+                  <div class="h5 fw-bold">
+                    LSP P2 Pusat Pengembangan SDM Perhubungan Laut
+                  </div>
                 </div>
                 <div class="col-lg-12">
                   <i
