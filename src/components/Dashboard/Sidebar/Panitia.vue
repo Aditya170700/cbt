@@ -11,6 +11,7 @@ let widthContent = window.innerWidth;
 let route = useRoute();
 const storeApp = appStore();
 let user = ref(null);
+let open = ref(false);
 
 onMounted(() => {
   if (storeApp.tokenPanitia) {
@@ -18,12 +19,6 @@ onMounted(() => {
   }
   user.value = JSON.parse(storeApp.userPanitia);
 });
-
-function logout() {
-  localStorage.removeItem("tokenPanitia");
-  localStorage.removeItem("userPanitia");
-  window.location.href = "/";
-}
 
 function refreshToken() {
   axios
@@ -48,6 +43,14 @@ function refreshToken() {
       });
     });
 }
+
+function sidebar() {
+  document.querySelector(".sidebar").classList.toggle("hide");
+  document.querySelector(".content").classList.toggle("hide");
+  document.querySelector(".main-content").classList.toggle("hide");
+  // document.querySelector(".content-footer").classList.toggle("hide");
+  open.value = !open.value;
+}
 </script>
 
 <template>
@@ -56,7 +59,12 @@ function refreshToken() {
       :class="`sidebar bg-gray-mice shadow ${widthContent > 992 ? '' : 'hide'}`"
     >
       <div class="d-flex justify-content-end d-lg-none">
-        <i class="fas fa-times" @click="sidebar"></i>
+        <img
+          :src="logoSidebar"
+          alt="Logo Sidebar"
+          style="width: 90%"
+          class="img-fluid"
+        />
       </div>
       <div
         class="d-none d-lg-block text-decoration-none text-center text-white"
@@ -144,9 +152,8 @@ function refreshToken() {
               </div>
             </div>
           </router-link>
-          <a
-            href="#"
-            @click.prevent="logout"
+          <router-link
+            :to="{ name: 'panitia' }"
             class="text-white text-decoration-none"
           >
             <div class="item logout d-flex align-items-center">
@@ -154,11 +161,11 @@ function refreshToken() {
                 style="width: 20px"
                 class="icons d-flex justify-content-center me-2"
               >
-                <i class="fas fa-power-off"></i>
+                <i class="fas fa-arrow-left"></i>
               </div>
-              <div>Logout</div>
+              <div>Keluar</div>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -210,8 +217,16 @@ function refreshToken() {
                   style="width: 15%"
                 />
                 <div class="menu-bar">
-                  <i class="fas fa-bars text-white me-3" @click="sidebar"></i>
-                  <i class="fas fa-ellipsis text-white"></i>
+                  <i
+                    class="fas fa-bars text-dark fa-2x"
+                    @click="sidebar"
+                    v-if="!open"
+                  ></i>
+                  <i
+                    class="fas fa-times text-dark fa-2x"
+                    @click="sidebar"
+                    v-else
+                  ></i>
                 </div>
               </div>
             </div>
