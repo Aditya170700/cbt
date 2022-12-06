@@ -127,24 +127,24 @@ function listJawaban(data) {
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2 mb-4" v-else>
-          <div class="col-2">
+          <div class="col-4 col-lg-2">
             <div class="fw-bold">Judul</div>
           </div>
-          <div class="col-10">
+          <div class="col-8 col-lg-10">
             :
             {{ result.data.header }}
           </div>
-          <div class="col-2">
+          <div class="col-4 col-lg-2">
             <div class="fw-bold">Pelaksanaan</div>
           </div>
-          <div class="col-10">
+          <div class="col-8 col-lg-10">
             :
             {{ `${result.data.mulai} - ${result.data.selesai}` }}
           </div>
-          <div class="col-2">
+          <div class="col-4 col-lg-2">
             <div class="fw-bold">Jumlah Peserta</div>
           </div>
-          <div class="col-10">
+          <div class="col-8 col-lg-10">
             :
             {{ result.data.peserta_count }}
           </div>

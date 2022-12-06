@@ -65,8 +65,8 @@ function fetchData() {
           </div>
         </div>
         <div class="row px-2" v-else>
-          <div class="col-2 fw-bold">Jenis Diklat</div>
-          <div class="col-10">
+          <div class="col-4 col-lg-2 fw-bold">Jenis Diklat</div>
+          <div class="col-8 col-lg-10">
             :
             {{
               result.data?.jenis_diklat_referensi_diklat?.jenis_diklat?.parent
@@ -75,15 +75,15 @@ function fetchData() {
             /
             {{ result.data?.jenis_diklat_referensi_diklat?.jenis_diklat?.name }}
           </div>
-          <div class="col-2 fw-bold">Program Diklat</div>
-          <div class="col-10">
+          <div class="col-4 col-lg-2 fw-bold">Program Diklat</div>
+          <div class="col-8 col-lg-10">
             :
             {{
               result.data?.jenis_diklat_referensi_diklat?.referensi_diklat?.name
             }}
           </div>
-          <div class="col-2 fw-bold">Pelaksanaan</div>
-          <div class="col-10">
+          <div class="col-4 col-lg-2 fw-bold">Pelaksanaan</div>
+          <div class="col-8 col-lg-10">
             : {{ result.data?.tgl_penerbitan }} s.d
             {{ result.data?.tgl_berakhir }}
           </div>

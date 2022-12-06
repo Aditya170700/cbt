@@ -196,101 +196,6 @@ function storeToDb() {
           <div class="h4 fw-bold">Kerjakan Test</div>
         </div>
         <div class="row px-2">
-          <div
-            :class="`col-lg-9 ${i != result.index ? 'd-none' : ''}`"
-            v-for="(pertanyaan, i) in result.data.pertanyaan"
-            :key="i"
-          >
-            <div class="card rounded-2 shadow-sm">
-              <div
-                class="card-body p-4"
-                v-if="pertanyaan.tipe == 'Multiple Choice'"
-              >
-                <div class="row mb-3">
-                  <div class="col-auto fw-bold">{{ i + 1 }}.</div>
-                  <div
-                    class="col-11 fw-bold"
-                    v-html="pertanyaan.pertanyaan"
-                  ></div>
-                </div>
-                <div
-                  class="row mb-2"
-                  v-for="(opsi, iOpsi) in pertanyaan.options"
-                  :key="iOpsi"
-                >
-                  <div class="col-auto fw-bold">&nbsp;</div>
-                  <div
-                    class="col-11 d-flex justify-content-start align-items-center"
-                  >
-                    <div
-                      :class="`rounded-circle ${
-                        opsi.id == pertanyaan.jawaban
-                          ? 'bg-success'
-                          : 'bg-light'
-                      } border me-2 hovered pointer`"
-                      style="width: 25px; height: 25px"
-                      @click="pertanyaan.jawaban = opsi.id"
-                    ></div>
-                    <span
-                      class="fw-bold small hovered pointer"
-                      @click="pertanyaan.jawaban = opsi.id"
-                      >{{ opsi.value }}</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="card-body p-4" v-if="pertanyaan.tipe == 'Essay'">
-                <div class="row mb-3">
-                  <div class="col-auto fw-bold">{{ i + 1 }}.</div>
-                  <div
-                    class="col-11 fw-bold"
-                    v-html="pertanyaan.pertanyaan"
-                  ></div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-auto fw-bold">&nbsp;</div>
-                  <div class="col-11">
-                    <QuillEditor
-                      theme="snow"
-                      v-model:content="pertanyaan.jawaban"
-                      contentType="html"
-                      style="height: 300px"
-                      toolbar="full"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="card-body p-4 d-flex justify-content-between align-items-center"
-              >
-                <button
-                  class="btn btn-sm rounded-2 btn-light border"
-                  v-if="i != 0"
-                  @click.prevent="result.index = i - 1"
-                >
-                  <i class="fas fa-angles-left me-2"></i>Sebelumnya
-                </button>
-                <span v-if="i == 0">&nbsp;</span>
-                <button
-                  class="btn btn-sm rounded-2 bg-info-1 border text-white"
-                  @click.prevent="selanjutnya(result.data.pertanyaan[i], i + 1)"
-                  v-if="i != result.data.pertanyaan.length - 1"
-                >
-                  Selanjutnya<i class="fas fa-angles-right ms-2"></i>
-                </button>
-                <button
-                  class="btn btn-sm rounded-2 bg-success border text-white"
-                  :disabled="result.submitLoading"
-                  v-if="i == result.data.pertanyaan.length - 1"
-                  @click.prevent="submit()"
-                >
-                  <Spinner v-if="result.submitLoading" /><span v-else
-                    ><i class="fas fa-check me-2"></i>Selesai</span
-                  >
-                </button>
-              </div>
-            </div>
-          </div>
           <div class="col-lg-3">
             <div class="card rounded-2 shadow-sm">
               <div class="card-body p-4">
@@ -363,6 +268,103 @@ function storeToDb() {
                     </table>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div
+            :class="`col-lg-9 ${i != result.index ? 'd-none' : ''}`"
+            v-for="(pertanyaan, i) in result.data.pertanyaan"
+            :key="i"
+          >
+            <div class="card rounded-2 shadow-sm">
+              <div
+                class="card-body p-4"
+                v-if="pertanyaan.tipe == 'Multiple Choice'"
+              >
+                <div class="row mb-3">
+                  <div class="col-auto fw-bold">{{ i + 1 }}.</div>
+                  <div
+                    class="col-auto fw-bold"
+                    v-html="pertanyaan.pertanyaan"
+                  ></div>
+                </div>
+                <div
+                  class="row mb-2"
+                  v-for="(opsi, iOpsi) in pertanyaan.options"
+                  :key="iOpsi"
+                >
+                  <div class="col-auto fw-bold">&nbsp;</div>
+                  <div
+                    class="col-11 d-flex justify-content-start align-items-center"
+                  >
+                    <div>
+                      <div
+                        :class="`rounded-circle ${
+                          opsi.id == pertanyaan.jawaban
+                            ? 'bg-success'
+                            : 'bg-light'
+                        } border me-2 hovered pointer`"
+                        style="width: 25px; height: 25px"
+                        @click="pertanyaan.jawaban = opsi.id"
+                      ></div>
+                    </div>
+                    <span
+                      class="fw-bold small hovered pointer"
+                      @click="pertanyaan.jawaban = opsi.id"
+                      >{{ opsi.value }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-4" v-if="pertanyaan.tipe == 'Essay'">
+                <div class="row mb-3">
+                  <div class="col-auto fw-bold">{{ i + 1 }}.</div>
+                  <div
+                    class="col-auto fw-bold"
+                    v-html="pertanyaan.pertanyaan"
+                  ></div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-auto fw-bold">&nbsp;</div>
+                  <div class="col-11">
+                    <QuillEditor
+                      theme="snow"
+                      v-model:content="pertanyaan.jawaban"
+                      contentType="html"
+                      style="height: 300px"
+                      toolbar="full"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="card-body p-4 d-flex justify-content-between align-items-center"
+              >
+                <button
+                  class="btn btn-sm rounded-2 btn-light border"
+                  v-if="i != 0"
+                  @click.prevent="result.index = i - 1"
+                >
+                  <i class="fas fa-angles-left me-2"></i>Sebelumnya
+                </button>
+                <span v-if="i == 0">&nbsp;</span>
+                <button
+                  class="btn btn-sm rounded-2 bg-info-1 border text-white"
+                  @click.prevent="selanjutnya(result.data.pertanyaan[i], i + 1)"
+                  v-if="i != result.data.pertanyaan.length - 1"
+                >
+                  Selanjutnya<i class="fas fa-angles-right ms-2"></i>
+                </button>
+                <button
+                  class="btn btn-sm rounded-2 bg-success border text-white"
+                  :disabled="result.submitLoading"
+                  v-if="i == result.data.pertanyaan.length - 1"
+                  @click.prevent="submit()"
+                >
+                  <Spinner v-if="result.submitLoading" /><span v-else
+                    ><i class="fas fa-check me-2"></i>Selesai</span
+                  >
+                </button>
               </div>
             </div>
           </div>
