@@ -1,9 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import Sidebar from "@/components/Dashboard/SidebarLsp/Instruktur.vue";
-import { onBeforeMount, reactive } from "vue";
+import { onBeforeMount, reactive, watch } from "vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
+import Pagination from "@/components/Dashboard/Pagination.vue";
 import axios from "axios";
 import { alertError, alertSuccess, confirmation } from "@/assets/js/utils";
 
@@ -15,21 +16,20 @@ let result = reactive({
   loading: false,
 });
 let params = reactive({
-  page: 1,
-  limit: 30,
   search: "",
   sort: "desc",
-  type: "MULTIPLE CHOICE",
+  type: "Multiple Choice",
+  per_page: 25,
 });
 
 onBeforeMount(() => {
-  fetchData();
+  fetchData(`${storeApp.baseurl}cbt/lsp/instruktur/soal/list`);
 });
 
-function fetchData() {
+function fetchData(url) {
   result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/lsp/instruktur/soal/list`, {
+    .get(url, {
       headers: {
         Authorization: `Bearer ${storeApp.tokenInstruktur}`,
       },
@@ -64,7 +64,7 @@ function destroy(data) {
           if (res.data.code_response != 200) throw new Error(res.data.message);
           data.loading = false;
           alertSuccess(res.data.message);
-          fetchData();
+          fetchData(`${storeApp.baseurl}cbt/lsp/instruktur/soal/list`);
         })
         .catch((err) => {
           data.loading = false;
@@ -73,6 +73,18 @@ function destroy(data) {
     }
   });
 }
+
+// watch params type
+watch(
+  () => params.type,
+  () => {
+    fetchData(`${storeApp.baseurl}cbt/lsp/instruktur/soal/list`);
+  }
+);
+
+let navigation = (url) => {
+  fetchData(url);
+};
 </script>
 
 <template>
@@ -124,17 +136,17 @@ function destroy(data) {
           <div class="col-lg-8 mb-2">
             <button
               :class="`btn btn-sm btn${
-                params.type == 'MULTIPLE CHOICE' ? '' : '-outline'
+                params.type == 'Multiple Choice' ? '' : '-outline'
               }-primary rounded-2 me-2 px-3 mb-2`"
-              @click="params.type = 'MULTIPLE CHOICE'"
+              @click="params.type = 'Multiple Choice'"
             >
               <i class="fas fa-list me-2"></i>MULTIPLE CHOICE
             </button>
             <button
               :class="`btn btn-sm btn${
-                params.type == 'ESSAY' ? '' : '-outline'
+                params.type == 'Essay' ? '' : '-outline'
               }-info rounded-2 me-2 px-3 mb-2`"
-              @click="params.type = 'ESSAY'"
+              @click="params.type = 'Essay'"
             >
               <i class="far fa-file me-2"></i>ESSAY
             </button>
@@ -147,11 +159,15 @@ function destroy(data) {
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="btn-search"
+                v-model="params.search"
               />
               <button
                 class="btn btn-success rounded-2 border-0"
                 type="button"
                 id="btn-search"
+                @click="
+                  fetchData(`${storeApp.baseurl}cbt/lsp/instruktur/soal/list`)
+                "
               >
                 <i class="fas fa-magnifying-glass"></i>
               </button>
@@ -197,6 +213,14 @@ function destroy(data) {
                 <div class="one-line">{{ data.tipe }}</div>
               </div>
             </div>
+          </div>
+          <div class="col-lg-12">
+            <Pagination
+              v-if="result.data?.length > 0"
+              :data="result.meta"
+              ammount="Soal"
+              :function="navigation"
+            />
           </div>
         </div>
       </div>
