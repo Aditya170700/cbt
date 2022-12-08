@@ -21,6 +21,10 @@ let params = reactive({
   type: "Multiple Choice",
   per_page: 25,
 });
+let upload = reactive({
+  type: "",
+  loading: false,
+});
 
 onBeforeMount(() => {
   fetchData(`${storeApp.baseurl}cbt/panitia/soal/list`);
@@ -82,6 +86,36 @@ watch(
 let navigation = (url) => {
   fetchData(url);
 };
+
+function chooseFile(type) {
+  upload.type = type;
+  document.getElementById("file-excel").click();
+}
+
+function changeFile(e) {
+  upload.loading = true;
+  let formData = new FormData();
+  formData.append("file", e.target.files[0]);
+  formData.append("type", upload.type);
+  axios
+    .post(`${storeApp.baseurl}cbt/panitia/soal-import`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${storeApp.tokenPanitia}`,
+      },
+    })
+    .then((res) => {
+      upload.loading = false;
+      e.target.value = null;
+      alertSuccess(res.data.message);
+      fetchData(`${storeApp.baseurl}cbt/panitia/soal/list`);
+    })
+    .catch((err) => {
+      upload.loading = false;
+      e.target.value = null;
+      alertError(err.response.data.message);
+    });
+}
 </script>
 
 <template>
@@ -95,38 +129,104 @@ let navigation = (url) => {
           <div class="col-6 col-lg-6 text-start mb-3">
             <div class="h4 fw-bold">BANK SOAL</div>
           </div>
-          <div class="dropdown">
-            <button
-              class="btn btn-sm btn-outline-success rounded-2 px-3 mb-2 dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="fas fa-plus me-2"></i>CREATE
-            </button>
-            <ul
-              class="dropdown-menu rounded-2"
-              style="position: fixed !important; right: 0; left: auto"
-            >
-              <li>
-                <router-link
-                  class="dropdown-item"
-                  :to="{
-                    name: 'dashboard-panitia-soal-create-multiple-choice',
-                  }"
-                  >MULTIPLE CHOICE</router-link
+          <div class="d-flex">
+            <div class="dropdown me-2">
+              <button
+                class="btn btn-sm btn-outline-info rounded-2 px-3 mb-2 dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span
+                  ><i class="fas fa-download me-2"></i>DOWNLOAD TEMPLATE</span
                 >
-              </li>
-              <li>
-                <router-link
-                  class="dropdown-item"
-                  :to="{
-                    name: 'dashboard-panitia-soal-create-essay',
-                  }"
-                  >ESSAY</router-link
-                >
-              </li>
-            </ul>
+              </button>
+              <ul
+                class="dropdown-menu rounded-2"
+                style="position: fixed !important; right: 0; left: auto"
+              >
+                <li>
+                  <a class="dropdown-item" :href="storeApp.templatePg"
+                    >MULTIPLE CHOICE</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" :href="storeApp.templateEssay"
+                    >ESSAY</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown me-2">
+              <input id="file-excel" type="file" hidden @change="changeFile" />
+              <button
+                class="btn btn-sm btn-outline-primary rounded-2 px-3 mb-2 dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                :disabled="upload.loading"
+              >
+                <Spinner
+                  :color="'primary'"
+                  class="me-2"
+                  v-if="upload.loading"
+                /><span><i class="fas fa-upload me-2"></i>IMPORT</span>
+              </button>
+              <ul
+                class="dropdown-menu rounded-2"
+                style="position: fixed !important; right: 0; left: auto"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    @click.prevent="chooseFile('Multiple Choice')"
+                    >MULTIPLE CHOICE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    @click.prevent="chooseFile('Essay')"
+                    >ESSAY</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button
+                class="btn btn-sm btn-outline-success rounded-2 px-3 mb-2 dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-plus me-2"></i>CREATE
+              </button>
+              <ul
+                class="dropdown-menu rounded-2"
+                style="position: fixed !important; right: 0; left: auto"
+              >
+                <li>
+                  <router-link
+                    class="dropdown-item"
+                    :to="{
+                      name: 'dashboard-panitia-soal-create-multiple-choice',
+                    }"
+                    >MULTIPLE CHOICE</router-link
+                  >
+                </li>
+                <li>
+                  <router-link
+                    class="dropdown-item"
+                    :to="{
+                      name: 'dashboard-panitia-soal-create-essay',
+                    }"
+                    >ESSAY</router-link
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="row px-2 mb-5">
