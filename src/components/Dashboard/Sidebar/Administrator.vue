@@ -53,30 +53,34 @@ function sidebar() {
 }
 
 let participants = ref([
-  {
-    id: "user1",
-    name: "Matteo",
-    imageUrl: "https://avatars3.githubusercontent.com/u/1915989?s=230&v=4",
-  },
-  {
-    id: "user2",
-    name: "Support",
-    imageUrl: "https://avatars3.githubusercontent.com/u/37018832?s=200&v=4",
-  },
+  // {
+  //   id: "user1",
+  //   name: "Matteo",
+  //   imageUrl: "https://avatars3.githubusercontent.com/u/1915989?s=230&v=4",
+  // },
+  // {
+  //   id: "user2",
+  //   name: "Support",
+  //   imageUrl: "https://avatars3.githubusercontent.com/u/37018832?s=200&v=4",
+  // },
 ]);
 let titleImageUrl = ref(
   "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png"
 );
 let messageList = ref([
-  { type: "text", author: `me`, data: { text: `Say yes!` } },
-  { type: "text", author: `user1`, data: { text: `No.` } },
+  { type: "text", author: `me`, data: { text: `Halo pak, saya ada kendala` } },
+  {
+    type: "text",
+    author: `user1`,
+    data: { text: `Halo, ada yang bisa saya bantu?` },
+  },
 ]);
 let newMessagesCount = ref(0);
 let isChatOpen = ref(false);
 let showTypingIndicator = ref("");
 let colors = ref({
   header: {
-    bg: "#4e8cff",
+    bg: "#0179FF",
     text: "#ffffff",
   },
   launcher: {
@@ -356,5 +360,7 @@ function removeMessage(message) {
     @onType="handleOnType"
     @edit="editMessage"
     @remove="removeMessage"
-  />
+  >
+    <template v-slot:header> You, Instruktur </template>
+  </beautiful-chat>
 </template>
