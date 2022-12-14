@@ -139,7 +139,7 @@ function verify() {
                   <div class="col-12">
                     <div class="mb-3 px-5">
                       <label for="username" class="form-label small"
-                        >Username</label
+                        >Username/Email</label
                       >
                       <input
                         type="text"
@@ -177,7 +177,7 @@ function verify() {
                   <div class="col-12">
                     <div class="mb-3 px-5">
                       <vue-recaptcha
-                        sitekey="6LeAdjwiAAAAABkX-LSN3e173q_ftHqk-fwu-obt"
+                        :sitekey="storeApp.captchaKey"
                         :loadRecaptchaScript="true"
                         @verify="verify"
                       ></vue-recaptcha>
@@ -244,7 +244,7 @@ function verify() {
                 <div class="col-12">
                   <div class="mb-3 px-3">
                     <label for="username" class="form-label small"
-                      >Username</label
+                      >Username/Email</label
                     >
                     <input
                       type="text"
@@ -282,7 +282,7 @@ function verify() {
                 <div class="col-12">
                   <div class="mb-3 px-3">
                     <vue-recaptcha
-                      sitekey="6LeAdjwiAAAAABkX-LSN3e173q_ftHqk-fwu-obt"
+                      :sitekey="storeApp.captchaKey"
                       :loadRecaptchaScript="true"
                       @verify="verify"
                     ></vue-recaptcha>

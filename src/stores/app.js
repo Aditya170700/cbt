@@ -8,6 +8,9 @@ export const appStore = defineStore("app", {
     templateEssay: process.env.NODE_ENV == "development" ? "http://localhost:8000/template-essay.xlsx" : "https://api-simple.smartmanagement.id/template-essay.xlsx",
     urlCbt: process.env.NODE_ENV == "development" ? "http://localhost:5174/" : "https://cbt-simple.smartmanagement.id/",
     urlSimpel: process.env.NODE_ENV == "development" ? "http://localhost:5173/" : "https://simple.smartmanagement.id/",
+    
+    captchaKey: process.env.NODE_ENV == "development" ? '6LeAdjwiAAAAABkX-LSN3e173q_ftHqk-fwu-obt' : '6LcO_n0jAAAAAHUVLEZQ5wE41vqTg727ZU5FNCyf',
+
     tokenAdministratorPelatihan: localStorage.getItem("tokenAdministratorPelatihan") || null,
     tokenAdminLemdik: localStorage.getItem("tokenAdminLemdik") || null,
     tokenPanitia: localStorage.getItem("tokenPanitia") || null,
