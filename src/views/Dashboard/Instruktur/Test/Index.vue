@@ -64,11 +64,13 @@ function fetchData() {
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="btn-search"
+                v-model="params.search"
               />
               <button
                 class="btn btn-success rounded-2 border-0"
                 type="button"
                 id="btn-search"
+                @click="fetchData()"
               >
                 <i class="fas fa-magnifying-glass"></i>
               </button>
