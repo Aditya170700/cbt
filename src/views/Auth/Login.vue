@@ -9,10 +9,11 @@ import { appStore } from "@/stores/app";
 import axios from "axios";
 import { alertError, alertSuccess } from "@/assets/js/utils";
 import { useRouter } from "vue-router";
-// import { VueRecaptcha } from "vue-recaptcha";
+import { VueRecaptcha } from "vue-recaptcha";
 
 let router = useRouter();
 const storeApp = appStore();
+let verifyCaptcha = ref(false);
 let receiveNotif = ref(false);
 let form = reactive({
   username: "",
@@ -110,6 +111,10 @@ function submit() {
       }
     });
 }
+
+function verify() {
+  verifyCaptcha.value = true;
+}
 </script>
 
 <template>
@@ -169,14 +174,15 @@ function submit() {
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="col-12">
-                  <div class="mb-3 px-5">
-                    <vue-recaptcha
-                      sitekey="6LeAdjwiAAAAABkX-LSN3e173q_ftHqk-fwu-obt"
-                      :loadRecaptchaScript="true"
-                    ></vue-recaptcha>
+                  <div class="col-12">
+                    <div class="mb-3 px-5">
+                      <vue-recaptcha
+                        sitekey="6LeAdjwiAAAAABkX-LSN3e173q_ftHqk-fwu-obt"
+                        :loadRecaptchaScript="true"
+                        @verify="verify"
+                      ></vue-recaptcha>
+                    </div>
                   </div>
-                </div> -->
                   <div class="col-12">
                     <div class="mb-3 px-5 d-flex justify-content-between">
                       <router-link
@@ -187,7 +193,7 @@ function submit() {
                       <button
                         class="btn btn-sm bg-info-1 rounded-2 text-white"
                         type="submit"
-                        :disabled="form.loading"
+                        :disabled="form.loading || !verifyCaptcha"
                       >
                         <Spinner v-if="form.loading" />
                         <span v-else>Sign In</span>
@@ -273,14 +279,15 @@ function submit() {
                     </div>
                   </div>
                 </div>
-                <!-- <div class="col-12">
+                <div class="col-12">
                   <div class="mb-3 px-3">
                     <vue-recaptcha
                       sitekey="6LeAdjwiAAAAABkX-LSN3e173q_ftHqk-fwu-obt"
                       :loadRecaptchaScript="true"
+                      @verify="verify"
                     ></vue-recaptcha>
                   </div>
-                </div> -->
+                </div>
                 <div class="col-12">
                   <div class="mb-3 px-3 d-flex justify-content-between">
                     <router-link
@@ -291,8 +298,10 @@ function submit() {
                     <button
                       @click.prevent="submit()"
                       class="btn btn-sm bg-info-1 text-white rounded-2"
+                      :disabled="form.loading || !verifyCaptcha"
                     >
-                      Sign In
+                      <Spinner v-if="form.loading" />
+                      <span v-else>Sign In</span>
                     </button>
                   </div>
                 </div>
