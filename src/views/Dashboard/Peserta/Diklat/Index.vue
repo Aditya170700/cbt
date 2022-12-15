@@ -3,10 +3,12 @@
 import Sidebar from "@/components/Dashboard/Sidebar/Peserta.vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
-import { onBeforeMount, reactive } from "vue";
+import { onBeforeMount, reactive, watch } from "vue";
 import axios from "axios";
 import imgStatic from "@/assets/img/static/materi-1.png";
 import { alertSuccess, alertError } from "@/assets/js/utils";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
@@ -15,14 +17,21 @@ let result = reactive({
   meta: null,
   loading: false,
 });
+let lemdik = reactive({
+  data: [],
+  selected: null,
+  loading: false,
+});
 let params = reactive({
   page: 1,
   limit: 10,
   search: "",
+  profil_lemdik_id: "",
 });
 
 onBeforeMount(() => {
   fetchData();
+  fetchDataLemdik();
 });
 
 function fetchData() {
@@ -66,6 +75,36 @@ function print(data) {
       alertError(err.response.data.message);
     });
 }
+
+function fetchDataLemdik() {
+  lemdik.loading = true;
+  axios
+    .get(`${storeApp.baseurl}cbt/peserta/other/lemdik`, {
+      headers: {
+        Authorization: `Bearer ${storeApp.tokenPeserta}`,
+      },
+      params,
+    })
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      lemdik.loading = false;
+      lemdik.data = res.data.data;
+    })
+    .catch((err) => {
+      lemdik.loading = false;
+      console.log(err);
+    });
+}
+
+watch(
+  () => lemdik.selected,
+  (val) => {
+    if (val) {
+      params.profil_lemdik_id = val.id;
+      fetchData();
+    }
+  }
+);
 </script>
 
 <template>
@@ -76,8 +115,17 @@ function print(data) {
     >
       <div class="container p-lg-4">
         <div class="d-flex px-2 mb-4 justify-content-between">
-          <div class="col-lg-9 text-start mb-3">
+          <div class="col-lg-6 text-start mb-3">
             <div class="h4 fw-bold">List Diklat</div>
+          </div>
+          <div class="col-lg-3 me-2">
+            <vSelect
+              :options="lemdik.data"
+              label="nm_lembaga"
+              v-model="lemdik.selected"
+              :placeholder="'Cari Lembaga Didik'"
+              class="shadow"
+            />
           </div>
           <div class="col-lg-3 text-end">
             <div class="input-group mb-3 bg-white rounded-2 shadow">
