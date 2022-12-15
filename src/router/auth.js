@@ -37,6 +37,24 @@ let routes = [
       middleware: [mNoAuth],
     },
   },
+  {
+    path: "/unverified",
+    name: "auth-unverified",
+    component: () => import("@/views/Auth/Unverified.vue"),
+    meta: {
+      group: "auth",
+      middleware: [mNoAuth],
+    },
+  },
+  {
+    path: "/verifikasi",
+    name: "auth-verifikasi",
+    component: () => import("@/views/Auth/Verifikasi.vue"),
+    meta: {
+      group: "auth",
+      middleware: [mNoAuth],
+    },
+  },
 ];
 
 export default routes;

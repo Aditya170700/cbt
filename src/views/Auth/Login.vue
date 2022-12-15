@@ -50,6 +50,12 @@ function submit() {
     )
     .then((res) => {
       form.loading = false;
+
+      if (res.data.data.redirect) {
+        window.location.href = res.data.data.redirect;
+        return;
+      }
+
       let r = null;
       switch (res.data.data.role) {
         case "administrator-pelatihan":
