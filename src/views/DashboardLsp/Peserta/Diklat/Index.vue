@@ -6,6 +6,7 @@ import Spinner from "@/components/Spinner.vue";
 import { onBeforeMount, reactive } from "vue";
 import axios from "axios";
 import imgStatic from "@/assets/img/static/materi-1.png";
+import { alertSuccess, alertError } from "@/assets/js/utils";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
@@ -42,6 +43,30 @@ function fetchData() {
     .catch((err) => {
       result.loading = false;
       console.log(err);
+    });
+}
+
+function print(data) {
+  data.loading = true;
+  axios
+    .get(
+      `${storeApp.baseurl}cbt/lsp/peserta/diklat/${data.id}/print-kartu-ujian`,
+      {
+        headers: {
+          Authorization: `Bearer ${storeApp.tokenPeserta}`,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      window.open(res.data.data);
+      data.loading = false;
+      alertSuccess(res.data.message);
+    })
+    .catch((err) => {
+      data.loading = false;
+      console.log(err);
+      alertError(err.response.data.message);
     });
 }
 </script>
@@ -86,17 +111,24 @@ function fetchData() {
             Belum ada course
           </div>
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
-            <router-link
-              :to="{
-                name: 'dashboard-lsp-peserta-diklat-test',
-                params: { id_diklat: data.id },
-              }"
-              class="text-decoration-none text-dark hovered"
-            >
-              <div class="card rounded-5 shadow border position-relative">
-                <div class="position-absolute" style="top: 0; right: -5%"></div>
+            <div class="card rounded-5 shadow border position-relative">
+              <router-link
+                :to="{
+                  name: 'dashboard-lsp-peserta-diklat-test',
+                  params: { id_diklat: data.id },
+                }"
+                class="text-decoration-none text-dark hovered"
+              >
                 <img :src="imgStatic" class="card-img-top" alt="Materi 1" />
-                <div class="card-body rounded-4 p-4">
+              </router-link>
+              <div class="card-body rounded-4 p-4">
+                <router-link
+                  :to="{
+                    name: 'dashboard-lsp-peserta-diklat-test',
+                    params: { id_diklat: data.id },
+                  }"
+                  class="text-decoration-none text-dark hovered"
+                >
                   <div class="h5 fw-bold">
                     {{
                       data.jenis_diklat_referensi_diklat_lsp
@@ -126,9 +158,23 @@ function fetchData() {
                     <span class="fw-bold">Peserta</span>
                     {{ data.jumlah_peserta }} Orang
                   </div>
+                </router-link>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <button
+                      class="btn btn-sm rounded-2 btn-success"
+                      @click="print(data)"
+                      :disabled="data.loading"
+                    >
+                      <Spinner v-if="data.loading" /><span v-else
+                        ><i class="fas fa-print me-2"></i>Cetak Kartu
+                        Ujian</span
+                      >
+                    </button>
+                  </div>
                 </div>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
       </div>
