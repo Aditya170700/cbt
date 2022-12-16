@@ -163,13 +163,16 @@ function listJawaban(data) {
             <div
               :class="`card rounded-4 border hovered pointer`"
               @click.prevent="
-                data.status == 'Belum mengerjakan'
+                data.status == 'Belum mengerjakan' && data.status_waktu == 0
                   ? doTest(data)
                   : listJawaban(data)
               "
             >
               <div class="card-body rounded-4 p-3 position-relative">
                 <div class="h6 fw-bold">{{ data.nama }}</div>
+                <div class="small fw-bold">
+                  {{ `${data.status_waktu_str}` }}
+                </div>
                 <div class="small">
                   {{ `${data.tgl}` }}
                 </div>
