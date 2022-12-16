@@ -306,6 +306,10 @@ function changeFile(e) {
                 <div class="h6 fw-bold one-line" v-html="data.pertanyaan"></div>
                 <div class="small">{{ data.created_at }}</div>
                 <div class="one-line">{{ data.tipe }}</div>
+                <div class="small fw-bold">
+                  Created By :
+                  {{ data.creator?.nm_pengguna ?? data.creator?.email }}
+                </div>
               </div>
             </div>
           </div>
