@@ -98,6 +98,11 @@ function fetchData() {
               </div>
             </div>
           </div>
+          <div class="col-12" v-if="result.data?.pertanyaan?.length <= 0">
+            <div class="alert alert-danger" role="alert">
+              Anda belum mengerjakan tes
+            </div>
+          </div>
           <div
             class="col-12 mb-4"
             v-for="(data, i) in result.data?.pertanyaan"
