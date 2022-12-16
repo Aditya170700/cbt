@@ -20,6 +20,9 @@ let question = reactive({
   data: [],
   loading: false,
 });
+let params = reactive({
+  search: "",
+});
 
 onBeforeMount(() => {
   fetchData();
@@ -59,6 +62,7 @@ function fetchQuestionNotInTest() {
         headers: {
           Authorization: `Bearer ${storeApp.tokenInstruktur}`,
         },
+        params,
       }
     )
     .then((res) => {
@@ -222,6 +226,7 @@ function removeSoal(data) {
                       class="form-control rounded-2"
                       aria-describedby="btn-search"
                       placeholder="Cari..."
+                      v-model="params.search"
                     />
                     <button
                       class="btn btn-success btn-sm rounded-2"
