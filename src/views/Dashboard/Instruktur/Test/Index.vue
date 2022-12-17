@@ -7,6 +7,7 @@ import { onBeforeMount, reactive, watch } from "vue";
 import axios from "axios";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import Pagination from "@/components/Dashboard/Pagination.vue";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
@@ -21,21 +22,20 @@ let lemdik = reactive({
   loading: false,
 });
 let params = reactive({
-  page: 1,
-  limit: 10,
+  per_page: 12,
   search: "",
   profil_lemdik_id: "",
 });
 
 onBeforeMount(() => {
-  fetchData();
+  fetchData(`${storeApp.baseurl}cbt/instruktur/test/list`);
   fetchDataLemdik();
 });
 
-function fetchData() {
+function fetchData(url) {
   result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/instruktur/test/list`, {
+    .get(url, {
       headers: {
         Authorization: `Bearer ${storeApp.tokenInstruktur}`,
       },
@@ -78,10 +78,39 @@ watch(
   (val) => {
     if (val) {
       params.profil_lemdik_id = val.id;
-      fetchData();
+      fetchData(`${storeApp.baseurl}cbt/instruktur/test/list`);
     }
   }
 );
+
+function timer(timer) {
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  const countDown = new Date(timer?.tgl).getTime(),
+    x = setInterval(function () {
+      const now = new Date().getTime(),
+        distance = countDown - now;
+
+      timer.jam = Math.floor((distance % day) / hour);
+      timer.menit = Math.floor((distance % hour) / minute);
+      timer.detik = Math.floor((distance % minute) / second);
+
+      if (distance < 0) {
+        timer.jam = 0;
+        timer.menit = 0;
+        timer.detik = 0;
+
+        clearInterval(x);
+      }
+    }, 0);
+}
+
+let navigation = (url) => {
+  fetchData(url);
+};
 </script>
 
 <template>
@@ -118,7 +147,9 @@ watch(
                 class="btn btn-success rounded-2 border-0"
                 type="button"
                 id="btn-search"
-                @click="fetchData()"
+                @click="
+                  fetchData(`${storeApp.baseurl}cbt/instruktur/test/list`)
+                "
               >
                 <i class="fas fa-magnifying-glass"></i>
               </button>
@@ -135,19 +166,40 @@ watch(
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
             <div class="card rounded-4 shadow border">
               <div class="card-body rounded-4 p-4">
+                <div class="d-flex mb-3 justify-content-between">
+                  <div>
+                    <div class="small fw-bold">
+                      {{ `${data.tgl}` }}
+                    </div>
+                    <div class="small">
+                      {{ `${data.mulai} - ${data.selesai}` }}
+                    </div>
+                  </div>
+                  <div
+                    class="small fw-bold text-success"
+                    v-if="data.status_waktu == 0"
+                  >
+                    {{ timer(data.timer) }}
+                    {{
+                      `${data.timer.jam} Jam ${data.timer.menit} Menit ${data.timer.detik} Detik`
+                    }}
+                  </div>
+                  <div
+                    class="small fw-bold text-warning"
+                    v-else-if="data.status_waktu == 1"
+                  >
+                    {{ data.status_waktu_str }}
+                  </div>
+                  <div class="small fw-bold text-danger" v-else>
+                    {{ data.status_waktu_str }}
+                  </div>
+                </div>
                 <div class="h6 fw-bold">{{ data.nama }}</div>
                 <div class="small mb-3">{{ data.created_at }}</div>
                 <div class="four-line mb-3" v-html="data.deskripsi"></div>
                 <div class="small">
                   <span class="fw-bold">UPT</span>
                   <span>: {{ data.nm_lembaga }}</span>
-                </div>
-                <div class="small">
-                  <span class="fw-bold">Pelaksanaan</span>
-                  <span class="small"
-                    >:
-                    {{ `${data.tgl}, ${data.mulai} - ${data.selesai}` }}</span
-                  >
                 </div>
                 <div class="row mt-3">
                   <div class="col-12">
@@ -173,6 +225,14 @@ watch(
                 </div>
               </div>
             </div>
+          </div>
+          <div class="col-lg-12">
+            <Pagination
+              v-if="result.data?.length > 0"
+              :data="result.meta"
+              ammount="Soal"
+              :function="navigation"
+            />
           </div>
         </div>
       </div>
