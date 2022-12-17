@@ -264,7 +264,7 @@ let navigationNotInTest = (url) => {
                         <th>Tipe</th>
                         <th>Creator</th>
                         <th>Bobot Maks.</th>
-                        <th>Aksi</th>
+                        <th>Pilih Soal</th>
                       </tr>
                     </thead>
                     <tbody v-if="question.loading">
@@ -341,9 +341,9 @@ let navigationNotInTest = (url) => {
               <div class="col-12">
                 <div class="table-responsive">
                   <table class="table table-bordered">
-                    <thead class="bg-info-1">
+                    <thead class="bg-success text-white">
                       <tr>
-                        <th>Aksi</th>
+                        <th>Hapus Soal</th>
                         <th>Pertanyaan</th>
                         <th>Tipe</th>
                         <th>Creator</th>
