@@ -25,6 +25,7 @@ let params = reactive({
   per_page: 12,
   search: "",
   profil_lemdik_id: "",
+  status_waktu: null,
 });
 
 onBeforeMount(() => {
@@ -111,6 +112,13 @@ function timer(timer) {
 let navigation = (url) => {
   fetchData(url);
 };
+
+watch(
+  () => params.status_waktu,
+  () => {
+    fetchData(`${storeApp.baseurl}cbt/lsp/instruktur/test/list`);
+  }
+);
 </script>
 
 <template>
@@ -160,6 +168,40 @@ let navigation = (url) => {
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2" v-else>
+          <div class="col-12 mb-3">
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-light ${
+                params.status_waktu == null ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = null"
+            >
+              Tampilkan Semua
+            </button>
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-warning ${
+                params.status_waktu == 1 ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = 1"
+            >
+              Akan Dilaksanakan
+            </button>
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-success ${
+                params.status_waktu == 0 ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = 0"
+            >
+              Sedang Dilaksanakan
+            </button>
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-danger ${
+                params.status_waktu == 2 ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = 2"
+            >
+              Sudah Dilaksanakan
+            </button>
+          </div>
           <div class="col-12 text-center" v-if="result.data.length == 0">
             Belum ada data
           </div>
