@@ -8,6 +8,7 @@ import axios from "axios";
 import imgStatic from "@/assets/img/static/materi-1.png";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import Pagination from "@/components/Dashboard/Pagination.vue";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
@@ -22,21 +23,21 @@ let lemdik = reactive({
   loading: false,
 });
 let params = reactive({
-  page: 1,
-  limit: 10,
+  per_page: 12,
   search: "",
   profil_lemdik_id: "",
+  status_waktu: null,
 });
 
 onBeforeMount(() => {
-  fetchData();
+  fetchData(`${storeApp.baseurl}cbt/non-pnbp/peserta/diklat/list`);
   fetchDataLemdik();
 });
 
-function fetchData() {
+function fetchData(url) {
   result.loading = true;
   axios
-    .get(`${storeApp.baseurl}cbt/non-pnbp/peserta/diklat/list`, {
+    .get(url, {
       headers: {
         Authorization: `Bearer ${storeApp.tokenPeserta}`,
       },
@@ -79,8 +80,19 @@ watch(
   (val) => {
     if (val) {
       params.profil_lemdik_id = val.id;
-      fetchData();
+      fetchData(`${storeApp.baseurl}cbt/non-pnbp/peserta/diklat/list`);
     }
+  }
+);
+
+let navigation = (url) => {
+  fetchData(url);
+};
+
+watch(
+  () => params.status_waktu,
+  () => {
+    fetchData(`${storeApp.baseurl}cbt/non-pnbp/peserta/diklat/list`);
   }
 );
 </script>
@@ -119,7 +131,11 @@ watch(
                 class="btn btn-success rounded-2 border-0"
                 type="button"
                 id="btn-search"
-                @click="fetchData()"
+                @click="
+                  fetchData(
+                    `${storeApp.baseurl}cbt/non-pnbp/peserta/diklat/list`
+                  )
+                "
               >
                 <i class="fas fa-magnifying-glass"></i>
               </button>
@@ -130,6 +146,40 @@ watch(
           <div class="col-lg-12 text-center"><Spinner :color="'dark'" /></div>
         </div>
         <div class="row px-2" v-else>
+          <div class="col-12 mb-3">
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-light ${
+                params.status_waktu == null ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = null"
+            >
+              Tampilkan Semua
+            </button>
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-warning ${
+                params.status_waktu == 1 ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = 1"
+            >
+              Akan Dilaksanakan
+            </button>
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-success ${
+                params.status_waktu == 0 ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = 0"
+            >
+              Sedang Dilaksanakan
+            </button>
+            <button
+              :class="`btn btn-sm rounded-2 me-2 btn-danger ${
+                params.status_waktu == 2 ? 'opacity-50' : ''
+              }`"
+              @click.prevent="params.status_waktu = 2"
+            >
+              Sudah Dilaksanakan
+            </button>
+          </div>
           <div class="col-lg-12" v-if="result.data.length < 1">
             Belum ada course
           </div>
@@ -169,6 +219,14 @@ watch(
                 </div>
               </div>
             </router-link>
+          </div>
+          <div class="col-12">
+            <Pagination
+              v-if="result.data?.length > 0"
+              :data="result.meta"
+              ammount="Diklat"
+              :function="navigation"
+            />
           </div>
         </div>
       </div>
