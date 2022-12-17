@@ -7,6 +7,7 @@ import { onBeforeMount, reactive } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
 import { alertError, alertSuccess, confirmation } from "@/assets/js/utils";
+import Pagination from "@/components/Dashboard/Pagination.vue";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
@@ -18,15 +19,19 @@ let result = reactive({
 });
 let question = reactive({
   data: [],
+  meta: null,
   loading: false,
 });
 let params = reactive({
   search: "",
+  per_page: 20,
 });
 
 onBeforeMount(() => {
   fetchData();
-  fetchQuestionNotInTest();
+  fetchQuestionNotInTest(
+    `${storeApp.baseurl}cbt/lsp/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+  );
 });
 
 function fetchData() {
@@ -52,23 +57,21 @@ function fetchData() {
     });
 }
 
-function fetchQuestionNotInTest() {
+function fetchQuestionNotInTest(url) {
   question.loading = true;
 
   axios
-    .get(
-      `${storeApp.baseurl}cbt/lsp/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`,
-      {
-        headers: {
-          Authorization: `Bearer ${storeApp.tokenInstruktur}`,
-        },
-        params,
-      }
-    )
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${storeApp.tokenInstruktur}`,
+      },
+      params,
+    })
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       question.loading = false;
       question.data = res.data.data;
+      question.meta = res.data.meta;
     })
     .catch((err) => {
       question.loading = false;
@@ -99,7 +102,9 @@ function addSoal(data) {
       data.loading = false;
       alertSuccess(res.data.message);
       fetchData();
-      fetchQuestionNotInTest();
+      fetchQuestionNotInTest(
+        `${storeApp.baseurl}cbt/lsp/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+      );
     })
     .catch((err) => {
       data.loading = false;
@@ -132,7 +137,9 @@ function removeSoal(data) {
           data.loading = false;
           alertSuccess(res.data.message);
           fetchData();
-          fetchQuestionNotInTest();
+          fetchQuestionNotInTest(
+            `${storeApp.baseurl}cbt/lsp/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+          );
         })
         .catch((err) => {
           data.loading = false;
@@ -142,6 +149,10 @@ function removeSoal(data) {
     }
   });
 }
+
+let navigationNotInTest = (url) => {
+  fetchQuestionNotInTest(url);
+};
 </script>
 
 <template>
@@ -302,6 +313,14 @@ function removeSoal(data) {
                     </tbody>
                   </table>
                 </div>
+              </div>
+              <div class="col-12">
+                <Pagination
+                  v-if="question.data?.length > 0"
+                  :data="question.meta"
+                  ammount="Soal"
+                  :function="navigationNotInTest"
+                />
               </div>
             </div>
           </div>
