@@ -47,6 +47,10 @@ onMounted(() => {
     });
 });
 
+function quillReady() {
+  document.querySelector(".ql-link").remove();
+}
+
 function submit() {
   form.submitLoading = true;
 
@@ -123,6 +127,7 @@ function submit() {
                   contentType="html"
                   style="height: 300px"
                   toolbar="full"
+                  @ready="quillReady"
                 />
                 <div
                   class="form-text small text-danger"

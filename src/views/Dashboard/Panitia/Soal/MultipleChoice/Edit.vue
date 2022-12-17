@@ -47,6 +47,10 @@ onMounted(() => {
     });
 });
 
+function quillReady() {
+  document.querySelector(".ql-link").remove();
+}
+
 function addOption() {
   let valid = true;
   let kunci = "N";
@@ -161,6 +165,7 @@ function destroyOpsi(data, iopt) {
                   contentType="html"
                   style="height: 300px"
                   toolbar="full"
+                  @ready="quillReady"
                 />
                 <div
                   class="form-text small text-danger"
