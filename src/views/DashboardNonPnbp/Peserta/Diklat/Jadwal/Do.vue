@@ -242,7 +242,7 @@ function storeToDb() {
                     </div>
                   </div>
                   <div class="col-12 text-center">
-                    <span class="fw-bold h5">Pengerjaan</span>
+                    <span class="fw-bold h5">Soal Test</span>
                   </div>
                   <div class="col-12">
                     <table class="table table-borderless">
