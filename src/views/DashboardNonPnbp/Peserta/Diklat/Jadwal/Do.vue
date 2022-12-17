@@ -331,6 +331,11 @@ function storeToDb() {
                     v-html="pertanyaan.pertanyaan"
                   ></div>
                 </div>
+                <div class="row">
+                  <div class="col-12">
+                    <span class="text-muted">Tuliskan Jawaban Anda</span>
+                  </div>
+                </div>
                 <div class="row mb-2">
                   <div class="col-auto fw-bold">&nbsp;</div>
                   <div class="col-11">
