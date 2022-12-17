@@ -222,7 +222,7 @@ function destroyOpsi(data, iopt) {
                       <button
                         :class="`btn btn-sm btn${
                           opt.kunci == 'Y' ? '' : '-outline'
-                        }-primary rounded-4 me-1`"
+                        }-success rounded-4 me-1`"
                         @click.prevent="
                           () => {
                             form.options.forEach((opt) => {
