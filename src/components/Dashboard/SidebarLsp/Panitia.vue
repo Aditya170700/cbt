@@ -163,7 +163,7 @@ function sidebar() {
               >
                 <i class="fas fa-arrow-left"></i>
               </div>
-              <div>Keluar</div>
+              <div>Halaman Utama</div>
             </div>
           </router-link>
         </div>
