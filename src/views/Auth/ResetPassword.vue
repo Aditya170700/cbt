@@ -105,14 +105,7 @@ function submit() {
             style="max-width: 1100px; top: 170px; left: 120px"
           >
             <div class="col-lg-7 bg-white p-5 rounded-2">
-              <div class="row px-5 text-start" v-if="!form.check.valid">
-                <div class="col-12">
-                  <div class="alert alert-danger" role="alert">
-                    Link expired
-                  </div>
-                </div>
-              </div>
-              <div class="row px-5 text-start" v-else>
+              <div class="row px-5 text-start">
                 <div class="col-12 mb-3">
                   <div class="h6 px-5">Ubah Password</div>
                   <div class="p px-5 small">
