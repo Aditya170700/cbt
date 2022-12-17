@@ -126,7 +126,7 @@ function submit() {
             </div>
             <div class="col-lg-6">
               <div class="mb-3">
-                <label for="option">Masukkan Opsi</label>
+                <label for="option">Jawaban</label>
                 <div class="input-group">
                   <input
                     type="text"
@@ -153,13 +153,13 @@ function submit() {
             </div>
             <div class="col-lg-6">
               <div class="mb-3">
-                <label>Opsi</label>
+                <label>Pilihan Jawaban</label>
                 <ul class="list-group">
                   <li
                     class="list-group-item text-danger"
                     v-if="form.options.length <= 0"
                   >
-                    Belum ada opsi
+                    Belum ada jawaban
                   </li>
                   <li
                     class="list-group-item d-flex justify-content-between align-items-center"
