@@ -20,6 +20,8 @@ onMounted(() => {
   }
 
   form.token = route.query.token;
+
+  checkToken();
 });
 
 const storeApp = appStore();
@@ -31,7 +33,34 @@ let form = reactive({
   password_confirmation: "",
   loading: false,
   errors: null,
+  check: {
+    loading: false,
+    username: null,
+    valid: true,
+  },
 });
+
+function checkToken() {
+  form.check.loading = true;
+  form.check.username = null;
+  axios
+    .post(`${storeApp.baseurl}cbt/auth/check-token`, form, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      form.check.loading = false;
+      form.check.username = res.data.data;
+    })
+    .catch((err) => {
+      form.check.loading = false;
+      form.check.valid = false;
+      alertError(err.response?.data?.message);
+    });
+}
 
 function submit() {
   form.errors = null;
@@ -76,11 +105,32 @@ function submit() {
             style="max-width: 1100px; top: 170px; left: 120px"
           >
             <div class="col-lg-7 bg-white p-5 rounded-2">
-              <div class="row px-5 text-start">
+              <div class="row px-5 text-start" v-if="!form.check.valid">
+                <div class="col-12">
+                  <div class="alert alert-danger" role="alert">
+                    Link expired
+                  </div>
+                </div>
+              </div>
+              <div class="row px-5 text-start" v-else>
                 <div class="col-12 mb-3">
                   <div class="h6 px-5">Ubah Password</div>
                   <div class="p px-5 small">
                     Silahkan masukkan password anda yang baru
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-3 px-5">
+                    <label for="password" class="form-label small"
+                      >Username</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="password"
+                      v-model="form.check.username"
+                      disabled
+                    />
                   </div>
                 </div>
                 <div class="col-12">
