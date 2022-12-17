@@ -184,7 +184,7 @@ function listJawaban(data) {
                 }}</span>
                 <div
                   class="position-absolute rounded-circle bg-info-1 d-flex justify-content-center align-items-center fw-bold"
-                  style="width: 40px; height: 40px; right: 10px; top: 10px"
+                  style="width: 40px; height: 40px; right: 10px; bottom: 10px"
                   v-if="data.status == 'Sudah dinilai'"
                 >
                   {{ data.nilai }}
