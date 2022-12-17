@@ -202,8 +202,9 @@ watch(
               Sudah Dilaksanakan
             </button>
           </div>
-          <div class="col-12 text-center" v-if="result.data.length == 0"></div>
-          Belum ada data
+          <div class="col-12 text-center" v-if="result.data.length == 0">
+            Belum ada data
+          </div>
           <div class="col-lg-4 mb-4" v-for="(data, i) in result.data" :key="i">
             <div class="card rounded-4 shadow border">
               <div class="card-body rounded-4 p-4">
