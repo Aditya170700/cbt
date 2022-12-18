@@ -112,7 +112,7 @@ function logout() {
       <div class="row justify-content-center mb-5" v-else>
         <div class="col-lg-2 mb-3" v-if="result.data?.diklat_pnbp">
           <router-link
-            :to="{ name: 'dashboard-instruktur' }"
+            :to="{ name: 'dashboard-instruktur-test' }"
             class="text-decoration-none text-dark"
           >
             <div
@@ -131,7 +131,7 @@ function logout() {
         </div>
         <div class="col-lg-2 mb-3" v-if="result.data?.diklat_lemdik">
           <router-link
-            :to="{ name: 'dashboard-non-pnbp-instruktur' }"
+            :to="{ name: 'dashboard-non-pnbp-instruktur-test' }"
             class="text-decoration-none text-dark"
           >
             <div
@@ -153,7 +153,7 @@ function logout() {
         </div>
         <div class="col-lg-2 mb-3" v-if="result.data?.diklat_lsp">
           <router-link
-            :to="{ name: 'dashboard-lsp-instruktur' }"
+            :to="{ name: 'dashboard-lsp-instruktur-test' }"
             class="text-decoration-none text-dark"
           >
             <div

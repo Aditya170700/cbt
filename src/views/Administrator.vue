@@ -79,7 +79,7 @@ function logout() {
       <div class="row justify-content-center mb-5">
         <div class="col-lg-2 mb-3">
           <router-link
-            :to="{ name: 'dashboard-administrator' }"
+            :to="{ name: 'dashboard-administrator-test' }"
             class="text-decoration-none text-dark"
           >
             <div
@@ -98,7 +98,7 @@ function logout() {
         </div>
         <div class="col-lg-2 mb-3">
           <router-link
-            :to="{ name: 'dashboard-lsp-administrator' }"
+            :to="{ name: 'dashboard-lsp-administrator-test' }"
             class="text-decoration-none text-dark"
           >
             <div
