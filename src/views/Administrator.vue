@@ -83,14 +83,14 @@ function logout() {
             class="text-decoration-none text-dark"
           >
             <div
-              class="card bg-info-1 text-center shadow rounded-4 hovered pointer"
+              class="card bg-success text-center shadow rounded-4 hovered pointer"
             >
               <div class="row py-4" style="height: 200px">
                 <div class="col-lg-12 mb-3 text-white">
                   <div class="h5 fw-bold">Diklat Pusbang</div>
                 </div>
                 <div class="col-lg-12">
-                  <i class="far fa-building fa-4x"></i>
+                  <i class="far fa-building fa-4x text-white"></i>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ function logout() {
             class="text-decoration-none text-dark"
           >
             <div
-              class="card bg-info-1 text-center shadow rounded-4 hovered pointer"
+              class="card bg-primary text-center shadow rounded-4 hovered pointer"
             >
               <div class="row py-4" style="height: 200px">
                 <div class="col-lg-12 mb-3 text-white">
@@ -112,7 +112,7 @@ function logout() {
                 </div>
                 <div class="col-lg-12">
                   <i
-                    class="fas fa-building-shield fa-4x"
+                    class="fas fa-building-shield fa-4x text-white"
                     style="width: 100%"
                   ></i>
                 </div>

@@ -1,8 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { appStore } from "@/stores/app";
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import logo from "@/assets/static/logo-2.png";
+import axios from "axios";
+import Spinner from "@/components/Spinner.vue";
 
 const storeApp = appStore();
 let user = ref(null);
@@ -10,7 +12,33 @@ let user = ref(null);
 onMounted(() => {
   document.title = "CBT | SIMPEL Pusbang Laut";
   user.value = JSON.parse(storeApp.userInstruktur);
+  fetchData();
 });
+let result = reactive({
+  data: null,
+  loading: false,
+});
+
+function fetchData() {
+  result.loading = true;
+  axios
+    .get(`${storeApp.baseurl}cbt/auth/other/diklat-instruktur`, {
+      headers: {
+        Authorization: `Bearer ${storeApp.tokenInstruktur}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      result.data = res.data.data;
+      result.loading = false;
+    })
+    .catch((err) => {
+      result.loading = false;
+      console.log(err);
+    });
+}
 
 function logout() {
   localStorage.removeItem("tokenInstruktur");
@@ -76,33 +104,38 @@ function logout() {
           <div class="h3 fw-bold">Kategori Diklat</div>
         </div>
       </div>
-      <div class="row justify-content-center mb-5">
-        <div class="col-lg-2 mb-3">
+      <div class="row justify-content-center my-5" v-if="result.loading">
+        <div class="col-12 text-center">
+          <Spinner :color="'dark'" />
+        </div>
+      </div>
+      <div class="row justify-content-center mb-5" v-else>
+        <div class="col-lg-2 mb-3" v-if="result.data?.diklat_pnbp">
           <router-link
             :to="{ name: 'dashboard-instruktur' }"
             class="text-decoration-none text-dark"
           >
             <div
-              class="card bg-info-1 text-center shadow rounded-4 hovered pointer"
+              class="card bg-success text-center shadow rounded-4 hovered pointer"
             >
               <div class="row py-4" style="height: 200px">
                 <div class="col-lg-12 mb-3 text-white">
                   <div class="h5 fw-bold">Diklat Pusbang</div>
                 </div>
                 <div class="col-lg-12">
-                  <i class="far fa-building fa-4x"></i>
+                  <i class="far fa-building fa-4x text-white"></i>
                 </div>
               </div>
             </div>
           </router-link>
         </div>
-        <div class="col-lg-2 mb-3">
+        <div class="col-lg-2 mb-3" v-if="result.data?.diklat_lemdik">
           <router-link
             :to="{ name: 'dashboard-non-pnbp-instruktur' }"
             class="text-decoration-none text-dark"
           >
             <div
-              class="card bg-info-1 text-center shadow rounded-4 hovered pointer"
+              class="card bg-warning text-center shadow rounded-4 hovered pointer"
             >
               <div class="row py-4" style="height: 200px">
                 <div class="col-lg-12 mb-3 text-white">
@@ -110,7 +143,7 @@ function logout() {
                 </div>
                 <div class="col-lg-12">
                   <i
-                    class="fas fa-building-shield fa-4x"
+                    class="fas fa-building-shield fa-4x text-white"
                     style="width: 100%"
                   ></i>
                 </div>
@@ -118,13 +151,13 @@ function logout() {
             </div>
           </router-link>
         </div>
-        <div class="col-lg-2 mb-3">
+        <div class="col-lg-2 mb-3" v-if="result.data?.diklat_lsp">
           <router-link
             :to="{ name: 'dashboard-lsp-instruktur' }"
             class="text-decoration-none text-dark"
           >
             <div
-              class="card bg-info-1 text-center shadow rounded-4 hovered pointer"
+              class="card bg-primary text-center shadow rounded-4 hovered pointer"
             >
               <div class="row py-4" style="height: 200px">
                 <div class="col-lg-12 mb-3 text-white">
@@ -134,13 +167,23 @@ function logout() {
                 </div>
                 <div class="col-lg-12">
                   <i
-                    class="fas fa-building-shield fa-4x"
+                    class="fas fa-building-shield fa-4x text-white"
                     style="width: 100%"
                   ></i>
                 </div>
               </div>
             </div>
           </router-link>
+        </div>
+        <div
+          class="col-lg-2 mb-3"
+          v-if="
+            !result.data?.diklat_pnbp &&
+            !result.data?.diklat_lsp &&
+            !result.data?.diklat_lemdik
+          "
+        >
+          Anda belum mengikuti diklat
         </div>
       </div>
       <div class="row justify-content-center py-5">
