@@ -198,6 +198,7 @@ function listJawaban(data) {
                 <span :class="`badge bg-${data.status_color}`">{{
                   data.status
                 }}</span>
+                <div class="small">Hasil diklat dari LMS</div>
                 <div
                   class="position-absolute rounded-circle bg-info-1 d-flex justify-content-center align-items-center fw-bold"
                   style="width: 40px; height: 40px; right: 10px; bottom: 10px"
