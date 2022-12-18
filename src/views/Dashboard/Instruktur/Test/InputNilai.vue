@@ -14,6 +14,7 @@ let route = useRoute();
 let result = reactive({
   data: null,
   loading: false,
+  simpanLoading: false,
 });
 
 onBeforeMount(() => {
@@ -42,15 +43,10 @@ function fetchData() {
     });
 }
 
-function submitNilai(data) {
+async function submitNilai(data) {
   data.loading = true;
 
-  if (data.nilai > data.pertanyaan?.bobot) {
-    alertError("Nilai tidak boleh lebih dari bobot");
-    return;
-  }
-
-  axios
+  await axios
     .post(
       `${storeApp.baseurl}cbt/instruktur/test/store-nilai/${route.params.table}/${data.id}`,
       {
@@ -64,7 +60,6 @@ function submitNilai(data) {
     )
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
-      alertSuccess("Berhasil menginput nilai");
       data.loading = false;
     })
     .catch((err) => {
@@ -83,6 +78,41 @@ function getNilai() {
   });
 
   return { bobot, nilai };
+}
+
+function validasi(data) {
+  if (data.nilai > data.pertanyaan?.bobot) {
+    alertError("Nilai tidak boleh lebih dari bobot");
+    return;
+  }
+}
+
+function simpan() {
+  let essay = 0;
+  result.simpanLoading = true;
+  result.data?.pertanyaan?.forEach((val) => {
+    if (val.pertanyaan?.pertanyaan?.tipe == "Essay") {
+      essay += 1;
+    }
+  });
+
+  let key = 0;
+  result.data?.pertanyaan?.forEach((val) => {
+    if (val.pertanyaan?.pertanyaan?.tipe == "Essay") {
+      submitNilai(val)
+        .then(() => {
+          key += 1;
+          if (key == essay) {
+            alertSuccess("Berhasil menginput nilai");
+            result.simpanLoading = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          result.simpanLoading = false;
+        });
+    }
+  });
 }
 </script>
 
@@ -188,7 +218,9 @@ function getNilai() {
                       class="form-control"
                       placeholder="0"
                       v-model="data.nilai"
-                      @change="submitNilai(data)"
+                      :max="data.pertanyaan.bobot"
+                      @change="validasi(data)"
+                      :disabled="result.simpanLoading"
                     />
                   </div>
                   <div class="col-auto fw-bold">
@@ -237,6 +269,17 @@ function getNilai() {
                 </div>
               </div>
             </div>
+          </div>
+          <div class="col-12 text-end">
+            <button
+              class="btn btn-sm rounded-2 bg-info-1 text-white"
+              @click="simpan"
+              :disabled="result.simpanLoading"
+            >
+              <Spinner v-if="result.simpanLoading" /><span v-else
+                ><i class="fas fa-save me-2"></i>Simpan Nilai</span
+              >
+            </button>
           </div>
         </div>
       </div>
