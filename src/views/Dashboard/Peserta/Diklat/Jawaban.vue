@@ -40,6 +40,18 @@ function fetchData() {
       console.log(err);
     });
 }
+
+function getNilai() {
+  let bobot = 0;
+  let nilai = 0;
+
+  result.data.pertanyaan.forEach((val) => {
+    nilai += val.nilai;
+    bobot += val.pertanyaan.bobot;
+  });
+
+  return { bobot, nilai };
+}
 </script>
 
 <template>
@@ -71,7 +83,7 @@ function fetchData() {
           </div>
         </div>
         <div class="row px-2" v-else>
-          <div class="col-12 mb-4">
+          <div class="col-lg-10 mb-4">
             <div class="row">
               <div class="col-3 col-lg-1 fw-bold">Test</div>
               <div class="col-9 col-lg-11">{{ result.data?.test?.nama }}</div>
@@ -97,6 +109,14 @@ function fetchData() {
                 {{ result.data?.test?.selesai }}
               </div>
             </div>
+          </div>
+          <div
+            class="col-lg-2 mb-4 text-lg-end"
+            v-if="result.data?.pertanyaan?.length >= 0"
+          >
+            <button class="btn btn-sm rounded-2 btn-success fw-bold">
+              {{ `${getNilai().nilai} / ${getNilai().bobot}` }}
+            </button>
           </div>
           <div class="col-12" v-if="result.data?.pertanyaan?.length <= 0">
             <div class="alert alert-danger" role="alert">

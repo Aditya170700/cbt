@@ -28,6 +28,7 @@ let result = reactive({
   menit: 0,
   detik: 0,
   submitLoading: false,
+  complete: true,
 });
 
 onMounted(() => {
@@ -130,10 +131,19 @@ function compareLocal() {
       }
     });
   });
+
+  cekJawaban();
 }
 
 function submit() {
   result.submitLoading = true;
+
+  cekJawaban();
+
+  if (!result.complete) {
+    alertError("Belum semua pertanyaan dijawab");
+    return;
+  }
 
   confirmation("Apakah anda yakin ingin mengakhiri test ini?").then(
     (confirmed) => {
@@ -180,6 +190,22 @@ function storeToDb() {
       result.submitLoading = false;
       alertError(err.response.data.message);
     });
+}
+
+function cekJawaban() {
+  let jumlahJawaban = 0;
+
+  result.data?.pertanyaan?.forEach((val) => {
+    if (val.jawaban) {
+      jumlahJawaban += 1;
+    }
+  });
+
+  if (jumlahJawaban == result.data?.pertanyaan?.length) {
+    result.complete = true;
+  } else {
+    result.complete = false;
+  }
 }
 </script>
 
@@ -310,12 +336,22 @@ function storeToDb() {
                             : 'bg-light'
                         } border me-2 hovered pointer`"
                         style="width: 25px; height: 25px"
-                        @click="pertanyaan.jawaban = opsi.id"
+                        @click="
+                          () => {
+                            pertanyaan.jawaban = opsi.id;
+                            cekJawaban();
+                          }
+                        "
                       ></div>
                     </div>
                     <span
                       class="fw-bold small hovered pointer"
-                      @click="pertanyaan.jawaban = opsi.id"
+                      @click="
+                        () => {
+                          pertanyaan.jawaban = opsi.id;
+                          cekJawaban();
+                        }
+                      "
                       >{{ opsi.value }}</span
                     >
                   </div>
@@ -330,7 +366,8 @@ function storeToDb() {
                   ></div>
                 </div>
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-auto">&nbsp;</div>
+                  <div class="col-auto">
                     <span class="text-muted">Tuliskan Jawaban Anda</span>
                   </div>
                 </div>
@@ -343,6 +380,7 @@ function storeToDb() {
                       contentType="html"
                       style="height: 300px"
                       toolbar="full"
+                      @textChange="cekJawaban()"
                     />
                   </div>
                 </div>
@@ -367,7 +405,7 @@ function storeToDb() {
                 </button>
                 <button
                   class="btn btn-sm rounded-2 bg-success border text-white"
-                  :disabled="result.submitLoading"
+                  :disabled="result.submitLoading || !result.complete"
                   v-if="i == result.data.pertanyaan.length - 1"
                   @click.prevent="submit()"
                 >
