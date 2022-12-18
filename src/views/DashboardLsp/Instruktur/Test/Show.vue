@@ -220,6 +220,11 @@ let navigationNotInTest = (url) => {
             </div>
           </div>
           <div class="col-12 mb-3" v-html="result.data.deskripsi"></div>
+          <div class="col-12 mb-3" v-if="result.data.jawaban_count != 0">
+            <div class="alert alert-danger" role="alert">
+              Tes telah dikerjakan, tidak bisa update soal
+            </div>
+          </div>
           <div class="col-lg-6">
             <div class="row">
               <div
@@ -258,8 +263,12 @@ let navigationNotInTest = (url) => {
                         <th>Pertanyaan</th>
                         <th>Tipe</th>
                         <th>Creator</th>
-                        <th>Bobot Maks.</th>
-                        <th>Pilih Soal</th>
+                        <th v-if="result.data.jawaban_count == 0">
+                          Bobot Maks.
+                        </th>
+                        <th v-if="result.data.jawaban_count == 0">
+                          Pilih Soal
+                        </th>
                       </tr>
                     </thead>
                     <tbody v-if="question.loading">
@@ -283,7 +292,7 @@ let navigationNotInTest = (url) => {
                         <td>
                           {{ data.creator.nm_pengguna ?? data.creator.role }}
                         </td>
-                        <td>
+                        <td v-if="result.data.jawaban_count == 0">
                           <div>
                             <input
                               type="number"
@@ -293,7 +302,7 @@ let navigationNotInTest = (url) => {
                             />
                           </div>
                         </td>
-                        <td>
+                        <td v-if="result.data.jawaban_count == 0">
                           <div class="d-flex">
                             <div>
                               <button
@@ -338,7 +347,9 @@ let navigationNotInTest = (url) => {
                   <table class="table table-bordered">
                     <thead class="bg-success text-white">
                       <tr>
-                        <th>Hapus Soal</th>
+                        <th v-if="result.data.jawaban_count == 0">
+                          Hapus Soal
+                        </th>
                         <th>Pertanyaan</th>
                         <th>Tipe</th>
                         <th>Creator</th>
@@ -362,7 +373,7 @@ let navigationNotInTest = (url) => {
                         v-for="(data, i) in result.data?.lms_pertanyaan"
                         :key="i"
                       >
-                        <td>
+                        <td v-if="result.data.jawaban_count == 0">
                           <div class="d-flex">
                             <div>
                               <button
