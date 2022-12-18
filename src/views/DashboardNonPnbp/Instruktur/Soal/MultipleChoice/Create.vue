@@ -16,6 +16,7 @@ let router = useRouter();
 let option = ref("");
 let form = reactive({
   pertanyaan: "",
+  share: false,
   tipe: "Multiple Choice",
   options: [],
   loading: false,
@@ -188,6 +189,21 @@ function submit() {
                     </div>
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.share"
+                    id="share"
+                  />
+                  <label class="form-check-label" for="share">
+                    Share soal
+                  </label>
+                </div>
               </div>
             </div>
             <div class="col-lg-12">

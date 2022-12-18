@@ -18,6 +18,7 @@ let option = ref("");
 let quill = ref(null);
 let form = reactive({
   pertanyaan: "",
+  share: false,
   tipe: "Multiple Choice",
   options: [],
   submitLoading: false,
@@ -38,6 +39,7 @@ onMounted(() => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
       form.loading = false;
       form.pertanyaan = res.data.data.pertanyaan;
+      form.share = res.data.data.share;
       form.options = res.data.data.options;
       quill.value.setHTML(res.data.data.pertanyaan);
     })
@@ -256,6 +258,21 @@ function destroyOpsi(data, iopt) {
                     </div>
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.share"
+                    id="share"
+                  />
+                  <label class="form-check-label" for="share">
+                    Share soal
+                  </label>
+                </div>
               </div>
             </div>
             <div class="col-lg-12">

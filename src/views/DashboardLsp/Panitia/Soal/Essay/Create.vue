@@ -15,6 +15,7 @@ const storeApp = appStore();
 let router = useRouter();
 let form = reactive({
   pertanyaan: "",
+  share: false,
   tipe: "Essay",
   loading: false,
   errors: null,
@@ -88,6 +89,21 @@ function submit() {
                   v-if="form.errors?.pertanyaan"
                 >
                   {{ form.errors?.pertanyaan[0] }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.share"
+                    id="share"
+                  />
+                  <label class="form-check-label" for="share">
+                    Share soal
+                  </label>
                 </div>
               </div>
             </div>
