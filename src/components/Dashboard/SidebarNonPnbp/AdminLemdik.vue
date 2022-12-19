@@ -150,7 +150,6 @@ function sidebar() {
               </div>
             </div>
           </router-link>
-
           <router-link
             :to="{
               name: 'dashboard-non-pnbp-admin-lemdik-soal',
@@ -178,6 +177,36 @@ function sidebar() {
                 class="col-10 d-flex justify-content-between align-items-center"
               >
                 Bank Soal
+              </div>
+            </div>
+          </router-link>
+          <router-link
+            :to="{
+              name: 'dashboard-non-pnbp-admin-lemdik-template',
+              params: {
+                id_lemdik: route.params.id_lemdik,
+              },
+            }"
+            class="text-white text-decoration-none"
+            href="#"
+          >
+            <div
+              :class="`item d-flex align-items-center ${
+                route.meta.group == 'dashboard-non-pnbp-admin-lemdik-template'
+                  ? 'active'
+                  : ''
+              }`"
+            >
+              <div
+                style="width: 20px"
+                class="col-2 icons d-flex justify-content-center me-2"
+              >
+                <i class="fas fa-file"></i>
+              </div>
+              <div
+                class="col-10 d-flex justify-content-between align-items-center"
+              >
+                Template Soal
               </div>
             </div>
           </router-link>
