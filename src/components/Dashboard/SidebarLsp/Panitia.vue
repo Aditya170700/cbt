@@ -153,6 +153,31 @@ function sidebar() {
             </div>
           </router-link>
           <router-link
+            :to="{ name: 'dashboard-lsp-panitia-template' }"
+            class="text-white text-decoration-none"
+            href="#"
+          >
+            <div
+              :class="`item d-flex align-items-center ${
+                route.meta.group == 'dashboard-lsp-panitia-template'
+                  ? 'active'
+                  : ''
+              }`"
+            >
+              <div
+                style="width: 20px"
+                class="col-2 icons d-flex justify-content-center me-2"
+              >
+                <i class="fas fa-file"></i>
+              </div>
+              <div
+                class="col-10 d-flex justify-content-between align-items-center"
+              >
+                Template Soal
+              </div>
+            </div>
+          </router-link>
+          <router-link
             :to="{ name: 'panitia' }"
             class="text-white text-decoration-none"
           >
