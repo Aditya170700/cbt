@@ -1,21 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable no-undef -->
 <script setup>
 import Sidebar from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
 import { appStore } from "@/stores/app";
 import Spinner from "@/components/Spinner.vue";
-import { onBeforeMount, reactive } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
-import { alertError, alertSuccess, confirmation } from "@/assets/js/utils";
 import Pagination from "@/components/Dashboard/Pagination.vue";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+import { alertError, alertSuccess } from "@/assets/js/utils";
 
 const storeApp = appStore();
 let widthContent = window.innerWidth;
 let route = useRoute();
+let templateModal = ref(null);
+let template = reactive({
+  data: [],
+  selected: null,
+  loading: false,
+});
 let result = reactive({
   data: null,
   bobot: 0,
   loading: false,
+  submitLoading: false,
 });
 let question = reactive({
   data: [],
@@ -25,6 +35,7 @@ let question = reactive({
 let params = reactive({
   search: "",
   per_page: 20,
+  selected_ids: [],
 });
 
 onBeforeMount(() => {
@@ -50,6 +61,9 @@ function fetchData() {
       result.loading = false;
       result.data = res.data.data;
       result.bobot = res.data.bobot;
+      res.data.data.lms_pertanyaan.forEach((val) => {
+        params.selected_ids.push(val.id);
+      });
     })
     .catch((err) => {
       result.loading = false;
@@ -79,17 +93,95 @@ function fetchQuestionNotInTest(url) {
     });
 }
 
-function addSoal(data) {
-  data.loading = true;
+function fetchTemplate() {
+  template.loading = true;
+  axios
+    .get(`${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/template/for-select`, {
+      headers: {
+        Authorization: `Bearer ${storeApp.tokenAdminLemdik}`,
+      },
+    })
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      template.loading = false;
+      template.data = res.data.data;
+    })
+    .catch((err) => {
+      template.loading = false;
+      console.log(err);
+    });
+}
+
+function openTemplateModal() {
+  fetchTemplate();
+
+  templateModal.value = new bootstrap.Modal("#templateModal");
+  templateModal.value.show();
+}
+
+function closeTemplateModal() {
+  template.selected = null;
+  templateModal.value.hide();
+}
+
+function pilihTemplate() {
+  template.selected?.pertanyaan?.forEach((val) => {
+    let exists = false;
+
+    if (params.selected_ids.includes(val.id)) {
+      exists = true;
+    }
+
+    if (!exists) {
+      result.data.lms_pertanyaan.push(val?.pertanyaan);
+      params.selected_ids.push(val?.pertanyaan.id);
+    }
+  });
+
+  fetchQuestionNotInTest(
+    `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+  );
+  closeTemplateModal();
+}
+
+function addSoal(data, i) {
+  let exists = false;
+
+  if (params.selected_ids.includes(data.id)) {
+    exists = true;
+  }
+
+  if (!exists) {
+    result.data.lms_pertanyaan.push(data);
+    params.selected_ids.push(data.id);
+  }
+
+  question.data.splice(i, 1);
+}
+
+function removeSoal(data, i) {
+  question.data.push(data);
+  result.data.lms_pertanyaan.splice(i, 1);
+  params.selected_ids.splice(i, 1);
+}
+
+let navigationNotInTest = (url) => {
+  fetchQuestionNotInTest(url);
+};
+
+function submit() {
+  result.submitLoading = true;
+
+  let bobot = Math.round(100 / params.selected_ids.length);
 
   axios
     .post(
-      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/attach-pertanyaan`,
+      `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/test/attach-pertanyaan`,
       {
-        bobot: data.bobot,
+        bobot,
+        ids: params.selected_ids,
         test_id: route.params.id_test,
         table: route.params.table,
-        soal_id: data.id,
       },
       {
         headers: {
@@ -99,60 +191,15 @@ function addSoal(data) {
     )
     .then((res) => {
       if (res.data.code_response != 200) throw new Error(res.data.message);
-      data.loading = false;
+      result.submitLoading = false;
       alertSuccess(res.data.message);
-      fetchData();
-      fetchQuestionNotInTest(
-        `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${route.params.id_test}/not-in-test/${route.params.table}`
-      );
     })
     .catch((err) => {
-      data.loading = false;
+      result.submitLoading = false;
       alertError(err.response.data.message);
       console.log(err);
     });
 }
-
-function removeSoal(data) {
-  confirmation("Yakin hapus data ini?").then((confirmed) => {
-    if (confirmed) {
-      data.loading = true;
-
-      axios
-        .post(
-          `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/test/detach-pertanyaan`,
-          {
-            test_id: route.params.id_test,
-            table: route.params.table,
-            soal_id: data.id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${storeApp.tokenAdminLemdik}`,
-            },
-          }
-        )
-        .then((res) => {
-          if (res.data.code_response != 200) throw new Error(res.data.message);
-          data.loading = false;
-          alertSuccess(res.data.message);
-          fetchData();
-          fetchQuestionNotInTest(
-            `${storeApp.baseurl}cbt/non-pnbp/admin-lemdik/${route.params.id_lemdik}/soal/${route.params.id_test}/not-in-test/${route.params.table}`
-          );
-        })
-        .catch((err) => {
-          data.loading = false;
-          alertError(err.response.data.message);
-          console.log(err);
-        });
-    }
-  });
-}
-
-let navigationNotInTest = (url) => {
-  fetchQuestionNotInTest(url);
-};
 </script>
 
 <template>
@@ -236,7 +283,16 @@ let navigationNotInTest = (url) => {
                 class="col-12 d-flex justify-content-between mb-2 align-items-center"
               >
                 <div class="col-8">
-                  <span class="fw-bold">List Soal</span>
+                  <div class="d-flex justify-content-start align-items-center">
+                    <span class="fw-bold me-3">Bank Soal</span>
+                    <button
+                      class="btn btn-sm rounded-2 btn-info"
+                      @click="openTemplateModal()"
+                      v-if="result.data.jawaban_count == 0"
+                    >
+                      <i class="fas fa-file me-2"></i>Template
+                    </button>
+                  </div>
                 </div>
                 <div class="col-4">
                   <div class="input-group rounded-2">
@@ -269,9 +325,6 @@ let navigationNotInTest = (url) => {
                         <th>Tipe</th>
                         <th>Creator</th>
                         <th v-if="result.data.jawaban_count == 0">
-                          Bobot Maks.
-                        </th>
-                        <th v-if="result.data.jawaban_count == 0">
                           Pilih Soal
                         </th>
                       </tr>
@@ -298,21 +351,11 @@ let navigationNotInTest = (url) => {
                           {{ data.creator.nm_pengguna ?? data.creator.role }}
                         </td>
                         <td v-if="result.data.jawaban_count == 0">
-                          <div>
-                            <input
-                              type="number"
-                              class="form-control"
-                              v-model="data.bobot"
-                              placeholder="Bobot"
-                            />
-                          </div>
-                        </td>
-                        <td v-if="result.data.jawaban_count == 0">
                           <div class="d-flex">
                             <div>
                               <button
                                 class="btn btn-sm rounded-2 btn-success"
-                                @click="addSoal(data)"
+                                @click="addSoal(data, i)"
                                 :disabled="data.loading"
                               >
                                 <Spinner v-if="data.loading" /><i
@@ -358,7 +401,6 @@ let navigationNotInTest = (url) => {
                         <th>Pertanyaan</th>
                         <th>Tipe</th>
                         <th>Creator</th>
-                        <th>Bobot Maks.</th>
                       </tr>
                     </thead>
                     <tbody v-if="result.loading">
@@ -383,7 +425,7 @@ let navigationNotInTest = (url) => {
                             <div>
                               <button
                                 class="btn btn-sm rounded-2 btn-danger"
-                                @click="removeSoal(data)"
+                                @click="removeSoal(data, i)"
                                 :disabled="data.loading"
                               >
                                 <Spinner v-if="data.loading" /><i
@@ -401,10 +443,119 @@ let navigationNotInTest = (url) => {
                         <td>
                           {{ data.creator.nm_pengguna ?? data.creator.role }}
                         </td>
-                        <td>{{ data.pivot?.bobot }}</td>
                       </tr>
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-12 mt-3 text-end"
+            v-if="result.data.jawaban_count == 0"
+          >
+            <button
+              class="btn btn-sm rounded-2 bg-info-1"
+              @click="submit()"
+              :disabled="result.submitLoading"
+            >
+              <Spinner v-if="result.submitLoading" /><span v-else
+                ><i class="fas fa-save me-2"></i>Simpan</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="templateModal"
+        tabindex="-1"
+        aria-labelledby="templateModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+      >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <div class="col-4">
+                  <h1 class="modal-title fs-5" id="templateModalLabel">
+                    Pilih Template
+                  </h1>
+                </div>
+                <div class="col-8">
+                  <div class="d-flex justify-content-end align-items-center">
+                    <div class="me-2 col-6">
+                      <vSelect
+                        :options="template.data"
+                        label="name"
+                        v-model="template.selected"
+                        :placeholder="'Pilih Template Soal'"
+                      />
+                    </div>
+                    <div class="col-2 d-grid me-2">
+                      <button
+                        type="button"
+                        class="btn btn-sm rounded-2 bg-info-1"
+                        @click="pilihTemplate()"
+                      >
+                        <i class="fas fa-pencil me-2"></i>Pilih
+                      </button>
+                    </div>
+                    <div class="col-2 d-grid">
+                      <button
+                        type="button"
+                        class="btn btn-sm rounded-2 btn-light"
+                        @click="closeTemplateModal()"
+                      >
+                        <i class="fas fa-times me-2"></i>Tutup
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-center" v-if="!template.selected">
+                  Belum ada template terpilih
+                </div>
+                <div class="col-12" v-else>
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead class="bg-success text-white">
+                        <tr>
+                          <th>No</th>
+                          <th>Pertanyaan</th>
+                          <th>Tipe</th>
+                          <th>Creator</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-if="template.selected?.pertanyaan?.length < 1">
+                          <td colspan="4" class="text-center">
+                            Belum ada soal dalam template
+                          </td>
+                        </tr>
+                        <tr
+                          v-for="(data, i) in template.selected?.pertanyaan"
+                          :key="i"
+                        >
+                          <td>
+                            {{ i + 1 }}
+                          </td>
+                          <td v-html="data.pertanyaan.pertanyaan"></td>
+                          <td>
+                            {{ data.tipe }}
+                          </td>
+                          <td>
+                            {{ data.pertanyaan.creator.nm_pengguna }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
