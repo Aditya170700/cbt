@@ -276,7 +276,7 @@ function submit() {
                   </div>
                 </div>
                 <table class="table table-bordered">
-                  <thead class="bg-info-1">
+                  <thead class="bg-success text-white">
                     <tr>
                       <th>Hapus Soal</th>
                       <th>Pertanyaan</th>
