@@ -1,5 +1,6 @@
 import test from '@/router/dashboard-lsp/administrator/test/index.js';
 import soal from '@/router/dashboard-lsp/administrator/soal/index.js';
+import template from '@/router/dashboard-lsp/administrator/template/index.js';
 import mAuth from "@/middleware/authAdministratorPelatihan.js";
 
 let routes = [
@@ -16,6 +17,7 @@ let routes = [
   },
   ...test,
   ...soal,
+  ...template,
 ];
 
 export default routes;
