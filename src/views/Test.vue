@@ -2,21 +2,19 @@
 <!-- eslint-disable no-undef -->
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
+import { default as BlotFormatter } from "quill-blot-formatter";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-// import { default as BlotFormatter } from "quill-blot-formatter";
-// import ImageUploader from "quill-image-uploader";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { appStore } from "@/stores/app";
 
 let quill = ref(null);
 let input = ref("");
 const storeApp = appStore();
-// const blotFormatterModule = {
-//   name: "blotFormatter",
-//   module: BlotFormatter,
-//   options: {},
-// };
-let modules = [storeApp.imageUploader, storeApp.blotFormatter];
+let modules = [storeApp.imageUploader];
+
+onMounted(() => {
+  console.log(BlotFormatter);
+});
 </script>
 
 <template>
