@@ -1,27 +1,32 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import BlotFormatter from "quill-blot-formatter";
 import { ref } from "vue";
 
+let quill = ref(null);
 let input = ref("");
+const blotFormatterModule = {
+  name: "blotFormatter",
+  module: BlotFormatter,
+  options: {
+    /* options */
+  },
+};
 </script>
 
 <template>
-  <div>
-    <input
-      class="form-control"
-      type="text"
-      name="city"
-      list="cityname"
-      style="text-transform: uppercase"
-      v-model="input"
-    />
-    <datalist id="cityname" style="width: 100%">
-      <option value="Boston" v-for="i in 300" :key="i">
-        {{ `Lorem, ipsum dolor sit amet consectetur adipisicing elit - ${i}` }}
-      </option>
-    </datalist>
-    {{ input }}
-  </div>
+  <QuillEditor
+    theme="snow"
+    v-model:content="input"
+    ref="quill"
+    contentType="html"
+    style="height: 300px"
+    toolbar="full"
+    :modules="[blotFormatterModule]"
+  />
+  <div class="mt-5 ql-editor" v-html="input"></div>
 </template>
 
 <style scoped></style>
