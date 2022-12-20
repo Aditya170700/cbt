@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import Sidebar from "@/components/Dashboard/SidebarNonPnbp/Adminlemdik.vue";
+import Sidebar from "@/components/Dashboard/SidebarNonPnbp/AdminLemdik.vue";
 import { appStore } from "@/stores/app";
 import axios from "axios";
 import { onMounted, reactive } from "vue";
