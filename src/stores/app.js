@@ -1,5 +1,9 @@
 /* eslint-disable no-undef */
 import { defineStore } from "pinia";
+import { default as BlotFormatter } from "quill-blot-formatter";
+import ImageUploader from "quill-image-uploader";
+import { clearBase64 } from "@/assets/js/utils";
+import axios from "axios";
 
 export const appStore = defineStore("app", {
   state: () => ({
@@ -23,6 +27,39 @@ export const appStore = defineStore("app", {
     userInstruktur: localStorage.getItem("userInstruktur") || null,
     userPeserta: localStorage.getItem("userPeserta") || null,
     reload: false,
+    imageUploader: {
+      name: "imageUploader",
+      module: ImageUploader,
+      options: {
+        upload: (file) => {
+          // convert file to base64 with promise
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+              axios
+                .post(`${process.env.NODE_ENV == "development" ? "http://localhost:8000/api/" : "https://api-simple.smartmanagement.id/api/" }quill/image-uploader`, {
+                  image: clearBase64(e.target.result),
+                  ext: file.name.split(".").pop().toLowerCase(),
+                })
+                .then((res) => {
+                  if (res.data.status != 200) throw new Error(res.data.message);
+                  resolve(res.data.data);
+                })
+                .catch((error) => {
+                  reject(error);
+                });
+            };
+            reader.onerror = (error) => reject(error);
+          });
+        },
+      },
+    },
+    blotFormatter: {
+      name: 'blotFormatter',  
+      module: BlotFormatter, 
+      options: {/* options */}
+    }
   }),
   getters: {},
   actions: {},
