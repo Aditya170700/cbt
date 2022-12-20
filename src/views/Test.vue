@@ -2,7 +2,7 @@
 <!-- eslint-disable no-undef -->
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
-// import { default as BlotFormatter } from "quill-blot-formatter";
+import BlotFormatter from "quill-blot-formatter/dist/BlotFormatter";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { onMounted, ref } from "vue";
 import { appStore } from "@/stores/app";
@@ -13,7 +13,7 @@ const storeApp = appStore();
 let modules = [storeApp.imageUploader];
 
 onMounted(() => {
-  console.log("BlotFormatter");
+  console.log("BlotFormatter", BlotFormatter);
 });
 </script>
 
