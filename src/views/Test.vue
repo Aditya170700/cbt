@@ -10,7 +10,7 @@ import { appStore } from "@/stores/app";
 let quill = ref(null);
 let input = ref("");
 const storeApp = appStore();
-let modules = [storeApp.imageUploader];
+let modules = [storeApp.imageUploader, storeApp.blotFormatter];
 
 onMounted(() => {
   console.log("BlotFormatter", BlotFormatter);

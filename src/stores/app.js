@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { defineStore } from "pinia";
-// import { default as BlotFormatter } from "quill-blot-formatter";
+import BlotFormatter from "quill-blot-formatter/dist/BlotFormatter";
 import ImageUploader from "quill-image-uploader";
 import { clearBase64 } from "@/assets/js/utils";
 import axios from "axios";
@@ -55,11 +55,11 @@ export const appStore = defineStore("app", {
         },
       },
     },
-    // blotFormatter: {
-    //   name: 'blotFormatter',  
-    //   module: BlotFormatter, 
-    //   options: {/* options */}
-    // }
+    blotFormatter: {
+      name: 'blotFormatter',  
+      module: BlotFormatter, 
+      options: {/* options */}
+    }
   }),
   getters: {},
   actions: {},
