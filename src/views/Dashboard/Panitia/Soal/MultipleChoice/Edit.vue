@@ -16,8 +16,10 @@ let router = useRouter();
 let route = useRoute();
 let option = ref("");
 let quill = ref(null);
+let kategori = ref([]);
 let form = reactive({
   pertanyaan: "",
+  kategori: "",
   share: false,
   tipe: "Multiple Choice",
   options: [],
@@ -40,11 +42,22 @@ onMounted(() => {
       form.loading = false;
       form.pertanyaan = res.data.data.pertanyaan;
       form.share = res.data.data.share;
+      form.kategori = res.data.data.kategori;
       form.options = res.data.data.options;
       quill.value.setHTML(res.data.data.pertanyaan);
     })
     .catch((err) => {
       form.loading = false;
+      console.log(err);
+    });
+
+  axios
+    .get(`${storeApp.baseurl}cbt/auth/other/kategori-pertanyaan`)
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      kategori.value = res.data.data;
+    })
+    .catch((err) => {
       console.log(err);
     });
 });
@@ -258,6 +271,26 @@ function destroyOpsi(data, iopt) {
                     </div>
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label class="form-check-label" for="kategori">
+                  Kategori
+                </label>
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="form.kategori"
+                  id="kategori"
+                  list="kategori-list"
+                  style="text-transform: uppercase"
+                />
+                <datalist id="kategori-list">
+                  <option :value="data" v-for="data in kategori" :key="data">
+                    {{ data }}
+                  </option>
+                </datalist>
               </div>
             </div>
             <div class="col-lg-12">
