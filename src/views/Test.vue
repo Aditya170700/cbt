@@ -10,9 +10,7 @@ let input = ref("");
 const blotFormatterModule = {
   name: "blotFormatter",
   module: BlotFormatter,
-  options: {
-    /* options */
-  },
+  options: {},
 };
 </script>
 
