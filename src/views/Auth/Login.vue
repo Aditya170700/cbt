@@ -1,4 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable no-undef -->
 <script setup>
 import logo from "@/assets/img/cbt-logo.png";
 import { onMounted, reactive, ref } from "vue";
@@ -8,11 +9,14 @@ import axios from "axios";
 import { alertError, alertSuccess } from "@/assets/js/utils";
 import { useRouter } from "vue-router";
 import { VueRecaptcha } from "vue-recaptcha";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 let router = useRouter();
 const storeApp = appStore();
 let verifyCaptcha = ref(false);
 let receiveNotif = ref(false);
+let faq = ref(null);
+let faqModal = ref(null);
 let form = reactive({
   username: "",
   password: "",
@@ -28,6 +32,15 @@ onMounted(() => {
       receiveNotif.value = true;
     }
   });
+
+  axios
+    .get(`${storeApp.baseurl}cbt/auth/faq`)
+    .then((res) => {
+      faq.value = res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 function submit() {
@@ -119,6 +132,11 @@ function submit() {
 function verify() {
   verifyCaptcha.value = true;
 }
+
+function openFaq() {
+  faqModal.value = new bootstrap.Modal("#faqModal");
+  faqModal.value.show();
+}
 </script>
 
 <template>
@@ -195,7 +213,10 @@ function verify() {
                   </div>
                   <div class="col-12">
                     <div class="d-flex justify-content-between">
-                      <a href="#" class="text-decoration-none text-white"
+                      <a
+                        href="#"
+                        @click.prevent="openFaq"
+                        class="text-decoration-none text-white"
                         >FAQ</a
                       >
                       <router-link
@@ -213,4 +234,26 @@ function verify() {
       </div>
     </div>
   </section>
+  <div
+    class="modal fade"
+    id="faqModal"
+    tabindex="-1"
+    aria-labelledby="faqModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="faqModalLabel">FAQ</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body ql-editor" v-html="faq"></div>
+      </div>
+    </div>
+  </div>
 </template>
