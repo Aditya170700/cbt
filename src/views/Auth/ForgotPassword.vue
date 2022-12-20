@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import bg from "@/assets/static/bg-1.png";
+// import bg from "@/assets/static/bg-1.png";
 import logo from "@/assets/img/cbt-logo.png";
 import { onMounted, reactive } from "vue";
 import Spinner from "@/components/Spinner.vue";
@@ -46,7 +46,82 @@ function submit() {
 </script>
 
 <template>
-  <div>
+  <section id="cover" class="min-vh-100 bg-info-1">
+    <div id="cover-caption">
+      <div class="container">
+        <div class="row text-white">
+          <div
+            class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4"
+          >
+            <div class="px-2 py-5">
+              <div class="row">
+                <div class="col-12 text-center mb-5">
+                  <img
+                    :src="logo"
+                    alt=""
+                    class="img-fluid"
+                    style="width: 70%"
+                  />
+                </div>
+                <form action="" class="justify-content-center">
+                  <div class="col-12 text-start mb-3">
+                    <div class="h6">Lupa Password</div>
+                    <div class="p small">
+                      Silahkan masukkan email anda, dan kami akan mengirimkan
+                      instruksi untuk mereset password
+                    </div>
+                  </div>
+                  <div class="col-12 text-start">
+                    <div class="form-group">
+                      <label class="sr-only">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        placeholder="Email"
+                        v-model="form.email"
+                      />
+                      <div
+                        class="form-text small text-danger"
+                        v-if="form.errors?.email"
+                      >
+                        {{ form.errors?.email[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-4 mb-2">
+                    <div class="d-grid">
+                      <button
+                        type="submit"
+                        class="btn btn-light"
+                        @click="submit"
+                        :disabled="form.loading"
+                      >
+                        <Spinner :color="'dark'" v-if="form.loading" /><span
+                          v-else
+                          >Kirim Link Lupa Password</span
+                        >
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <router-link
+                        class="btn text-white"
+                        :to="{ name: 'auth-login' }"
+                      >
+                        <i class="fas fa-angle-left me-2"></i>Kembali
+                      </router-link>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <div>
     <div
       :style="`background-image: url('${bg}'); top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; position: fixed; background-size: cover; background-position: center;`"
       class="d-none d-lg-block"
@@ -201,5 +276,5 @@ function submit() {
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>

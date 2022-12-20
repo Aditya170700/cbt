@@ -1,8 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import bg from "@/assets/static/bg-1.png";
 import logo from "@/assets/img/cbt-logo.png";
-import qr from "@/assets/static/qrcode.png";
 import { onMounted, reactive, ref } from "vue";
 import Spinner from "@/components/Spinner.vue";
 import { appStore } from "@/stores/app";
@@ -76,7 +74,7 @@ function submit() {
           localStorage.setItem("tokenAdminLemdik", res.data.data.token);
           localStorage.setItem("userAdminLemdik", res.data.data.user);
           r = router.resolve({
-            name: "dashboard-non-pnbp-admin-lemdik",
+            name: "dashboard-non-pnbp-admin-lemdik-test",
             params: {
               id_lemdik: JSON.parse(res.data.data.user).id_lemdik,
             },
@@ -124,33 +122,31 @@ function verify() {
 </script>
 
 <template>
-  <div>
-    <div
-      :style="`background-image: url('${bg}'); top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; position: fixed; background-size: cover; background-position: center;`"
-      class="d-none d-lg-block"
-    >
-      <div
-        :style="`background-color: rgba(0, 0, 0, 0.6); top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; position: fixed;`"
-      >
-        <div class="container position-relative">
+  <section id="cover" class="min-vh-100 bg-info-1">
+    <div id="cover-caption">
+      <div class="container">
+        <div class="row text-white">
           <div
-            class="row bg-info-1 position-absolute rounded-2 text-dark"
-            style="max-width: 1100px; top: 120px; left: 120px"
+            class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4"
           >
-            <div class="col-lg-7 bg-white p-5 text-center rounded-2">
-              <div class="h5">SELAMAT DATANG PADA</div>
-              <div class="h5">SIM - PEL PPSDMPL</div>
-              <form @submit.prevent="submit">
-                <div class="row px-5 mt-3 text-start">
-                  <div class="col-12">
-                    <div class="mb-3 px-5">
-                      <label for="username" class="form-label small"
-                        >Username/Email</label
-                      >
+            <div class="px-2 py-5">
+              <div class="row">
+                <div class="col-12 text-center mb-5">
+                  <img
+                    :src="logo"
+                    alt=""
+                    class="img-fluid"
+                    style="width: 70%"
+                  />
+                </div>
+                <form @submit.prevent="submit" class="justify-content-center">
+                  <div class="col-12 text-start">
+                    <div class="form-group">
+                      <label class="sr-only">Username / Email</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="username"
+                        placeholder="Username / Email"
                         v-model="form.username"
                       />
                       <div
@@ -161,15 +157,13 @@ function verify() {
                       </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="mb-3 px-5">
-                      <label for="password" class="form-label small"
-                        >Password</label
-                      >
+                  <div class="col-12 text-start">
+                    <div class="form-group">
+                      <label class="sr-only">Password</label>
                       <input
                         type="password"
                         class="form-control"
-                        id="password"
+                        placeholder="Password"
                         v-model="form.password"
                       />
                       <div
@@ -181,154 +175,42 @@ function verify() {
                     </div>
                   </div>
                   <div class="col-12">
-                    <div class="mb-3 px-5">
-                      <vue-recaptcha
-                        :sitekey="storeApp.captchaKey"
-                        :loadRecaptchaScript="true"
-                        @verify="verify"
-                      ></vue-recaptcha>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="mb-3 px-5 d-flex justify-content-between">
-                      <router-link
-                        :to="{ name: 'auth-forgot-password' }"
-                        class="text-decoration-none"
-                        >Forgot password?</router-link
-                      >
-                      <button
-                        class="btn btn-sm bg-info-1 rounded-2 text-white"
-                        type="submit"
-                        :disabled="form.loading || !verifyCaptcha"
-                      >
-                        <Spinner v-if="form.loading" />
-                        <span v-else>Sign In</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div
-              class="col-lg-5 text-white p-4 d-flex align-items-center position-relative"
-            >
-              <div class="row text-center">
-                <div class="col-12">
-                  <img :src="logo" alt="Logo" style="width: 60%" class="mb-3" />
-                </div>
-                <div class="col-12">
-                  <div class="h6 fw-light">SISTEM PELAPORAN PPSDMPL</div>
-                </div>
-                <img
-                  :src="qr"
-                  alt="Logo"
-                  style="width: 25%; bottom: 5%; right: 5%"
-                  class="position-absolute"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      :style="`background-image: url('${bg}'); top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; position: fixed; background-size: cover; background-position: center;`"
-      class="d-lg-none"
-    >
-      <div
-        :style="`background-color: rgba(0, 0, 0, 0.6); top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; position: fixed;`"
-      >
-        <div class="position-relative">
-          <div
-            class="row bg-info-1 position-absolute text-dark"
-            style="max-width: 90%; top: 20px; left: 30px"
-          >
-            <div class="col-12 bg-white py-5 text-center">
-              <div class="h5">SELAMAT DATANG PADA</div>
-              <div class="h5">SIM - PEL PPSDMPL</div>
-              <div class="row mt-3 text-start">
-                <div class="col-12">
-                  <div class="mb-3 px-3">
-                    <label for="username" class="form-label small"
-                      >Username/Email</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="username"
-                      v-model="form.username"
-                    />
-                    <div
-                      class="form-text small text-danger"
-                      v-if="form.errors?.username"
-                    >
-                      {{ form.errors?.username[0] }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="mb-3 px-3">
-                    <label for="password" class="form-label small"
-                      >Password</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="password"
-                      v-model="form.password"
-                    />
-                    <div
-                      class="form-text small text-danger"
-                      v-if="form.errors?.password"
-                    >
-                      {{ form.errors?.password[0] }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="mb-3 px-3">
                     <vue-recaptcha
                       :sitekey="storeApp.captchaKey"
                       :loadRecaptchaScript="true"
                       @verify="verify"
                     ></vue-recaptcha>
                   </div>
-                </div>
-                <div class="col-12">
-                  <div class="mb-3 px-3 d-flex justify-content-between">
-                    <router-link
-                      :to="{ name: 'auth-forgot-password' }"
-                      class="text-decoration-none"
-                      >Forgot password?</router-link
-                    >
-                    <button
-                      @click.prevent="submit()"
-                      class="btn btn-sm bg-info-1 text-white rounded-2"
-                      :disabled="form.loading || !verifyCaptcha"
-                    >
-                      <Spinner v-if="form.loading" />
-                      <span v-else>Sign In</span>
-                    </button>
+                  <div class="col-12 mt-5 mb-4">
+                    <div class="d-grid">
+                      <button
+                        type="submit"
+                        class="btn btn-light"
+                        :disabled="form.loading || !verifyCaptcha"
+                      >
+                        <Spinner :color="'dark'" v-if="form.loading" />
+                        <span v-else>Sign In</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 text-white p-4 d-flex align-items-center">
-              <div class="row text-center">
-                <div class="col-12">
-                  <img :src="logo" alt="Logo" style="width: 60%" class="mb-3" />
-                </div>
-                <div class="col-12">
-                  <div class="h6 fw-light">SISTEM PELAPORAN PPSDMPL</div>
-                </div>
-                <div class="col-12">
-                  <img :src="qr" alt="Logo" style="width: 25%" class="mb-3" />
-                </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                      <a href="#" class="text-decoration-none text-white"
+                        >FAQ</a
+                      >
+                      <router-link
+                        :to="{ name: 'auth-forgot-password' }"
+                        class="text-decoration-none text-white"
+                        >Lupa password?</router-link
+                      >
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
