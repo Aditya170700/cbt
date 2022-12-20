@@ -194,6 +194,7 @@ function destroyOpsi(data, iopt) {
                   style="height: 300px"
                   toolbar="full"
                   @ready="quillReady"
+                  :modules="[storeApp.imageUploader, storeApp.blotFormatter]"
                 />
                 <div
                   class="form-text small text-danger"
