@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { defineStore } from "pinia";
-import BlotFormatter from "quill-blot-formatter/dist/BlotFormatter";
+import BlotFormatter from "quill-blot-formatter/dist/BlotFormatter.js";
 import ImageUploader from "quill-image-uploader";
 import { clearBase64 } from "@/assets/js/utils";
 import axios from "axios";
