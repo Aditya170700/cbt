@@ -2,7 +2,7 @@
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import BlotFormatter from "quill-blot-formatter";
+import { default as BlotFormatter } from "quill-blot-formatter";
 import { ref } from "vue";
 
 let quill = ref(null);
