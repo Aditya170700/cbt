@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import Sidebar from "@/components/Dashboard/SidebarLsp/Administrator.vue";
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { appStore } from "@/stores/app";
 import { alertError, alertSuccess } from "@/assets/js/utils";
@@ -13,12 +13,26 @@ import Spinner from "@/components/Spinner.vue";
 let widthContent = window.innerWidth;
 const storeApp = appStore();
 let router = useRouter();
+let kategori = ref([]);
 let form = reactive({
   pertanyaan: "",
+  kategori: "",
   share: false,
   tipe: "Essay",
   loading: false,
   errors: null,
+});
+
+onMounted(() => {
+  axios
+    .get(`${storeApp.baseurl}cbt/auth/other/kategori-pertanyaan`)
+    .then((res) => {
+      if (res.data.code_response != 200) throw new Error(res.data.message);
+      kategori.value = res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 function quillReady() {
@@ -90,6 +104,26 @@ function submit() {
                 >
                   {{ form.errors?.pertanyaan[0] }}
                 </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label class="form-check-label" for="kategori">
+                  Kategori
+                </label>
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="form.kategori"
+                  id="kategori"
+                  list="kategori-list"
+                  style="text-transform: uppercase"
+                />
+                <datalist id="kategori-list">
+                  <option :value="data" v-for="data in kategori" :key="data">
+                    {{ data }}
+                  </option>
+                </datalist>
               </div>
             </div>
             <div class="col-lg-12">
