@@ -22,7 +22,7 @@ const blotFormatterModule = {
     contentType="html"
     style="height: 300px"
     toolbar="full"
-    :modules="[blotFormatterModule]"
+    :modules="blotFormatterModule"
   />
   <div class="mt-5 ql-editor" v-html="input"></div>
 </template>
