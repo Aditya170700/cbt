@@ -220,7 +220,7 @@ function sort(field) {
   params.sort = params.sort == "asc" ? "desc" : "asc";
 
   fetchQuestionNotInTest(
-    `${storeApp.baseurl}cbt/admin-pusbang/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+    `${storeApp.baseurl}cbt/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`
   );
 }
 </script>
