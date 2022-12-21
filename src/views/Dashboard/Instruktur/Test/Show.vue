@@ -26,6 +26,10 @@ let result = reactive({
   bobot: 0,
   loading: false,
   submitLoading: false,
+  params: {
+    sort: "asc",
+    field: "pertanyaan",
+  },
 });
 let question = reactive({
   data: [],
@@ -36,6 +40,8 @@ let params = reactive({
   search: "",
   per_page: 20,
   selected_ids: [],
+  sort: "asc",
+  field: "pertanyaan",
 });
 
 onBeforeMount(() => {
@@ -54,6 +60,7 @@ function fetchData() {
         headers: {
           Authorization: `Bearer ${storeApp.tokenInstruktur}`,
         },
+        params: result.params,
       }
     )
     .then((res) => {
@@ -200,6 +207,22 @@ function submit() {
       console.log(err);
     });
 }
+
+function sortInTest(field) {
+  result.params.field = field;
+  result.params.sort = result.params.sort == "asc" ? "desc" : "asc";
+
+  fetchData();
+}
+
+function sort(field) {
+  params.field = field;
+  params.sort = params.sort == "asc" ? "desc" : "asc";
+
+  fetchQuestionNotInTest(
+    `${storeApp.baseurl}cbt/admin-pusbang/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+  );
+}
 </script>
 
 <template>
@@ -316,9 +339,62 @@ function submit() {
                   <table class="table table-bordered">
                     <thead class="bg-info-1">
                       <tr>
-                        <th>Pertanyaan</th>
-                        <th>Tipe</th>
-                        <th>Creator</th>
+                        <th class="pointer" @click="sort('pertanyaan')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Pertanyaan</span>
+                            <span v-if="params.field == 'pertanyaan'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="pointer" @click="sort('tipe')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Tipe</span>
+                            <span v-if="params.field == 'tipe'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="pointer" @click="sort('creator')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Creator</span>
+                            <span v-if="params.field == 'creator'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="pointer" @click="sort('kategori')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Kategori</span>
+                            <span v-if="params.field == 'kategori'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
                         <th v-if="result.data.jawaban_count == 0">
                           Pilih Soal
                         </th>
@@ -343,7 +419,10 @@ function submit() {
                           {{ data.tipe }}
                         </td>
                         <td>
-                          {{ data.creator.nm_pengguna ?? data.creator.role }}
+                          {{ data.creator }}
+                        </td>
+                        <td>
+                          {{ data.kategori ?? "-" }}
                         </td>
                         <td v-if="result.data.jawaban_count == 0">
                           <div class="d-flex">
@@ -393,9 +472,62 @@ function submit() {
                         <th v-if="result.data.jawaban_count == 0">
                           Hapus Soal
                         </th>
-                        <th>Pertanyaan</th>
-                        <th>Tipe</th>
-                        <th>Creator</th>
+                        <th class="pointer" @click="sortInTest('pertanyaan')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Pertanyaan</span>
+                            <span v-if="result.params.field == 'pertanyaan'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="result.params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="pointer" @click="sortInTest('tipe')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Tipe</span>
+                            <span v-if="result.params.field == 'tipe'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="result.params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="pointer" @click="sortInTest('creator')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Creator</span>
+                            <span v-if="result.params.field == 'creator'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="result.params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="pointer" @click="sortInTest('kategori')">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span>Kategori</span>
+                            <span v-if="result.params.field == 'kategori'">
+                              <i
+                                class="fas fa-arrow-up small"
+                                v-if="result.params.sort == 'desc'"
+                              ></i>
+                              <i class="fas fa-arrow-down small" v-else></i>
+                            </span>
+                          </div>
+                        </th>
                       </tr>
                     </thead>
                     <tbody v-if="result.loading">
@@ -436,7 +568,10 @@ function submit() {
                           {{ data.tipe }}
                         </td>
                         <td>
-                          {{ data.creator.nm_pengguna ?? data.creator.role }}
+                          {{ data.creator }}
+                        </td>
+                        <td>
+                          {{ data.kategori ?? "-" }}
                         </td>
                       </tr>
                     </tbody>
