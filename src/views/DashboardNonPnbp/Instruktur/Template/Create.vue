@@ -27,6 +27,8 @@ let params = reactive({
   search: "",
   per_page: 20,
   selected_ids: [],
+  sort: "asc",
+  field: "pertanyaan",
 });
 
 onMounted(() => {
@@ -112,6 +114,13 @@ function submit() {
       }
     });
 }
+
+function sort(field) {
+  params.field = field;
+  params.sort = params.sort == "asc" ? "desc" : "asc";
+
+  fetchSoal(`${storeApp.baseurl}cbt/non-pnbp/instruktur/soal/for-template`);
+}
 </script>
 
 <template>
@@ -181,9 +190,62 @@ function submit() {
                 <table class="table table-bordered">
                   <thead class="bg-info-1">
                     <tr>
-                      <th>Pertanyaan</th>
-                      <th>Tipe</th>
-                      <th>Creator</th>
+                      <th class="pointer" @click="sort('pertanyaan')">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <span>Pertanyaan</span>
+                          <span v-if="params.field == 'pertanyaan'">
+                            <i
+                              class="fas fa-arrow-up small"
+                              v-if="params.sort == 'desc'"
+                            ></i>
+                            <i class="fas fa-arrow-down small" v-else></i>
+                          </span>
+                        </div>
+                      </th>
+                      <th class="pointer" @click="sort('tipe')">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <span>Tipe</span>
+                          <span v-if="params.field == 'tipe'">
+                            <i
+                              class="fas fa-arrow-up small"
+                              v-if="params.sort == 'desc'"
+                            ></i>
+                            <i class="fas fa-arrow-down small" v-else></i>
+                          </span>
+                        </div>
+                      </th>
+                      <th class="pointer" @click="sort('creator')">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <span>Creator</span>
+                          <span v-if="params.field == 'creator'">
+                            <i
+                              class="fas fa-arrow-up small"
+                              v-if="params.sort == 'desc'"
+                            ></i>
+                            <i class="fas fa-arrow-down small" v-else></i>
+                          </span>
+                        </div>
+                      </th>
+                      <th class="pointer" @click="sort('kategori')">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <span>Kategori</span>
+                          <span v-if="params.field == 'kategori'">
+                            <i
+                              class="fas fa-arrow-up small"
+                              v-if="params.sort == 'desc'"
+                            ></i>
+                            <i class="fas fa-arrow-down small" v-else></i>
+                          </span>
+                        </div>
+                      </th>
                       <th>Pilih Soal</th>
                     </tr>
                   </thead>
@@ -206,7 +268,10 @@ function submit() {
                         {{ data.tipe }}
                       </td>
                       <td>
-                        {{ data.creator.nm_pengguna ?? data.creator.role }}
+                        {{ data.creator }}
+                      </td>
+                      <td>
+                        {{ data.kategori }}
                       </td>
                       <td>
                         <div class="d-flex">
@@ -254,6 +319,7 @@ function submit() {
                       <th>Pertanyaan</th>
                       <th>Tipe</th>
                       <th>Creator</th>
+                      <th>Kategori</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -280,7 +346,10 @@ function submit() {
                         {{ data.tipe }}
                       </td>
                       <td>
-                        {{ data.creator.nm_pengguna ?? data.creator.role }}
+                        {{ data.creator }}
+                      </td>
+                      <td>
+                        {{ data.kategori }}
                       </td>
                     </tr>
                   </tbody>
