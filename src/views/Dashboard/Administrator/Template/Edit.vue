@@ -296,7 +296,7 @@ function sort(field) {
                         {{ data.tipe }}
                       </td>
                       <td>
-                        {{ data.creator }}
+                        {{ data.creator.nm_pengguna ?? data.creator }}
                       </td>
                       <td>
                         {{ data.kategori }}
@@ -347,6 +347,7 @@ function sort(field) {
                       <th>Pertanyaan</th>
                       <th>Tipe</th>
                       <th>Creator</th>
+                      <th>Kategori</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -373,7 +374,10 @@ function sort(field) {
                         {{ data.tipe }}
                       </td>
                       <td>
-                        {{ data.creator.nm_pengguna ?? data.creator.role }}
+                        {{ data.creator.nm_pengguna ?? data.creator }}
+                      </td>
+                      <td>
+                        {{ data.kategori }}
                       </td>
                     </tr>
                   </tbody>
