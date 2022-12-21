@@ -294,6 +294,36 @@ function sort(field) {
               </div>
             </div>
           </div>
+          <div class="col-12 mb-3">
+            <table>
+              <tr>
+                <td>
+                  <div class="fw-bold">UPT</div>
+                </td>
+                <td>
+                  <span class="ms-2"
+                    >:
+                    {{
+                      result.data.diklat_lemdik?.profil_lemdik?.nm_lembaga
+                    }}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fw-bold">Pelaksanaan</div>
+                </td>
+                <td>
+                  <span class="ms-2"
+                    >:
+                    {{
+                      `${result.data.tgl} ${result.data.mulai}-${result.data.selesai}`
+                    }}</span
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
           <div class="col-12 mb-3" v-html="result.data.deskripsi"></div>
           <div class="col-12 mb-3" v-if="result.data.jawaban_count != 0">
             <div class="alert alert-danger" role="alert">
