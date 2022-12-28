@@ -344,11 +344,11 @@ input[type="number"] {
   top: 0;
   left: 0;
   z-index: 100;
-  background: rgb(1, 121, 255);
+  background: rgb(48, 29, 110);
         background: linear-gradient(
-          356deg,
-          rgba(1, 121, 255, 1) 5%,
-          rgba(0, 207, 255, 1) 95%
+          150deg,
+          rgba(48, 29, 110, 0.5) 5%,
+          rgba(48, 29, 110, 0.94) 100%
         );
   height: 100vh;
   box-shadow: 0px 0px 16px rgba(3, 5, 16, 0.04);
@@ -400,12 +400,12 @@ input[type="number"] {
 }
 
 .dashboard-navigation .section nav .card-shadow {
-  background: rgb(1, 121, 255);
-              background: linear-gradient(
-                270deg,
-                rgba(1, 121, 255, 1) 5%,
-                rgba(0, 207, 255, 1) 95%
-              );
+  background: rgb(48, 29, 110);
+        background: linear-gradient(
+          150deg,
+          rgba(48, 29, 110, 0.5) 5%,
+          rgba(48, 29, 110, 0.94) 100%
+        );
 }
 
 .dashboard-navigation .section-footer {
