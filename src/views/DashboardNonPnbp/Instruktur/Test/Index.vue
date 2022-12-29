@@ -163,6 +163,22 @@ watch(
               >
                 <i class="fas fa-magnifying-glass"></i>
               </button>
+              <button
+                class="btn btn-danger rounded-2 border-0"
+                type="button"
+                v-if="params.search || params.profil_lemdik_id"
+                @click="
+                  () => {
+                    params.search = '';
+                    params.profil_lemdik_id = '';
+                    fetchData(
+                      `${storeApp.baseurl}cbt/non-pnbp/instruktur/test/list`
+                    );
+                  }
+                "
+              >
+                <i class="fas fa-refresh"></i>
+              </button>
             </div>
           </div>
         </div>
