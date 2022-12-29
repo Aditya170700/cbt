@@ -450,7 +450,7 @@ function sort(field) {
                           {{ data.tipe }}
                         </td>
                         <td>
-                          {{ data.creator }}
+                          {{ data.creator.nm_pengguna ?? data.creator }}
                         </td>
                         <td>
                           {{ data.kategori ?? "-" }}
@@ -599,7 +599,7 @@ function sort(field) {
                           {{ data.tipe }}
                         </td>
                         <td>
-                          {{ data.creator }}
+                          {{ data.creator.nm_pengguna ?? data.creator }}
                         </td>
                         <td>
                           {{ data.kategori ?? "-" }}
