@@ -137,7 +137,7 @@ function submit() {
                   style="height: 300px"
                   toolbar="full"
                   @ready="quillReady"
-                  :modules="[storeApp.imageUploader, storeApp.blotFormatter]"
+                  :modules="[storeApp.imageUploader]"
                 />
                 <div
                   class="form-text small text-danger"
