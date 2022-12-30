@@ -2,6 +2,7 @@
 <!-- eslint-disable no-undef -->
 <script setup>
 import logo from "@/assets/img/cbt-logo.png";
+import bg from "@/assets/img/bg-login.png";
 import { onMounted, reactive, ref } from "vue";
 import Spinner from "@/components/Spinner.vue";
 import { appStore } from "@/stores/app";
@@ -140,100 +141,130 @@ function openFaq() {
 </script>
 
 <template>
-  <section id="cover" class="min-vh-100 bg-info-1">
-    <div id="cover-caption">
-      <div class="container">
-        <div class="row text-white">
-          <div
-            class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4"
-          >
-            <div class="px-2 py-5">
-              <div class="row">
-                <div class="col-12 text-center mb-5">
-                  <img
-                    :src="logo"
-                    alt=""
-                    class="img-fluid"
-                    style="width: 70%"
-                  />
+  <div>
+    <div class="fixed-top">
+      <nav class="py-2 bg-info-1 border-bottom border-3 border-warning">
+        <div class="px-2 d-flex">
+          <ul class="nav me-auto">
+            <li class="nav-item">
+              <img :src="logo" alt="" style="max-width: 200px" />
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <section
+      id="cover"
+      class="min-vh-100 bg-info-1"
+      :style="`background-image: url('${bg}'); width: 100%; height: 100%; position: fixed; background-size: cover; background-position: center;`"
+    >
+      <div id="cover-caption">
+        <div class="container">
+          <div class="row my-5">&nbsp;</div>
+          <div class="row my-5">&nbsp;</div>
+          <div class="row mt-lg-5">
+            <div class="col-1 col-lg-7">&nbsp;</div>
+            <div class="col-10 col-lg-4">
+              <div class="card rounded-4 border-0 shadow">
+                <div class="card-body">
+                  <div class="p-3">
+                    <div class="row">
+                      <form
+                        @submit.prevent="submit"
+                        class="justify-content-center"
+                      >
+                        <div class="col-12 text-center mb-3">
+                          <div
+                            class="h4 fw-bold"
+                            style="color: rgb(48, 29, 110)"
+                          >
+                            SELAMAT DATANG PADA CBT PUSBANG LAUT
+                          </div>
+                        </div>
+                        <div class="col-12 text-start">
+                          <div class="form-group">
+                            <label class="sr-only">Username / Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Username / Email"
+                              v-model="form.username"
+                            />
+                            <div
+                              class="form-text small text-danger"
+                              v-if="form.errors?.username"
+                            >
+                              {{ form.errors?.username[0] }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 text-start">
+                          <div class="form-group">
+                            <label class="sr-only">Password</label>
+                            <input
+                              type="password"
+                              class="form-control"
+                              placeholder="Password"
+                              v-model="form.password"
+                            />
+                            <div
+                              class="form-text small text-danger"
+                              v-if="form.errors?.password"
+                            >
+                              {{ form.errors?.password[0] }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <vue-recaptcha
+                            :sitekey="storeApp.captchaKey"
+                            :loadRecaptchaScript="true"
+                            @verify="verify"
+                          ></vue-recaptcha>
+                        </div>
+                        <div class="col-12 mt-5 mb-4">
+                          <div class="d-grid">
+                            <button
+                              type="submit"
+                              class="btn bg-info-1"
+                              :disabled="form.loading || !verifyCaptcha"
+                            >
+                              <Spinner :color="'dark'" v-if="form.loading" />
+                              <span v-else>Sign In</span>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-flex justify-content-between">
+                            <a
+                              href="#"
+                              @click.prevent="openFaq"
+                              class="text-decoration-none"
+                              >FAQ</a
+                            >
+                            <router-link
+                              :to="{ name: 'auth-forgot-password' }"
+                              class="text-decoration-none"
+                              >Lupa password?</router-link
+                            >
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-                <form @submit.prevent="submit" class="justify-content-center">
-                  <div class="col-12 text-start">
-                    <div class="form-group">
-                      <label class="sr-only">Username / Email</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Username / Email"
-                        v-model="form.username"
-                      />
-                      <div
-                        class="form-text small text-danger"
-                        v-if="form.errors?.username"
-                      >
-                        {{ form.errors?.username[0] }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 text-start">
-                    <div class="form-group">
-                      <label class="sr-only">Password</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Password"
-                        v-model="form.password"
-                      />
-                      <div
-                        class="form-text small text-danger"
-                        v-if="form.errors?.password"
-                      >
-                        {{ form.errors?.password[0] }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <vue-recaptcha
-                      :sitekey="storeApp.captchaKey"
-                      :loadRecaptchaScript="true"
-                      @verify="verify"
-                    ></vue-recaptcha>
-                  </div>
-                  <div class="col-12 mt-5 mb-4">
-                    <div class="d-grid">
-                      <button
-                        type="submit"
-                        class="btn btn-light"
-                        :disabled="form.loading || !verifyCaptcha"
-                      >
-                        <Spinner :color="'dark'" v-if="form.loading" />
-                        <span v-else>Sign In</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="d-flex justify-content-between">
-                      <a
-                        href="#"
-                        @click.prevent="openFaq"
-                        class="text-decoration-none text-white"
-                        >FAQ</a
-                      >
-                      <router-link
-                        :to="{ name: 'auth-forgot-password' }"
-                        class="text-decoration-none text-white"
-                        >Lupa password?</router-link
-                      >
-                    </div>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
+          <div class="row text-white">
+            <div
+              class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4"
+            ></div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
   <div
     class="modal fade"
     id="faqModal"
