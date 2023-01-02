@@ -17,7 +17,7 @@ function back() {
         class="position-absolute text-center d-none d-lg-block"
         style="top: 300px; left: 450px; max-width: 500px"
       >
-        <div class="h4 fw-bold">401</div>
+        <div class="h4 fw-bold mb-3">Terima Kasih</div>
         <div class="h4 fw-bold">
           Akun {{ route.query.akun }} belum terverifikasi, silahkan cek email.
           Kami telah mengirimkan link untuk memverifikasi akun
@@ -31,7 +31,7 @@ function back() {
         class="position-absolute text-center d-lg-none"
         style="top: 300px; left: 50px; max-width: 300px"
       >
-        <div class="h4 fw-bold">401</div>
+        <div class="h4 fw-bold mb-3">Terima Kasih</div>
         <div class="h4 fw-bold">
           Akun {{ route.query.akun }} belum terverifikasi, silahkan cek email.
           Kami telah mengirimkan link untuk memverifikasi akun
