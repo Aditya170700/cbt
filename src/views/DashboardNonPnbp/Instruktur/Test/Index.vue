@@ -231,8 +231,10 @@ watch(
                     <div class="small fw-bold">
                       {{ `${data.tgl}` }}
                     </div>
-                    <div class="small">
-                      {{ `${data.mulai} - ${data.selesai}` }}
+                    <div class="small text-uppercase">
+                      {{
+                        `${data.by_zona.mulai} - ${data.by_zona.selesai} (${data.zona})`
+                      }}
                     </div>
                   </div>
                   <div
@@ -259,6 +261,10 @@ watch(
                 <div class="small">
                   <span class="fw-bold">UPT</span>
                   <span>: {{ data.nm_lembaga }}</span>
+                </div>
+                <div class="small text-uppercase">
+                  <span class="fw-bold">KATEGORI</span>
+                  <span>: {{ data.kategori }}</span>
                 </div>
                 <div class="row mt-3">
                   <div class="col-12">
