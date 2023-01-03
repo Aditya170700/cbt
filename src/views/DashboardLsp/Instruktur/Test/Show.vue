@@ -38,6 +38,7 @@ let question = reactive({
 });
 let params = reactive({
   search: "",
+  share: 0,
   per_page: 20,
   selected_ids: [],
   sort: "asc",
@@ -331,7 +332,7 @@ function sort(field) {
               <div
                 class="col-12 d-flex justify-content-between mb-2 align-items-center"
               >
-                <div class="col-8">
+                <div class="col-6">
                   <div class="d-flex justify-content-start align-items-center">
                     <span class="fw-bold me-3">Bank Soal</span>
                     <button
@@ -343,8 +344,20 @@ function sort(field) {
                     </button>
                   </div>
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   <div class="input-group rounded-2">
+                    <select
+                      class="form-select"
+                      v-model="params.share"
+                      @change="
+                        fetchQuestionNotInTest(
+                          `${storeApp.baseurl}cbt/lsp/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+                        )
+                      "
+                    >
+                      <option value="0">Default</option>
+                      <option value="1">Share</option>
+                    </select>
                     <input
                       type="text"
                       class="form-control rounded-2"
@@ -356,7 +369,11 @@ function sort(field) {
                       class="btn btn-success btn-sm rounded-2"
                       type="button"
                       id="btn-search"
-                      @click="fetchQuestionNotInTest"
+                      @click="
+                        fetchQuestionNotInTest(
+                          `${storeApp.baseurl}cbt/lsp/instruktur/soal/${route.params.id_test}/not-in-test/${route.params.table}`
+                        )
+                      "
                     >
                       <i class="fas fa-search"></i>
                     </button>
