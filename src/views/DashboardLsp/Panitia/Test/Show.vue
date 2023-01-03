@@ -310,10 +310,10 @@ function sort(field) {
                   <div class="fw-bold">Pelaksanaan</div>
                 </td>
                 <td>
-                  <span class="ms-2"
+                  <span class="ms-2 text-uppercase"
                     >:
                     {{
-                      `${result.data.tgl} ${result.data.mulai}-${result.data.selesai}`
+                      `${result.data.tgl_f} ${result.data.by_zona.mulai}-${result.data.by_zona.selesai} (${result.data.zona})`
                     }}</span
                   >
                 </td>
