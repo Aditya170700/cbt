@@ -222,19 +222,7 @@ function openFaq() {
                             @verify="verify"
                           ></vue-recaptcha>
                         </div>
-                        <div class="col-12 mt-5 mb-4">
-                          <div class="d-grid">
-                            <button
-                              type="submit"
-                              class="btn bg-info-1"
-                              :disabled="form.loading || !verifyCaptcha"
-                            >
-                              <Spinner :color="'dark'" v-if="form.loading" />
-                              <span v-else>Sign In</span>
-                            </button>
-                          </div>
-                        </div>
-                        <div class="col-12">
+                        <div class="col-12 my-3">
                           <div class="d-flex justify-content-between">
                             <a
                               href="#"
@@ -247,6 +235,18 @@ function openFaq() {
                               class="text-decoration-none"
                               >Lupa password?</router-link
                             >
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-grid">
+                            <button
+                              type="submit"
+                              class="btn bg-info-1"
+                              :disabled="form.loading || !verifyCaptcha"
+                            >
+                              <Spinner :color="'dark'" v-if="form.loading" />
+                              <span v-else>Sign In</span>
+                            </button>
                           </div>
                         </div>
                       </form>
