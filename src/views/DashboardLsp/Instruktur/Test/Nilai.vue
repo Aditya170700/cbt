@@ -87,19 +87,25 @@ function fetchData() {
             <div class="row">
               <div class="col-lg-2 col-3 fw-bold">Tanggal</div>
               <div class="col-lg-10 col-9">
-                {{ result.data?.test?.tgl }}
+                {{ result.data?.test?.tgl_f }}
               </div>
             </div>
             <div class="row">
               <div class="col-lg-2 col-3 fw-bold">Mulai</div>
               <div class="col-lg-10 col-9">
-                {{ result.data?.test?.mulai }}
+                {{ result.data?.test?.by_zona?.mulai }}
               </div>
             </div>
             <div class="row">
               <div class="col-lg-2 col-3 fw-bold">Selesai</div>
               <div class="col-lg-10 col-9">
-                {{ result.data?.test?.selesai }}
+                {{ result.data?.test?.by_zona?.selesai }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-2 col-3 fw-bold">Zona</div>
+              <div class="col-lg-10 col-9 text-uppercase">
+                {{ result.data?.test?.zona }}
               </div>
             </div>
             <div class="row mt-3">
