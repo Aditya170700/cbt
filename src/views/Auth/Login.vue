@@ -147,7 +147,18 @@ function openFaq() {
         <div class="px-2 d-flex">
           <ul class="nav me-auto">
             <li class="nav-item">
-              <img :src="logo" alt="" style="max-width: 200px" />
+              <img
+                :src="logo"
+                alt=""
+                style="max-width: 250px"
+                class="d-none d-lg-inline"
+              />
+              <img
+                :src="logo"
+                alt=""
+                style="max-width: 150px"
+                class="d-lg-none"
+              />
             </li>
           </ul>
         </div>
