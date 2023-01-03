@@ -174,10 +174,12 @@ function listJawaban(data) {
                   {{ `${data.status_waktu_str}` }}
                 </div>
                 <div class="small">
-                  {{ `${data.tgl}` }}
+                  {{ `${data.tgl_f}` }}
                 </div>
-                <div class="small mb-3">
-                  {{ `${data.mulai} - ${data.selesai}` }}
+                <div class="small mb-3 text-uppercase">
+                  {{
+                    `${data.by_zona.mulai} - ${data.by_zona.selesai} (${data.zona})`
+                  }}
                 </div>
                 <span :class="`badge bg-${data.status_color}`">{{
                   data.status

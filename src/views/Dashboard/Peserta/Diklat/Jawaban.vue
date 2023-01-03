@@ -96,17 +96,25 @@ function getNilai() {
               ></div>
             </div>
             <div class="row">
-              <div class="col-3 col-lg-1 fw-bold">Tanggal</div>
-              <div class="col-9 col-lg-11">{{ result.data?.test?.tgl }}</div>
+              <div class="col-4 col-lg-1 fw-bold">Tanggal</div>
+              <div class="col-8 col-lg-11">{{ result.data?.test?.tgl }}</div>
             </div>
             <div class="row">
-              <div class="col-3 col-lg-1 fw-bold">Mulai</div>
-              <div class="col-9 col-lg-11">{{ result.data?.test?.mulai }}</div>
+              <div class="col-4 col-lg-1 fw-bold">Mulai</div>
+              <div class="col-8 col-lg-11">
+                {{ result.data?.test?.by_zona?.mulai }}
+              </div>
             </div>
             <div class="row">
-              <div class="col-3 col-lg-1 fw-bold">Selesai</div>
-              <div class="col-9 col-lg-11">
-                {{ result.data?.test?.selesai }}
+              <div class="col-4 col-lg-1 fw-bold">Selesai</div>
+              <div class="col-8 col-lg-11">
+                {{ result.data?.test?.by_zona?.selesai }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4 col-lg-1 fw-bold">Zona</div>
+              <div class="col-8 col-lg-11 text-uppercase">
+                {{ result.data?.test?.zona }}
               </div>
             </div>
           </div>
